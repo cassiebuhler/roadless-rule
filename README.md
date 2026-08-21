@@ -1,113 +1,102 @@
-# geo-agent-template
+# roadless-rule
 
-A GitHub template for deploying an AI-powered interactive map app.
-Users describe in plain language what datasets to show; the app uses an LLM agent with map tools and SQL access to visualize and analyze cloud-native geospatial data.
+An AI-powered interactive map for testing the numbers behind **USDA's 2026 proposal to rescind the
+2001 Roadless Area Conservation Rule** (36 CFR 294, subpart B) — 91 FR 53827, published
+2026-08-20, comments close **2026-09-21**.
 
-**No JavaScript to write.** The core modules (map, chat, agent, tools) are loaded from CDN. You configure which data to show via three small files.
+The agency's announcement quotes several figures in support of the proposal. Almost every one is a
+percentage, and almost every percentage depends on **which acreage base it is computed against** —
+of which there are four, differing by 18 million acres. This app holds the underlying data so those
+figures can be reproduced rather than taken on trust.
 
-**Full documentation:** [boettiger-lab.github.io/geo-agent/docs](https://boettiger-lab.github.io/geo-agent/docs/)
+Built on the [geo-agent / GLEN](https://github.com/boettiger-lab/geo-agent) framework. **No
+JavaScript to write** — the map, chat, agent and tools load from CDN; this repo is three config
+files plus deployment manifests.
 
-## Repository structure
+**Live:** <https://roadless-rule.nrp-nautilus.io> · **Framework docs:**
+[boettiger-lab.github.io/geo-agent](https://boettiger-lab.github.io/geo-agent/)
 
-```
-index.html          ← HTML shell — loads core JS/CSS from CDN
-layers-input.json   ← which STAC collections to show + LLM settings
-system-prompt.md    ← LLM system prompt (customize per app)
-k8s/                ← Kubernetes deployment manifests (optional)
-```
-
-## Quick start
-
-### 1. Create your repo from this template
-
-Click **"Use this template"** on GitHub → **"Create a new repository"**.
-
-### 2. Choose your datasets
-
-Browse the available STAC catalog:
+## Files
 
 ```
-https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-data/stac/catalog.json
+index.html          ← HTML shell — loads GLEN core (pinned @v3.27.0) + libs from CDN
+layers-input.json   ← datasets, grouping, map view, LLM settings
+system-prompt.md    ← rescission-analyst persona, denominators, guardrails
+DATA-SOURCES.md     ← publisher, coverage, vintage and license for every layer
+k8s/                ← Kubernetes deployment (app: roadless-rule)
+AGENTS.md           ← configuration reference for AI coding agents
 ```
 
-Edit `layers-input.json` — set your collections and adjust the default map view.
-See the [configuration reference](https://boettiger-lab.github.io/geo-agent/docs/guide/configuration) for all fields.
+## The four denominators
 
-### 3. Edit `system-prompt.md`
+This is the thing the app exists for. Agency percentages are computed against the **potentially
+affected environment**, not total roadless acreage:
 
-Describe the domain, what users are likely to ask, and include SQL examples relevant to your datasets.
+| Base | Acres | Notes |
+|---|---:|---|
+| All inventoried roadless areas | 58,419,694 | 11,391 polygons, 38 states + Puerto Rico |
+| **Rule-affected** | **44,701,002** | less Idaho (9,285,370) + Colorado (4,433,322), which have their own state rules |
+| Rule-affected on NFS lands | ~44,300,000 | less ~400k ac of ownership-change slivers |
+| **Potentially affected environment** | **40,049,537** | less designated wilderness, WSAs and Wild & Scenic wild segments — DEIS Vol I Table 12 |
 
-### 4. Deploy
+"More than 44 million acres" ✅ and "more than 95% in 10 Western states" ✅ (95.61% of the
+rule-affected base; 73.16% of the all-IRA base) both reconcile against this layer. The Montana
+"nearly 60 percent of Forest Service land" claim does **not** — see
+[DATA-SOURCES.md](DATA-SOURCES.md).
 
-#### Option A: GitHub Pages (no server needed)
+The 58.4M ↔ 44.7M split has no attribute in the data; it is `STATE NOT IN ('ID','CO')`.
 
-The `llm` block in `layers-input.json` is already enabled. Each visitor enters their own API key (e.g. from [OpenRouter](https://openrouter.ai)) in the in-app settings panel — keys are stored in the browser only, never on the server.
+## Layer organization
 
-1. Enable GitHub Pages in your repo: Settings → Pages → Source → **GitHub Actions**
-2. Add `.github/workflows/gh-pages.yml`:
+Layers are grouped by **what the data describes**, not by which agency publishes it. Every label
+follows one form — **`what it is · PUBLISHER vintage`** — and legal status is its own field, so
+"PROPOSED for rescission" reads as a status rather than an accomplished fact.
 
-```yaml
-name: Deploy to GitHub Pages
-on:
-  push:
-    branches: [main]
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
-```
+| Group | Layers |
+|---|---|
+| **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
+| **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `All protected areas · PAD-US 4.1` |
+| **Fuels & fire** | `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildland-urban interface · SILVIS 2020` |
+| **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
 
-3. Push — the workflow deploys automatically on changes to `main`.
+The two roadless layers are one dataset filtered two ways, via the `alias` mechanism — the map opens
+with both on, so the affected area and the untouched Idaho/Colorado comparison group read as a
+single picture. Every other group starts collapsed and off.
 
-#### Option B: Kubernetes
+Full provenance — publisher, coverage, vintage, license, and every caveat that changes a number — is
+in **[DATA-SOURCES.md](DATA-SOURCES.md)**, which the app links as "About" in its footer.
 
-API keys are injected server-side via a ConfigMap + Kubernetes secrets — no user-facing key entry.
+## Datasets still to come
 
-1. Delete the `llm` block from `layers-input.json` (the server-injected `config.json` takes precedence anyway)
-2. Replace the git clone URL in `k8s/deployment.yaml` with your repo URL
-3. Replace the slug `calenviroscreen` throughout `k8s/` with your app name
-4. Set your hostname in `k8s/ingress.yaml`
-5. Create the required secret:
-
-```bash
-kubectl create secret generic llm-proxy-secrets \
-  --from-literal=proxy-key=YOUR_PROXY_KEY
-```
-
-6. Deploy:
-
-```bash
-kubectl apply -f k8s/
-kubectl rollout status deployment/my-app
-```
-
-After pushing changes, redeploy: `kubectl rollout restart deployment/my-app`
-
-See the [deployment guide](https://boettiger-lab.github.io/geo-agent/docs/guide/deployment) for full details on all options including Hugging Face Spaces.
+Ingest is tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows)
+under the [`roadless`](https://github.com/boettiger-lab/data-workflows/issues?q=is%3Aissue+label%3Aroadless)
+label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594). Two of the
+three headline claims cannot be tested until they land: **Wildfire Hazard Potential**
+([#586](https://github.com/boettiger-lab/data-workflows/issues/586)) for the ">40% high hazard"
+claim, and **RoadCore + TIGER roads**
+([#588](https://github.com/boettiger-lab/data-workflows/issues/588)) for "11.3M acres near roads".
+The full table is in [DATA-SOURCES.md](DATA-SOURCES.md).
 
 ## Local development
 
 ```bash
 python -m http.server 8000
-# Open http://localhost:8000 — enter your API key in the settings panel
+# Open http://localhost:8000 — enter your API key in the ⚙ settings panel
 ```
 
-## More resources
+## Deployment
 
-- [Configuration reference](https://boettiger-lab.github.io/geo-agent/docs/guide/configuration) — all `layers-input.json` fields with examples
-- [Deployment guide](https://boettiger-lab.github.io/geo-agent/docs/guide/deployment) — GitHub Pages, Hugging Face Spaces, Kubernetes
-- [Core library](https://github.com/boettiger-lab/geo-agent) — source code for the map, chat, and agent modules
+Kubernetes on NRP Nautilus, namespace `schmidtdse`. The pod's init container clones `main` at
+startup, so **push, then restart** — pushing alone changes nothing and restarting alone serves
+stale config.
+
+```bash
+kubectl apply -f k8s/                                        # first time
+kubectl -n schmidtdse rollout restart deployment/roadless-rule   # after every push
+kubectl -n schmidtdse rollout status  deployment/roadless-rule
+```
+
+The LLM key is injected server-side by the nginx sidecar (`/api/llm` reverse proxy, `PROXY_KEY` from
+the `open-llm-proxy-secrets` secret) — the browser never holds it. The `llm` block in
+`layers-input.json` is what makes the local `http.server` flow work; in-cluster the injected
+`config.json` takes precedence.

@@ -1,13 +1,14 @@
-# AI Agent Guide — geo-agent-template
+# AI Agent Guide — roadless-rule
 
 ## Repo relationship
 
-This is a **template repo** for creating geo-agent map applications. The core library lives at [boettiger-lab/geo-agent](https://github.com/boettiger-lab/geo-agent) and is loaded from CDN — you never modify it here.
+This is a **client app repo** built from [geo-agent-template](https://github.com/boettiger-lab/geo-agent-template). The core library lives at [boettiger-lab/geo-agent](https://github.com/boettiger-lab/geo-agent) and is loaded from CDN — you never modify it here.
 
 | Repo | Purpose |
 |---|---|
 | `geo-agent` | Core library (map, chat, agent, tools). Source of truth for all functionality. |
-| `geo-agent-template` | Starter template. Users fork this and configure three files for their dataset. |
+| `geo-agent-template` | Starter template this repo was created from. |
+| `roadless-rule` | **This repo.** Config only — `index.html`, `layers-input.json`, `system-prompt.md`, `k8s/`. |
 
 **Full docs:** [boettiger-lab.github.io/geo-agent](https://boettiger-lab.github.io/geo-agent/)
 — includes the complete configuration reference, deployment guide, and agent loop internals.
@@ -322,3 +323,87 @@ Do **not** use the legacy `["in", "ColumnName", "value1", "value2"]` form — it
 ```
 
 Omit the `llm` block entirely for Kubernetes deployments where `config.json` is injected server-side.
+
+---
+
+# Repo-specific notes — roadless-rule
+
+Everything above is the generic framework reference. This section is what an agent working on *this*
+repo needs and cannot get from the tools.
+
+## What this app is auditing
+
+USDA's 2026 proposal to rescind the 2001 Roadless Area Conservation Rule — **91 FR 53827**
+(2026-08-20), RIN 0596-AD66, docket FS-2025-0001, comments close **2026-09-21**. The proposal is not
+enacted. Any copy you write must use the conditional ("would remove"), and legal status must be its
+own field in a layer label, never folded into a word like "reduced".
+
+## ⛔ The four denominators
+
+Do not write a percentage anywhere in this repo without naming its base.
+
+| Base | Acres | Derivation |
+|---|---:|---|
+| All IRA | 58,419,694 | `SUM(ACRES)` over the layer |
+| **Rule-affected** | **44,701,002** | `WHERE STATE NOT IN ('ID','CO')` |
+| On NFS lands | ~44,300,000 | −400k, DEIS Vol I p. 30 fn. 9 |
+| **Potentially affected environment** | **40,049,537** | −wilderness / WSA / W&SR wild segments, DEIS Vol I Table 12 |
+
+Idaho 9,285,370 + Colorado 4,433,322 = 13,718,692. West-10 = **95.61%** of the rule-affected base,
+**73.16%** of the all-IRA base. Verify any figure you add:
+
+```sql
+SELECT SUM(ACRES) FROM read_parquet('s3://public-usfs/roadless-areas-2001.parquet')
+WHERE STATE NOT IN ('ID','CO');   -- 44,701,002
+```
+
+## ⚠️ The `CATEGORY` trap
+
+`CATEGORY` (`1B` / `1B-1` / `1C`) records **pre-rule forest-plan direction**, not rule status. `1C`
+reads as though road construction were allowed; it was not. Never style, filter, or label as though
+this column carried protection level.
+
+## The two roadless layers are one STAC asset
+
+`roadless-areas-2001-pmtiles` appears **twice** in `layers-input.json`, distinguished by `alias`
+(`ira-rule-affected`, `ira-idaho-colorado`) and complementary `default_filter`s on `STATE`. This is
+the documented mechanism for two logical layers off one asset — the framework shares a single
+MapLibre source between aliases. If you add a third view of the same data, add another alias; do not
+duplicate the collection entry.
+
+Filters use the modern `match` form (`["match", ["get","STATE"], ["ID","CO"], false, true]`). `STATE`
+is a clean two-letter code and **is** present in the tiles — verified, not assumed.
+
+## Layers pending ingest
+
+Tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows) under the
+`roadless` label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594).
+Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row. Two of the three
+headline claims are untestable until #586 and #588 land — `system-prompt.md` says so explicitly, and
+that wording must be updated in the same PR that adds the layer.
+
+| Issue | Dataset | Expected bucket |
+|---|---|---|
+| #585 | USFS administrative forest / proclaimed / surface ownership + ranger districts | `public-usfs` |
+| #586 | Wildfire Hazard Potential v2023, 270 m | `public-fire` |
+| #587 | FPA-FOD wildfire occurrence 1992–2020 | `public-fire` |
+| #588 | USFS RoadCore + Census TIGER roads | `public-usfs`, `public-census` |
+| #590 | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | `public-land-cover` |
+| #591 | USFS Insect & Disease Detection Survey | `public-usfs` |
+| #592 | Wildfire Risk to Communities v2 | `public-fire` |
+| #593 | MTBS perimeters + burn severity 1984–2024 | `public-fire` |
+| #603 | TWIG interagency fuel treatments + intersections | `public-fire` |
+
+⚠️ **`facts-common-attributes-2026-06` and TWIG (#603) must never be unioned** — TWIG's 737,013
+FACTS-CA rows overlap ours, so a union double-counts USFS treatments.
+
+## Deployment quirks
+
+- Namespace `schmidtdse`, slug `roadless-rule`, host `roadless-rule.nrp-nautilus.io`.
+- The init container clones `main` at pod start: **push, then**
+  `kubectl -n schmidtdse rollout restart deployment/roadless-rule`. Neither step works alone.
+- `kubectl` needs `/home/jovyan/bin` on `PATH` — the kubeconfig's exec credential plugin shells out
+  to `kubectl` itself, so a bare invocation fails with "executable kubectl not found".
+- The nginx sidecar config carries two fixes that must not be "cleaned up":
+  `resolver 10.96.0.10 ipv6=off` with a variabled `proxy_pass` (IPv4-only, geo-agent-ops#64) and
+  `worker_processes 2` (OOM on high-core nodes, geo-agent-ops#49).
