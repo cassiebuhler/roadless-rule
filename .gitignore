@@ -3,3 +3,19 @@
 # Editor / notebook artifacts
 .ipynb_checkpoints/
 .vscode/
+
+# No spatial data in this repo — layers are served from the public STAC catalog
+# (s3-west.nrp-nautilus.io/public-data/stac/catalog.json). Source extracts and
+# derived tiles belong in object storage, not in git.
+*.geojson
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.parquet
+*.pmtiles
+*.tif
+*.tiff
+*.zip

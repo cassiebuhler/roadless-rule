@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: padus
-  namespace: biodiversity
+  name: roadless-rule
+  namespace: schmidtdse
   labels:
-    app: padus
+    app: roadless-rule
 spec:
   type: ClusterIP
   selector:
-    app: padus
+    app: roadless-rule
   ports:
     - protocol: TCP
       port: 80
