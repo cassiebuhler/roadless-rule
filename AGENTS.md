@@ -378,21 +378,33 @@ is a clean two-letter code and **is** present in the tiles — verified, not ass
 
 Tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows) under the
 `roadless` label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594).
-Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row. Two of the three
-headline claims are untestable until #586 and #588 land — `system-prompt.md` says so explicitly, and
-that wording must be updated in the same PR that adds the layer.
+Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row. Claim 3 (roads) is still
+untestable until #588 lands — `system-prompt.md` says so explicitly, and that wording must be updated
+in the same PR that adds the layer.
+
+**Already added:** #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
+classified pair is SQL-only because its COGs carry no `classification:classes`, so geo-agent would
+paint Non-burnable and Water as top hazard), #593 (MTBS — perimeters split into wildfire and
+prescribed-fire aliases, plus per-domain annual severity behind a `versions` year selector) and
+#587 (FPA-FOD — 2.66M ignition points as two `circle` layers coloured by cause). Claim 1 is now
+testable. Note the builds published to S3 while PRs #605, #612 and #614 were still open — **STAC
+liveness, not merge status, is what determines whether a layer can be added.**
+
+⚠️ **FPA-FOD was built as the 7th edition (1992–2024), not the 6th (1992–2020) that #587 was filed
+against.** The 7th backfills previously underrepresented states, so pre-2021 counts differ — the
+dataset id is `fpa-fod-1992-2024`.
 
 | Issue | Dataset | Expected bucket |
 |---|---|---|
 | #585 | USFS administrative forest / proclaimed / surface ownership + ranger districts | `public-usfs` |
-| #586 | Wildfire Hazard Potential v2023, 270 m | `public-fire` |
-| #587 | FPA-FOD wildfire occurrence 1992–2020 | `public-fire` |
 | #588 | USFS RoadCore + Census TIGER roads | `public-usfs`, `public-census` |
 | #590 | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | `public-land-cover` |
 | #591 | USFS Insect & Disease Detection Survey | `public-usfs` |
 | #592 | Wildfire Risk to Communities v2 | `public-fire` |
-| #593 | MTBS perimeters + burn severity 1984–2024 | `public-fire` |
 | #603 | TWIG interagency fuel treatments + intersections | `public-fire` |
+| #609 | Mesic Analysis Platform — mesic persistence, valley bottoms | TBD |
+| #610 | USGS INHABIT v4 — fire-promoting invasive plants | TBD |
+| #611 | Wildfire Risk to Communities v2 — populated areas | `public-fire` |
 
 ⚠️ **`facts-common-attributes-2026-06` and TWIG (#603) must never be unioned** — TWIG's 737,013
 FACTS-CA rows overlap ours, so a union double-counts USFS treatments.
