@@ -56,7 +56,7 @@ follows one form — **`what it is · PUBLISHER vintage`** — and legal status 
 |---|---|
 | **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
 | **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
-| **Fuels & fire** | `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildland-urban interface · SILVIS 2020` |
+| **Fuels & fire** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Wildland-urban interface · SILVIS 2020` · `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` |
 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
 
 The two roadless layers are one dataset filtered two ways, via the `alias` mechanism — the map opens

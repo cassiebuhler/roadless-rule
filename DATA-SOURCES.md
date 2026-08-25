@@ -130,8 +130,8 @@ layer.
 | `Completed treatments, FY2014+ · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
 | `Wildland-urban interface · SILVIS 2020` | SILVIS Lab, UW–Madison | National (census blocks) | 2020 (v4, decades 1990–2020) | CC-BY-4.0 | `silvis-wui-2020` |
-| `Wildfire hazard index · WHP 2023` → `CONUS` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
-| `Wildfire hazard index · WHP 2023` → `Alaska` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
+| `Wildfire hazard index · WHP 2023 (CONUS)` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
+| `Wildfire hazard index · WHP 2023 (Alaska)` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
 | `Wildfire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Prescribed fire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
@@ -156,7 +156,12 @@ agency-figure reproduction belongs in any case.
 class breaks are percentiles computed *within each domain*, so "Very High" is index > 1,985 in CONUS
 but > 8,912 in Alaska — 4.5× apart. Never pool the classified domains; use the continuous index for
 any CONUS-vs-Alaska comparison. Each layer's colour ramp saturates at its own Very High break, which
-is why the two use different rescale bounds.
+is why the two use different rescale bounds. They are consequently **two separate panel toggles** —
+a user who wants national wildfire hazard has to turn on both. One toggle driving both halves needs
+a framework change, tracked at
+[geo-agent#349](https://github.com/boettiger-lab/geo-agent/issues/349); mosaicking the two into one
+national raster is **not** the fix, because a single shared stretch would saturate >10% of Alaska
+into the top colour and contradict the zero-high-hazard finding below.
 
 ⚠️ **Alaska's high/very-high WHP acreage is zero, not missing** — USFS land in Alaska is Tongass and
 Chugach coastal temperate rainforest, at the bottom of the *Alaska* hazard distribution. DEIS Table 22

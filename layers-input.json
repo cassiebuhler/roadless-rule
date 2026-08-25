@@ -65,13 +65,13 @@
             "collection_id": "whp-2023-continuous-conus",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json",
             "group": {
-                "name": "Wildfire hazard index · WHP 2023",
+                "name": "Fuels & fire",
                 "collapsed": true
             },
             "assets": [
                 {
                     "id": "whp-2023-continuous-conus-cog",
-                    "display_name": "CONUS",
+                    "display_name": "Wildfire hazard index · WHP 2023 (CONUS)",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,2000",
@@ -86,13 +86,13 @@
             "collection_id": "whp-2023-continuous-ak",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json",
             "group": {
-                "name": "Wildfire hazard index · WHP 2023",
+                "name": "Fuels & fire",
                 "collapsed": true
             },
             "assets": [
                 {
                     "id": "whp-2023-continuous-ak-cog",
-                    "display_name": "Alaska",
+                    "display_name": "Wildfire hazard index · WHP 2023 (Alaska)",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,9000",

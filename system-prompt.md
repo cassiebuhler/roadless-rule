@@ -154,15 +154,17 @@ what the data describes:
   PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer equals its
   Table 12 component, and the layers can overlap each other. Never add their acreages, and never
   present a layer total as the deduction.
-- **Fuels & fire** — `Completed treatments, FY2014+ · USFS FACTS 2026`,
+- **Fuels & fire** — `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
+  `Completed treatments, FY2014+ · USFS FACTS 2026`,
   `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
   `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
   `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
   selector rather than one entry per year — and `Ignitions by cause 1992–2024 · FPA-FOD` plus
   `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`.
-- **Wildfire hazard index · WHP 2023** — its own group holding two entries, `CONUS` and `Alaska`.
-  They are separate rasters on separate scales (the published Very High break is 1,985 for CONUS,
-  8,912 for Alaska), so each carries its own legend and the two cannot be compared by raw value.
+  The two WHP entries are separate rasters on separate scales (the published Very High break is
+  1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
+  compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
+  are two halves of one variable and currently need two clicks.
 - **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
   14.8M roadless acres) and `Human modification · Theobald 2016`.
 
