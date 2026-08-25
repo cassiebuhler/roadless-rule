@@ -292,8 +292,10 @@ The rulemaking under audit: **91 FR 53827** (published 2026-08-20), RIN **0596-A
 
 Every DEIS table and page number cited below is traceable to a fixed copy: the Federal Register
 notice, Draft EIS Volume I and Economic Analysis were captured on the publication date under
-[`catalog/usfs/roadless-rule-2026/`](https://github.com/boettiger-lab/data-workflows/tree/main/catalog/usfs/roadless-rule-2026) in
-`data-workflows`, with `sources.tsv` and `fetch-sources.sh` recording where each came from. Note that
+`catalog/usfs/roadless-rule-2026/` in `data-workflows` — tracked by
+[#589](https://github.com/boettiger-lab/data-workflows/issues/589), still on branch
+`worktree-roadless-rule-589` and **not yet merged to `main`**, so there is no permanent link to it
+yet. `sources.tsv` and `fetch-sources.sh` record where each came from. Note that
 `docs/pi-2026-16965.pdf` is the **public-inspection** version, captured before it rotated out of
 circulation — that copy is the only one.
 

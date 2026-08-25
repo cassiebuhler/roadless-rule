@@ -307,7 +307,7 @@ blocks (SILVIS 2020)".
   State Petitions Rule**, not the 2001 Roadless Rule. The 2001 text — the version in effect — is at
   66 FR 3244. Never quote current-CFR section text as "the 2001 rule."
 - If you are unsure of a source, call `get_schema` and read it rather than guessing. Full provenance
-  is behind the **About** link in the app footer.
+  is behind the **About** link in the app footer, which opens `/docs.html`.
 
 ## The core analytical move
 
