@@ -62,6 +62,60 @@
     },
     "collections": [
         {
+            "collection_id": "roadless-areas-2001",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json",
+            "assets": [
+                {
+                    "id": "roadless-areas-2001-pmtiles",
+                    "alias": "ira-rule-affected",
+                    "display_name": "Rule-affected · 44.7M ac — PROPOSED for rescission",
+                    "group": "Roadless areas · USFS 2001",
+                    "visible": true,
+                    "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], false, true],
+                    "default_style": {
+                        "fill-color": "#1B6B4C",
+                        "fill-opacity": 0.45
+                    },
+                    "outline_style": {
+                        "line-color": "#0E4531",
+                        "line-width": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Rule-affected · 44.7M ac",
+                            "color": "#1B6B4C"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
+                },
+                {
+                    "id": "roadless-areas-2001-pmtiles",
+                    "alias": "ira-idaho-colorado",
+                    "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded",
+                    "group": "Roadless areas · USFS 2001",
+                    "visible": true,
+                    "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],
+                    "default_style": {
+                        "fill-color": "#7A8FA6",
+                        "fill-opacity": 0.4
+                    },
+                    "outline_style": {
+                        "line-color": "#4E6377",
+                        "line-width": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Idaho & Colorado · 13.7M ac",
+                            "color": "#7A8FA6"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
+                }
+            ]
+        },
+        {
             "collection_id": "whp-2023-continuous-conus",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json",
             "group": {
@@ -221,60 +275,6 @@
                         { "label": "2022", "asset_id": "mtbs-severity-ak-cog-2022" },
                         { "label": "2023", "asset_id": "mtbs-severity-ak-cog-2023" }
                     ]
-                }
-            ]
-        },
-        {
-            "collection_id": "roadless-areas-2001",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json",
-            "assets": [
-                {
-                    "id": "roadless-areas-2001-pmtiles",
-                    "alias": "ira-rule-affected",
-                    "display_name": "Rule-affected · 44.7M ac — PROPOSED for rescission",
-                    "group": "Roadless areas · USFS 2001",
-                    "visible": true,
-                    "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], false, true],
-                    "default_style": {
-                        "fill-color": "#1B6B4C",
-                        "fill-opacity": 0.45
-                    },
-                    "outline_style": {
-                        "line-color": "#0E4531",
-                        "line-width": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Rule-affected · 44.7M ac",
-                            "color": "#1B6B4C"
-                        }
-                    ],
-                    "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
-                },
-                {
-                    "id": "roadless-areas-2001-pmtiles",
-                    "alias": "ira-idaho-colorado",
-                    "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded",
-                    "group": "Roadless areas · USFS 2001",
-                    "visible": true,
-                    "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],
-                    "default_style": {
-                        "fill-color": "#7A8FA6",
-                        "fill-opacity": 0.4
-                    },
-                    "outline_style": {
-                        "line-color": "#4E6377",
-                        "line-width": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Idaho & Colorado · 13.7M ac",
-                            "color": "#7A8FA6"
-                        }
-                    ],
-                    "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
                 }
             ]
         },
