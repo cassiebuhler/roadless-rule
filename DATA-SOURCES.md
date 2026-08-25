@@ -64,6 +64,50 @@ USFS cautions that source scales vary across this layer and that boundaries cann
 align with features from other datasets — the National Forest Planning Record documents remain the
 official inventory. Treat adjacency and buffer-distance results as approximate.
 
+### National Forest System extent · USFS 2025
+
+| Layer | Features | `SUM(GIS_ACRES)` | Collection |
+|---|---:|---:|---|
+| `Forest Service ownership, 193.2M ac · USFS 2025` | 97,493 parcels | 193,174,461 | `nfs-surface-ownership` |
+| `Proclaimed boundary, 225.1M ac · USFS 2025` | 154 units | 225,145,181 | `proclaimed-forest` |
+| `Administrative boundary, 236.8M ac · USFS 2025` | 112 units | 236,835,251 | `administrative-forest` |
+| `Ranger districts, 237.1M ac · USFS 2025` | 503 districts | 237,098,674 | `ranger-district` |
+
+Publisher: USDA Forest Service, Enterprise Data Warehouse. Coverage: national. Vintage: 2025-06-22
+snapshot. License: public domain. Sources — [`S_USA.SurfaceOwnership.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.SurfaceOwnership.zip),
+[`S_USA.ProclaimedForest.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.ProclaimedForest.zip),
+[`S_USA.AdministrativeForest.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.AdministrativeForest.zip),
+[`S_USA.RangerDistrict.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.RangerDistrict.zip).
+
+⚠️ **Only the first layer is ownership. The other three are administrative envelopes.** They enclose
+inholdings and private, state and other-federal parcels the Forest Service does not own, which is why
+they run 32–44M acres above it. They are drawn as **outlines with no fill** to keep that distinction
+visible on the map: ownership is land, the rest are boundaries.
+
+Using an envelope as the base for a "share of Forest Service land" figure inflates the denominator by
+up to 22.6% and deflates the resulting percentage by about 18% relative. **Surface ownership is the
+right base**, and it is corroborated independently: PAD-US 4.1 `fee` filtered to `Mang_Name = 'USFS'`
+gives 193,275,732 acres — 101,271 acres apart (0.05%) from two unrelated publishers — and both agree
+with the announcement's "193 million."
+
+The ownership layer is filtered in the map to `OWNERCLASS = 'USDA FOREST SERVICE'`. The full parquet
+retains what that filter hides, and the assistant can query it:
+
+| `OWNERCLASS` | Parcels | Acres |
+|---|---:|---:|
+| `USDA FOREST SERVICE` | 97,493 | 193,174,461 |
+| `NON-FS` | 19,663 | 10,993,819 |
+| `UNPARTITIONED RIPARIAN INTEREST` | 34 | 130,508 |
+
+Those 11.0M acres of `NON-FS` parcels are the inholdings themselves — retained deliberately, since
+they are what makes this layer more precise than an envelope.
+
+⚠️ **There is no state column in any of the four.** Attributing acreage to a state requires a spatial
+or hex join — `census-2024/state` is native H3 resolution 8, and these layers are native resolution 10
+with h9/h8/h0 parents, so they join cell-for-cell against `roadless-areas-2001` as well. A plain
+`ST_Intersects` sum is wrong: it credits a parcel's entire acreage to every state its geometry
+touches, which overstates Montana by roughly 9M acres.
+
 ### Comparison strata
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
@@ -278,6 +322,12 @@ The West-10 share (AK, AZ, CA, MT, NV, NM, OR, UT, WA, WY) is **95.61%** of the 
 but **73.16%** of the all-IRA base — the ">95%" claim holds only on the former. **State the base with
 every percentage.**
 
+**A fifth base sits outside this ladder.** All four steps above are bases of *roadless* acreage. A
+claim of the form "X percent of **Forest Service land**" is measured against Forest Service surface
+ownership — **193,174,461 acres** nationally — which is a different quantity entirely and must never
+be substituted into the ladder. See *National Forest System extent* above for why the ownership layer,
+not one of the three administrative envelopes, is the correct base.
+
 ### The three headline claims
 
 All three are press-release claims attributed to Chief Tom Schultz; the Federal Register preamble
@@ -289,10 +339,13 @@ contains none of them, and the Draft EIS supplies the methods.
 | "only 5% received hazardous fuels treatments since 2014" | FACTS, *completed*, **fiscal** years 2014–2024, ÷ PAE (DEIS Vol I p. 94). **Activity codes never disclosed**, nor whether overlapping records were dissolved or summed. | ⚠️ partially — code choice is yours to publish |
 | "more than a quarter — 11.3M ac — already near existing roads" | Within **0.5 mi either side** of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives **13.3M / 30.8%** against the 44.7M base. | ❌ needs the roads layer (pending) |
 
-⚠️ **Montana does not reconcile.** The announcement calls Montana roadless area "nearly 60 percent of
-Forest Service land," but Montana holds 6,395,401 IRA acres — 60% would require a 10,659,001-acre NFS
-denominator, well below Montana's actual NFS acreage. Settling it needs the administrative-forest
-layer (pending). Unresolved, not false.
+⚠️ **Montana does not reconcile — and the NFS extent layers now show why.** The announcement calls
+Montana roadless area "nearly 60 percent of Forest Service land." Montana holds 6,395,401 IRA acres,
+so 60% would require an NFS base of about 10,659,001 acres. No Forest Service extent layer is that
+small: against Montana surface ownership the share is roughly **37%**, and against the proclaimed
+boundary it is lower still. The claim is therefore not a denominator ambiguity — **no available base
+produces 60%**. The announcement publishes no method, so the accurate statement is that the figure
+cannot be reproduced, not that it is false.
 
 ⚠️ **The rule does not prohibit fuels work.** § 294.13(b)(1)(ii) of the 2001 rule already permits
 cutting small-diameter timber "to maintain or restore the characteristics of ecosystem composition and
@@ -311,7 +364,6 @@ added here as each lands.
 
 | Issue | Dataset | Why it matters |
 |---|---|---|
-| [#585](https://github.com/boettiger-lab/data-workflows/issues/585) | USFS administrative forest / proclaimed / surface ownership + ranger districts | The NFS denominators; settles the Montana claim |
 | [#588](https://github.com/boettiger-lab/data-workflows/issues/588) | USFS RoadCore + Census TIGER roads | Claim 3 |
 | [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | Forest mask, condition class |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |

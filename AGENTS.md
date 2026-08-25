@@ -349,6 +349,12 @@ Do not write a percentage anywhere in this repo without naming its base.
 | On NFS lands | ~44,300,000 | −400k, DEIS Vol I p. 30 fn. 9 |
 | **Potentially affected environment** | **40,049,537** | −wilderness / WSA / W&SR wild segments, DEIS Vol I Table 12 |
 
+A **fifth base** answers a different question and must never be substituted into the four above:
+**NFS surface ownership, 193,174,461 ac** (`nfs-surface-ownership`, `OWNERCLASS = 'USDA FOREST
+SERVICE'`) — the base for "share of Forest Service land" claims. The three administrative envelopes
+(`proclaimed-forest` 225.1M, `administrative-forest` 236.8M, `ranger-district` 237.1M) are **not**
+ownership; using one inflates the denominator by up to 22.6%.
+
 Idaho 9,285,370 + Colorado 4,433,322 = 13,718,692. West-10 = **95.61%** of the rule-affected base,
 **73.16%** of the all-IRA base. Verify any figure you add:
 
@@ -374,6 +380,14 @@ duplicate the collection entry.
 Filters use the modern `match` form (`["match", ["get","STATE"], ["ID","CO"], false, true]`). `STATE`
 is a clean two-letter code and **is** present in the tiles — verified, not assumed.
 
+## ⚠️ The NFS extent layers carry no state column
+
+None of `nfs-surface-ownership`, `proclaimed-forest`, `administrative-forest`, `ranger-district` has a
+state field — `REGION` is a USFS region, not a state. Any per-state figure needs a hex or clipped
+spatial join (`census-2024/state` is native h8; these layers are native h10 with h9/h8/h0 parents). A
+plain `ST_Intersects` **sum is wrong** — it credits a parcel's whole acreage to every state its
+geometry touches, overstating Montana by roughly 9M acres.
+
 ## Layers pending ingest
 
 Tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows) under the
@@ -382,7 +396,9 @@ Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row. Cla
 untestable until #588 lands — `system-prompt.md` says so explicitly, and that wording must be updated
 in the same PR that adds the layer.
 
-**Already added:** #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
+**Already added:** #585 (USFS extent — `nfs-surface-ownership` filtered to `OWNERCLASS = 'USDA
+FOREST SERVICE'`, plus proclaimed / administrative / ranger-district as outline-only envelopes; the
+Montana "nearly 60% of Forest Service land" claim is now testable and reconciles to ~37%), #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
 classified pair is SQL-only because its COGs carry no `classification:classes`, so geo-agent would
 paint Non-burnable and Water as top hazard), #593 (MTBS — perimeters split into wildfire and
 prescribed-fire aliases, plus per-domain annual severity behind a `versions` year selector) and
@@ -396,7 +412,6 @@ dataset id is `fpa-fod-1992-2024`.
 
 | Issue | Dataset | Expected bucket |
 |---|---|---|
-| #585 | USFS administrative forest / proclaimed / surface ownership + ranger districts | `public-usfs` |
 | #588 | USFS RoadCore + Census TIGER roads | `public-usfs`, `public-census` |
 | #590 | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | `public-land-cover` |
 | #591 | USFS Insect & Disease Detection Survey | `public-usfs` |
