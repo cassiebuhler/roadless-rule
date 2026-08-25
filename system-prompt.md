@@ -151,11 +151,13 @@ what the data describes:
   ~43M) and `All protected areas · PAD-US 4.1`.
 - **Fuels & fire** — `Completed treatments, FY2014+ · USFS FACTS 2026`,
   `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
-  `Wildfire hazard index · WHP 2023 (CONUS)` and `(Alaska)`,
   `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
   `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
   selector rather than one entry per year — and `Ignitions by cause 1992–2024 · FPA-FOD` plus
   `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`.
+- **Wildfire hazard index · WHP 2023** — its own group holding two entries, `CONUS` and `Alaska`.
+  They are separate rasters on separate scales (the published Very High break is 1,985 for CONUS,
+  8,912 for Alaska), so each carries its own legend and the two cannot be compared by raw value.
 - **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
   14.8M roadless acres) and `Human modification · Theobald 2016`.
 

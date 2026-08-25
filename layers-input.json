@@ -65,13 +65,13 @@
             "collection_id": "whp-2023-continuous-conus",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json",
             "group": {
-                "name": "Fuels & fire",
+                "name": "Wildfire hazard index · WHP 2023",
                 "collapsed": true
             },
             "assets": [
                 {
                     "id": "whp-2023-continuous-conus-cog",
-                    "display_name": "Wildfire hazard index · WHP 2023 (CONUS)",
+                    "display_name": "CONUS",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,2000",
@@ -86,13 +86,13 @@
             "collection_id": "whp-2023-continuous-ak",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json",
             "group": {
-                "name": "Fuels & fire",
+                "name": "Wildfire hazard index · WHP 2023",
                 "collapsed": true
             },
             "assets": [
                 {
                     "id": "whp-2023-continuous-ak-cog",
-                    "display_name": "Wildfire hazard index · WHP 2023 (Alaska)",
+                    "display_name": "Alaska",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,9000",
@@ -291,7 +291,15 @@
                     "alias": "padus-wilderness",
                     "display_name": "Designated wilderness · PAD-US 4.1",
                     "visible": false,
-                    "default_filter": ["match", ["get", "Des_Tp"], ["WA"], true, false],
+                    "default_filter": ["all",
+                        ["match", ["get", "Des_Tp"], ["WA"], true, false],
+                        ["match", ["get", "Unit_Nm"], [
+                            "Papahanaumokuakea Marine National Monument",
+                            "Pacific Remote Islands Marine National Monument",
+                            "Alaska Maritime National Wildlife Refuge",
+                            "Aleutian Islands Wilderness Area"
+                        ], false, true]
+                    ],
                     "default_style": {
                         "fill-color": "#6B4E9E",
                         "fill-opacity": 0.45
@@ -314,13 +322,18 @@
                     "alias": "padus-all",
                     "display_name": "All protected areas · PAD-US 4.1",
                     "visible": false,
+                    "default_filter": ["all",
+                        ["match", ["get", "Category"], ["Marine", "Proclamation"], false, true],
+                        ["match", ["get", "Unit_Nm"], [
+                            "Papahanaumokuakea Marine National Monument",
+                            "Pacific Remote Islands Marine National Monument",
+                            "Alaska Maritime National Wildlife Refuge",
+                            "Aleutian Islands Wilderness Area"
+                        ], false, true]
+                    ],
                     "default_style": {
                         "fill-color": "#A38FC7",
                         "fill-opacity": 0.3
-                    },
-                    "outline_style": {
-                        "line-color": "#6B4E9E",
-                        "line-width": 0.3
                     },
                     "legend_type": "categorical",
                     "legend_classes": [

@@ -71,12 +71,29 @@ official inventory. Treat adjacency and buffer-distance results as approximate.
 | `Designated wilderness · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 (released Mar 2025) | Public domain | `pad-us-4.1-combined` |
 | `All protected areas · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
 
-Both are the PAD-US **combined** layer; the wilderness layer is filtered to `Des_Tp = 'WA'` (995
-features, 113.8M ac). DOI [10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS).
+Both are the PAD-US **combined** layer. The wilderness layer is filtered to `Des_Tp = 'WA'` (994
+features, 112.5M ac); the all-protected-areas layer excludes `Category` in `Marine` and
+`Proclamation` (651,784 features, 1.62B ac). DOI
+[10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS).
 
 ⚠️ **PAD-US combined contains overlapping polygons** for the same ground (separate fee, easement,
 proclamation and management rows), so `SUM(GIS_Acres)` over it is meaningless at national scale —
-deduplicate by unit or intersect geometries first.
+deduplicate by unit or intersect geometries first. Unfiltered, the collection sums to 8.68B acres
+across a country with ~2.3B acres of land. `Marine` (2.72B ac) and `Proclamation` (1.68B ac) are
+excluded from the map for this reason: marine monuments dwarf every terrestrial feature, and
+proclamation rows are administrative envelopes that blanket private inholdings rather than protected
+land. Both remain in the parquet and the assistant can query them.
+
+⚠️ **Four units are excluded from both map layers because their geometries wrap the antimeridian.**
+`Papahanaumokuakea Marine National Monument`, `Pacific Remote Islands Marine National Monument`,
+`Alaska Maritime National Wildlife Refuge` and `Aleutian Islands Wilderness Area` are stored with
+unwrapped longitudes — a `bbox` spanning the full −180→180 over a narrow latitude band — so MapLibre
+draws each one as a horizontal stripe across the entire map. 47 features in the collection have this
+defect; the `Marine`/`Proclamation` exclusion removes 35, and these four names remove the remaining
+12. All four are **FWS**-managed, so none of them is a comparison stratum for National Forest System
+roadless area — the exclusion costs this app nothing. It is nonetheless a **workaround**: the fix is
+to split these polygons at ±180 in the PAD-US build, and until that lands the map understates
+Alaska and Pacific protected area. The parquet is unaffected.
 
 ⚠️ **PAD-US carries its own `Des_Tp = 'IRA'` records** (~58.2M ac, close to the USFS 58.4M). It is a
 different rendering of the same inventory, not an independent one — never add it to the USFS roadless
@@ -89,8 +106,8 @@ layer.
 | `Completed treatments, FY2014+ · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
 | `Wildland-urban interface · SILVIS 2020` | SILVIS Lab, UW–Madison | National (census blocks) | 2020 (v4, decades 1990–2020) | CC-BY-4.0 | `silvis-wui-2020` |
-| `Wildfire hazard index · WHP 2023 (CONUS)` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
-| `Wildfire hazard index · WHP 2023 (Alaska)` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
+| `Wildfire hazard index · WHP 2023` → `CONUS` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
+| `Wildfire hazard index · WHP 2023` → `Alaska` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
 | `Wildfire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Prescribed fire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
