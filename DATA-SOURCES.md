@@ -69,31 +69,55 @@ official inventory. Treat adjacency and buffer-distance results as approximate.
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
 | `Designated wilderness · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 (released Mar 2025) | Public domain | `pad-us-4.1-combined` |
-| `All protected areas · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
+| `Wilderness study areas · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
+| `Wild & Scenic Rivers, wild segments · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
 
-Both are the PAD-US **combined** layer. The wilderness layer is filtered to `Des_Tp = 'WA'` (994
-features, 112.5M ac); the all-protected-areas layer excludes `Category` in `Marine` and
-`Proclamation` (651,784 features, 1.62B ac). DOI
-[10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS).
+DOI [10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS). All three are the PAD-US **combined** layer,
+distinguished by `alias` and complementary `Des_Tp` filters on one shared STAC asset.
 
-⚠️ **PAD-US combined contains overlapping polygons** for the same ground (separate fee, easement,
-proclamation and management rows), so `SUM(GIS_Acres)` over it is meaningless at national scale —
-deduplicate by unit or intersect geometries first. Unfiltered, the collection sums to 8.68B acres
-across a country with ~2.3B acres of land. `Marine` (2.72B ac) and `Proclamation` (1.68B ac) are
-excluded from the map for this reason: marine monuments dwarf every terrestrial feature, and
-proclamation rows are administrative envelopes that blanket private inholdings rather than protected
-land. Both remain in the parquet and the assistant can query them.
+**These three strata are the deduction behind the fourth denominator.** DEIS Vol I Table 12 nets
+wilderness, wilderness study areas and Wild & Scenic River *wild* segments out of the ~44.3M NFS
+acres to reach the 40,049,537-acre potentially affected environment — a deduction of **4,250,463
+acres**. Each layer is drawn for all managers, not just USFS, so **no layer is itself the deduction**;
+the USFS-managed subset is the part that can intersect roadless area:
 
-⚠️ **Four units are excluded from both map layers because their geometries wrap the antimeridian.**
-`Papahanaumokuakea Marine National Monument`, `Pacific Remote Islands Marine National Monument`,
-`Alaska Maritime National Wildlife Refuge` and `Aleutian Islands Wilderness Area` are stored with
-unwrapped longitudes — a `bbox` spanning the full −180→180 over a narrow latitude band — so MapLibre
-draws each one as a horizontal stripe across the entire map. 47 features in the collection have this
-defect; the `Marine`/`Proclamation` exclusion removes 35, and these four names remove the remaining
-12. All four are **FWS**-managed, so none of them is a comparison stratum for National Forest System
-roadless area — the exclusion costs this app nothing. It is nonetheless a **workaround**: the fix is
-to split these polygons at ±180 in the PAD-US build, and until that lands the map understates
-Alaska and Pacific protected area. The parquet is unaffected.
+| Layer | `Des_Tp` filter | All managers | USFS-managed |
+|---|---|---:|---:|
+| Designated wilderness | `WA` | 994 feat · 112.5M ac | 475 feat · 37.11M ac |
+| Wilderness study areas | `WSA` | 722 feat · 24.16M ac | 42 feat · 3.40M ac |
+| W&SR wild segments | `WSR` + `Loc_Ds` | 163 feat · 1.36M ac | 91 feat · 0.58M ac |
+
+⚠️ **`Loc_Ds` is what makes the W&SR layer honest.** PAD-US files all Wild & Scenic River records
+under `Des_Tp = 'WSR'` (910 features, 5.3M ac) regardless of classification; only `Loc_Ds`
+distinguishes wild from scenic and recreational, and designated from eligible and suitable. The layer
+filters to `Loc_Ds IN ('Wild', 'Designated - Wild')` because Table 12 deducts **designated** wild
+segments. `Eligible - Wild` (134 feat, 0.25M ac) and `Suitable - Wild` (56 feat, 0.13M ac) are
+deliberately excluded — they are candidates, not designations. Never relabel this layer as all W&SR;
+that would be 4× the acreage and the wrong denominator component.
+
+⚠️ **The combined layer contains overlapping polygons** for the same ground (separate fee, easement,
+proclamation, marine and designation rows), so `SUM(GIS_Acres)` over it is meaningless at national
+scale — unfiltered it totals 8.68B acres across a country with ~2.3B acres of land. Deduplicate by
+unit or intersect geometries first. The three layers above can also overlap each other (a wild river
+segment can run through wilderness), so do not add their acreages.
+
+⚠️ **Four units are excluded from the wilderness layer because their geometries wrap the
+antimeridian.** `Papahanaumokuakea Marine National Monument`, `Pacific Remote Islands Marine National
+Monument`, `Alaska Maritime National Wildlife Refuge` and `Aleutian Islands Wilderness Area` are
+stored with unwrapped longitudes — a `bbox` spanning the full −180→180 over a narrow latitude band —
+so MapLibre draws each one as a horizontal stripe across the entire map. 47 features in `combined`
+have this defect. The `WSA` and `WSR` strata contain **none** of them and carry no exclusion —
+verified, not assumed. All four units are **FWS**-managed, so none is a comparison stratum for
+National Forest System roadless area. It is nonetheless a **workaround**
+([data-workflows#617](https://github.com/boettiger-lab/data-workflows/issues/617)): the fix is to
+split these polygons at ±180 in the PAD-US build, and until that lands the map understates Alaska and
+Pacific protected area. The parquet is unaffected and the assistant can query all of it.
+
+⚠️ **PAD-US `fee` and `easement` are deliberately not mapped here.** `fee` filtered to
+`Mang_Name = 'USFS'` is 193.3M acres in 469 polygons — essentially the whole National Forest System,
+which *contains* every IRA acre rather than distinguishing any of them. `easement` is 98%
+non-federal (62.3M of 63.4M ac), so it is very nearly disjoint from federal NFS roadless area.
+Neither is a comparison stratum for this audit. Both remain queryable via the catalog.
 
 ⚠️ **PAD-US carries its own `Des_Tp = 'IRA'` records** (~58.2M ac, close to the USFS 58.4M). It is a
 different rendering of the same inventory, not an independent one — never add it to the USFS roadless

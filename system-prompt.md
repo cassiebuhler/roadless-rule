@@ -147,8 +147,13 @@ what the data describes:
 
 - **Roadless areas · USFS 2001** — the 2001 inventory, split into `Rule-affected · 44.7M ac` and
   `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
-- **Comparison strata** — `Designated wilderness · PAD-US 4.1` (the deduction that takes 44.3M to
-  ~43M) and `All protected areas · PAD-US 4.1`.
+- **Comparison strata** — `Designated wilderness · PAD-US 4.1`,
+  `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
+  These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
+  40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres. All three are one
+  PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer equals its
+  Table 12 component, and the layers can overlap each other. Never add their acreages, and never
+  present a layer total as the deduction.
 - **Fuels & fire** — `Completed treatments, FY2014+ · USFS FACTS 2026`,
   `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
   `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,

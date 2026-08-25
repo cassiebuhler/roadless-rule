@@ -55,7 +55,7 @@ follows one form — **`what it is · PUBLISHER vintage`** — and legal status 
 | Group | Layers |
 |---|---|
 | **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
-| **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `All protected areas · PAD-US 4.1` |
+| **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
 | **Fuels & fire** | `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildland-urban interface · SILVIS 2020` |
 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
 

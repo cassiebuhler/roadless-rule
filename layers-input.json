@@ -319,30 +319,52 @@
                 },
                 {
                     "id": "combined-pmtiles",
-                    "alias": "padus-all",
-                    "display_name": "All protected areas · PAD-US 4.1",
+                    "alias": "padus-wsa",
+                    "display_name": "Wilderness study areas · PAD-US 4.1",
                     "visible": false,
-                    "default_filter": ["all",
-                        ["match", ["get", "Category"], ["Marine", "Proclamation"], false, true],
-                        ["match", ["get", "Unit_Nm"], [
-                            "Papahanaumokuakea Marine National Monument",
-                            "Pacific Remote Islands Marine National Monument",
-                            "Alaska Maritime National Wildlife Refuge",
-                            "Aleutian Islands Wilderness Area"
-                        ], false, true]
-                    ],
+                    "default_filter": ["match", ["get", "Des_Tp"], ["WSA"], true, false],
                     "default_style": {
                         "fill-color": "#A38FC7",
-                        "fill-opacity": 0.3
+                        "fill-opacity": 0.45
+                    },
+                    "outline_style": {
+                        "line-color": "#6B4E9E",
+                        "line-width": 0.5
                     },
                     "legend_type": "categorical",
                     "legend_classes": [
                         {
-                            "label": "Protected areas (all types)",
+                            "label": "Wilderness study area",
                             "color": "#A38FC7"
                         }
                     ],
-                    "tooltip_fields": ["Unit_Nm", "Des_Tp", "Mang_Name", "GAP_Sts", "GIS_Acres"]
+                    "tooltip_fields": ["Unit_Nm", "Des_Tp", "Loc_Ds", "Mang_Name", "GAP_Sts", "GIS_Acres"]
+                },
+                {
+                    "id": "combined-pmtiles",
+                    "alias": "padus-wsr-wild",
+                    "display_name": "Wild & Scenic Rivers, wild segments · PAD-US 4.1",
+                    "visible": false,
+                    "default_filter": ["all",
+                        ["match", ["get", "Des_Tp"], ["WSR"], true, false],
+                        ["match", ["get", "Loc_Ds"], ["Wild", "Designated - Wild"], true, false]
+                    ],
+                    "default_style": {
+                        "fill-color": "#B07AA1",
+                        "fill-opacity": 0.55
+                    },
+                    "outline_style": {
+                        "line-color": "#8E5A82",
+                        "line-width": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "W&SR wild segment",
+                            "color": "#B07AA1"
+                        }
+                    ],
+                    "tooltip_fields": ["Unit_Nm", "Des_Tp", "Loc_Ds", "Mang_Name", "GAP_Sts", "GIS_Acres"]
                 }
             ]
         },
