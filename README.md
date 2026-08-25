@@ -27,7 +27,7 @@ k8s/                ← Kubernetes deployment (app: roadless-rule)
 AGENTS.md           ← configuration reference for AI coding agents
 ```
 
-## The four denominators
+## The five denominators
 
 This is the thing the app exists for. Agency percentages are computed against the **potentially
 affected environment**, not total roadless acreage:
@@ -38,11 +38,17 @@ affected environment**, not total roadless acreage:
 | **Rule-affected** | **44,701,002** | less Idaho (9,285,370) + Colorado (4,433,322), which have their own state rules |
 | Rule-affected on NFS lands | ~44,300,000 | less ~400k ac of ownership-change slivers |
 | **Potentially affected environment** | **40,049,537** | less designated wilderness, WSAs and Wild & Scenic wild segments — DEIS Vol I Table 12 |
+| **All NFS land** *(a different question)* | **193,174,461** | Forest Service **surface ownership** — the base for "share of Forest Service land" claims, never for "share of roadless area" |
 
 "More than 44 million acres" ✅ and "more than 95% in 10 Western states" ✅ (95.61% of the
 rule-affected base; 73.16% of the all-IRA base) both reconcile against this layer. The Montana
-"nearly 60 percent of Forest Service land" claim does **not** — see
+"nearly 60 percent of Forest Service land" claim does **not**: against Montana surface ownership the
+share is roughly 37%, and no Forest Service extent layer is small enough to yield 60% — see
 [DATA-SOURCES.md](DATA-SOURCES.md).
+
+⚠️ The fifth base is **surface ownership**, not one of the three administrative envelopes the Forest
+Service also publishes (proclaimed 225.1M, administrative 236.8M, ranger districts 237.1M). Those
+enclose inholdings the agency does not own; substituting one inflates the denominator by up to 22.6%.
 
 The 58.4M ↔ 44.7M split has no attribute in the data; it is `STATE NOT IN ('ID','CO')`.
 
@@ -55,9 +61,14 @@ follows one form — **`what it is · PUBLISHER vintage`** — and legal status 
 | Group | Layers |
 |---|---|
 | **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
+| **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
 | **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
 | **Fuels & fire** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Wildland-urban interface · SILVIS 2020` · `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` |
 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
+
+Only `Forest Service ownership` in the NFS extent group is ownership; the other three are
+administrative envelopes, drawn as outlines with no fill so the distinction is visible rather than
+merely documented.
 
 The two roadless layers are one dataset filtered two ways, via the `alias` mechanism — the map opens
 with both on, so the affected area and the untouched Idaho/Colorado comparison group read as a

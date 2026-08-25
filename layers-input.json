@@ -53,7 +53,8 @@
             "How many roadless acres would the proposal affect, and how does that differ from all inventoried roadless acres?",
             "Which states hold the most rule-affected roadless acreage, and what share is in the ten Western states?",
             "How much rule-affected roadless area has a completed Forest Service treatment recorded since FY2014?",
-            "What share of rule-affected roadless area has high or very high wildfire hazard potential, and does that match the agency's >40% claim?"
+            "What share of rule-affected roadless area has high or very high wildfire hazard potential, and does that match the agency's >40% claim?",
+            "Is Montana's roadless area really \"nearly 60 percent of Forest Service land\"? Say which Forest Service extent layer you used."
         ]
     },
     "links": {
@@ -112,6 +113,131 @@
                         }
                     ],
                     "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
+                }
+            ]
+        },
+        {
+            "collection_id": "nfs-surface-ownership",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/nfs-surface-ownership/stac-collection.json",
+            "group": {
+                "name": "National Forest System extent",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "nfs-surface-ownership-pmtiles",
+                    "display_name": "Forest Service ownership, 193.2M ac · USFS 2025",
+                    "visible": false,
+                    "default_filter": ["match", ["get", "OWNERCLASS"], ["USDA FOREST SERVICE"], true, false],
+                    "default_style": {
+                        "fill-color": "#C2A878",
+                        "fill-opacity": 0.35
+                    },
+                    "outline_style": {
+                        "line-color": "#8A7248",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "FS-owned land · 193.2M ac",
+                            "color": "#C2A878"
+                        }
+                    ],
+                    "tooltip_fields": ["OWNERCLASS", "GIS_ACRES", "LANDSTATUS", "REGION"]
+                }
+            ]
+        },
+        {
+            "collection_id": "proclaimed-forest",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/proclaimed-forest/stac-collection.json",
+            "group": {
+                "name": "National Forest System extent",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "proclaimed-forest-pmtiles",
+                    "display_name": "Proclaimed boundary, 225.1M ac · USFS 2025",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#000000",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#B5651D",
+                        "line-width": 1.2
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Proclaimed boundary — not ownership",
+                            "color": "#B5651D"
+                        }
+                    ],
+                    "tooltip_fields": ["FORESTNAME", "GIS_ACRES"]
+                }
+            ]
+        },
+        {
+            "collection_id": "administrative-forest",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/administrative-forest/stac-collection.json",
+            "group": {
+                "name": "National Forest System extent",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "administrative-forest-pmtiles",
+                    "display_name": "Administrative boundary, 236.8M ac · USFS 2025",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#000000",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#7B3F00",
+                        "line-width": 1.2
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Administrative boundary — not ownership",
+                            "color": "#7B3F00"
+                        }
+                    ],
+                    "tooltip_fields": ["FORESTNAME", "REGION", "GIS_ACRES"]
+                }
+            ]
+        },
+        {
+            "collection_id": "ranger-district",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/ranger-district/stac-collection.json",
+            "group": {
+                "name": "National Forest System extent",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "ranger-district-pmtiles",
+                    "display_name": "Ranger districts, 237.1M ac · USFS 2025",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#000000",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#A08C6C",
+                        "line-width": 0.7
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Ranger district — not ownership",
+                            "color": "#A08C6C"
+                        }
+                    ],
+                    "tooltip_fields": ["DISTRICTNA", "FORESTNAME", "REGION", "GIS_ACRES"]
                 }
             ]
         },

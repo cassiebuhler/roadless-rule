@@ -28,7 +28,7 @@ computed against** — treat that as the first thing to establish, not a footnot
   Idaho and Colorado roadless boundaries are separate datasets not included here. Treat ID and CO as
   a **comparison group** — roadless areas the proposal leaves alone — not as part of the affected area.
 
-## ⛔ Four competing denominators — always say which one you used
+## ⛔ Five competing denominators — always say which one you used
 
 This is the single most important thing in this app. The agency's percentages are **not** computed
 against total roadless acreage, and choosing the wrong base changes the answer materially.
@@ -39,6 +39,27 @@ against total roadless acreage, and choosing the wrong base changes the answer m
 | **Rule-affected** | **44,701,002** | All IRAs minus Idaho (9,285,370) and Colorado (4,433,322) — what the proposal would touch |
 | Rule-affected on NFS lands | ~44,300,000 | Less ~400k ac of ownership-change slivers (DEIS Vol I p. 30, fn. 9) |
 | **Potentially affected environment (PAE)** | **40,049,537** | Less designated wilderness (~1.3M), wilderness study areas (~2.8M) and Wild & Scenic wild segments (~85k) — **DEIS Vol I Table 12** |
+| **All NFS land** (a different question) | **193,174,461** | Forest Service *surface ownership* nationally — the base for "share of Forest Service land" claims, not for "share of roadless area" claims |
+
+⚠️ **The fifth base answers a different question and must never be swapped for the first four.**
+The first four are bases of *roadless* acreage; 193.2M is a base of *Forest Service* acreage. Use it
+only when the claim itself is "X percent of Forest Service land."
+
+**When you do use it, use surface ownership — not an administrative boundary.** The Forest Service
+publishes four national extent layers and three of them are envelopes that enclose inholdings the
+agency does not own:
+
+| Layer | Acres | vs ownership |
+|---|---:|---:|
+| **Surface ownership** (`OWNERCLASS = 'USDA FOREST SERVICE'`) | **193,174,461** | — |
+| Proclaimed boundary | 225,145,181 | +31,970,720 |
+| Administrative boundary | 236,835,251 | +43,660,790 (+22.6%) |
+| Ranger districts | 237,098,674 | +43,924,213 |
+
+Substituting the administrative boundary inflates the denominator by 22.6% and deflates any
+"share of NFS land" percentage by about 18% relative. The 193.2M figure is corroborated
+independently — PAD-US 4.1 `fee` filtered to `Mang_Name = 'USFS'` gives 193,275,732, a 0.05%
+difference between two unrelated publishers, and both match the announcement's "193 million."
 
 **Agency percentages in the press release and the DEIS use the ~40.0M PAE base.** Statutory
 designations are excluded because they carry more restrictive and more permanent mandates than the
@@ -147,6 +168,16 @@ what the data describes:
 
 - **Roadless areas · USFS 2001** — the 2001 inventory, split into `Rule-affected · 44.7M ac` and
   `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
+- **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
+  `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
+  `Ranger districts, 237.1M ac · USFS 2025`. Only the first is **ownership**; the other three are
+  administrative envelopes, drawn as outlines with no fill precisely because they are boundaries
+  rather than land. The ownership layer is filtered to `OWNERCLASS = 'USDA FOREST SERVICE'` in the
+  map; the parquet also carries 10,993,819 acres of `NON-FS` inholdings and 130,508 acres of
+  unpartitioned riparian interest, which the assistant can query. **There is no state column** —
+  attributing acreage to a state needs a spatial or hex join (e.g. `census-2024/state`, native h8);
+  a plain `ST_Intersects` sum double-counts, because it credits a parcel's whole acreage to every
+  state it touches.
 - **Comparison strata** — `Designated wilderness · PAD-US 4.1`,
   `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
   These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
@@ -169,14 +200,19 @@ what the data describes:
   14.8M roadless acres) and `Human modification · Theobald 2016`.
 
 **Datasets the claims need that are not here yet.** Say so plainly when a question requires one;
-never improvise a substitute. Pending: NFS RoadCore + TIGER roads (claim 3) · USFS administrative
-forest / proclaimed / surface ownership (the Montana denominator) · LANDFIRE · Insect & Disease
-Survey · Wildfire Risk to Communities · TWIG interagency treatments.
+never improvise a substitute. Pending: NFS RoadCore + TIGER roads (claim 3) · LANDFIRE ·
+Insect & Disease Survey · Wildfire Risk to Communities · TWIG interagency treatments · Mesic
+Analysis Platform · INHABIT invasive plants.
 
 ⚠️ One claim in the announcement — Montana roadless area as "nearly 60 percent of Forest Service
-land" — **does not reconcile.** Montana holds 6,395,401 IRA acres, which would require a
-10,659,001-acre NFS denominator to be 60%, well below Montana's actual NFS acreage. Settling it needs
-the administrative-forest layer, which is pending. Report it as unresolved, not as false.
+land" — **is now testable, and it does not hold.** Montana holds 6,395,401 IRA acres. For that to be
+60% the state's NFS base would have to be about 10,659,001 acres, far below any Montana Forest
+Service figure: measured against Montana surface ownership the share is roughly **37%**, and against
+the proclaimed boundary it is lower still. No choice among the four extent layers produces 60%, so
+the gap is not a denominator ambiguity. Compute it live from the hex assets rather than quoting these
+figures, state which extent layer you used, and report the claim as **not reconciling** — the
+announcement does not publish its method, so say the figure cannot be reproduced rather than
+asserting intent.
 
 ## Working with the FPA-FOD ignition layers
 
