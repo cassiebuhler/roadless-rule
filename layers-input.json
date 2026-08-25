@@ -59,7 +59,7 @@
     },
     "links": {
         "github": "https://github.com/cassiebuhler/roadless-rule",
-        "docs": "https://github.com/cassiebuhler/roadless-rule/blob/main/DATA-SOURCES.md"
+        "docs": "/docs.html"
     },
     "collections": [
         {

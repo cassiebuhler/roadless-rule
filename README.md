@@ -10,8 +10,8 @@ of which there are four, differing by 18 million acres. This app holds the under
 figures can be reproduced rather than taken on trust.
 
 Built on the [geo-agent / GLEN](https://github.com/boettiger-lab/geo-agent) framework. **No
-JavaScript to write** — the map, chat, agent and tools load from CDN; this repo is three config
-files plus deployment manifests.
+JavaScript to write** — the map, chat, agent and tools load from CDN; this repo is config files, a
+static About page, and deployment manifests.
 
 **Live:** <https://roadless-rule.nrp-nautilus.io> · **Framework docs:**
 [boettiger-lab.github.io/geo-agent](https://boettiger-lab.github.io/geo-agent/)
@@ -20,6 +20,7 @@ files plus deployment manifests.
 
 ```
 index.html          ← HTML shell — loads GLEN core (pinned @v3.27.0) + libs from CDN
+docs.html           ← "About" page served at /docs.html — sources, denominators, claims
 layers-input.json   ← datasets, grouping, map view, LLM settings
 system-prompt.md    ← rescission-analyst persona, denominators, guardrails
 DATA-SOURCES.md     ← publisher, coverage, vintage and license for every layer
@@ -75,7 +76,9 @@ with both on, so the affected area and the untouched Idaho/Colorado comparison g
 single picture. Every other group starts collapsed and off.
 
 Full provenance — publisher, coverage, vintage, license, and every caveat that changes a number — is
-in **[DATA-SOURCES.md](DATA-SOURCES.md)**, which the app links as "About" in its footer.
+in **[DATA-SOURCES.md](DATA-SOURCES.md)**. The app's "About" footer link points to
+**[docs.html](docs.html)**, a self-hosted page served at `/docs.html` alongside the map — it is
+derived from DATA-SOURCES.md, so the two must be updated together.
 
 ## Datasets still to come
 
