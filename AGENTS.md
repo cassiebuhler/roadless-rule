@@ -80,6 +80,33 @@ kubectl rollout status  -f k8s/deployment.yaml
 
 Restarting without pushing first serves stale code.
 
+> ⛔ **`rollout restart` never reads `k8s/deployment.yaml`.** It re-runs the Deployment object
+> already in the cluster. If your change touched anything under `k8s/`, you must
+> **`kubectl apply -f k8s/deployment.yaml` first** — apply updates the pod template and rolls
+> automatically, so no separate restart is needed.
+>
+> ```bash
+> git add <files> && git commit -m "<message>" && git push
+> kubectl apply -f k8s/deployment.yaml    # ONLY needed if k8s/ changed — also triggers the rollout
+> kubectl rollout status -f k8s/deployment.yaml
+> ```
+>
+> **This fails silently, and the symptom looks like the app ignoring your change.** Adding a file
+> the init container must copy (`docs.html`, an extra asset) is the usual way to hit it: the pod
+> re-clones and picks up your `layers-input.json` edits, so the config looks deployed — but the
+> in-cluster init container still has the old `cp` list, so the new file never lands in
+> `/usr/share/nginx/html/`. nginx's `try_files $uri $uri/ /index.html` then answers that URL with
+> the SPA shell: **HTTP 200 with the wrong page**, not a 404.
+>
+> Diagnose by size, not status code — a served file the same byte count as `index.html` *is* the
+> fallback:
+>
+> ```bash
+> curl -s -o /dev/null -w '%{http_code} %{size_download}\n' https://<host>/docs.html
+> # Confirm what the cluster is actually running:
+> kubectl get -f k8s/deployment.yaml -o jsonpath='{.spec.template.spec.initContainers[0].command}'
+> ```
+
 ### Private repo (ConfigMap pattern)
 
 When the GitHub repo is private, the pod reads content from a k8s ConfigMap instead of git-cloning. **Never edit `k8s/content-configmap.yaml` directly** — it is generated from source files.
@@ -429,6 +456,12 @@ FACTS-CA rows overlap ours, so a union double-counts USFS treatments.
 - Namespace `schmidtdse`, slug `roadless-rule`, host `roadless-rule.nrp-nautilus.io`.
 - The init container clones `main` at pod start: **push, then**
   `kubectl -n schmidtdse rollout restart deployment/roadless-rule`. Neither step works alone.
+- ⛔ **If you changed `k8s/` — including adding a file to the init container's `cp` list —
+  `rollout restart` is not enough.** Run `kubectl apply -f k8s/deployment.yaml` instead; it rolls
+  on its own. Skipping it serves a 200 with the wrong content, not an error. See
+  *Public repo (k8s git-clone pattern)* above. The four files the init container copies are
+  `index.html`, `docs.html`, `layers-input.json` and `system-prompt.md` — **a new top-level file
+  is invisible in production until it is added there and the manifest is applied.**
 - `kubectl` needs `/home/jovyan/bin` on `PATH` — the kubeconfig's exec credential plugin shells out
   to `kubectl` itself, so a bare invocation fails with "executable kubectl not found".
 - The nginx sidecar config carries two fixes that must not be "cleaned up":
