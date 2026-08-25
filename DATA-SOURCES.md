@@ -89,6 +89,57 @@ layer.
 | `Completed treatments, FY2014+ · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
 | `Wildland-urban interface · SILVIS 2020` | SILVIS Lab, UW–Madison | National (census blocks) | 2020 (v4, decades 1990–2020) | CC-BY-4.0 | `silvis-wui-2020` |
+| `Wildfire hazard index · WHP 2023 (CONUS)` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
+| `Wildfire hazard index · WHP 2023 (Alaska)` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
+| `Wildfire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
+| `Prescribed fire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
+| `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
+| `Burn severity by year · MTBS (Alaska)` | MTBS (USGS / USFS) | **Alaska only** | 36 annual years, 1984–2023 | Public domain | `mtbs-severity-1984-2024-ak` |
+| `Ignitions by cause 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National incl. AK, HI, PR, VI, Guam | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
+| `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
+
+WHP source DOI [10.2737/RDS-2015-0047-4](https://doi.org/10.2737/RDS-2015-0047-4). The two severity
+layers carry a **year selector** rather than one panel entry per year.
+
+⚠️ **WHP is hazard, not risk.** It indexes relative potential for high-intensity fire that would be
+difficult to control. The source metadata states plainly that it is **not** a measure of risk to
+homes, communities or people and does not account for what is exposed. Conflating the two is the
+central framing move in the announcement.
+
+⚠️ **The mapped WHP layer is the continuous index; the classified 1–5 product is SQL-only.** The
+classified rasters carry no colour table upstream, so a map legend for them would be invented rather
+than published — they are available to the assistant through the hex asset, which is where the
+agency-figure reproduction belongs in any case.
+
+⛔ **CONUS and Alaska WHP are separate layers because the classification is domain-relative.** The
+class breaks are percentiles computed *within each domain*, so "Very High" is index > 1,985 in CONUS
+but > 8,912 in Alaska — 4.5× apart. Never pool the classified domains; use the continuous index for
+any CONUS-vs-Alaska comparison. Each layer's colour ramp saturates at its own Very High break, which
+is why the two use different rescale bounds.
+
+⚠️ **Alaska's high/very-high WHP acreage is zero, not missing** — USFS land in Alaska is Tongass and
+Chugach coastal temperate rainforest, at the bottom of the *Alaska* hazard distribution. DEIS Table 22
+labels the cell "Not Available"; the measured answer is 0. See the claims table below.
+
+⚠️ **MTBS perimeters mix fire types, and the two map layers do not sum to the dataset.**
+`Incid_Type` holds `Wildfire` (16,960), `Prescribed Fire` (8,870), `Unknown` (4,689) and
+`Wildland Fire Use` (211) — the last documented nowhere in the source FGDC metadata, which describes
+the field as `WF`/`Rx`/`UNK`. The wildfire layer covers `Wildfire` + `Wildland Fire Use`; the
+prescribed-fire layer covers `Prescribed Fire`; **the 4,689 `Unknown` records appear in neither.**
+
+⚠️ **MTBS severity has two hex assets and they are not interchangeable.** `…-hex` gives the dominant
+class per cell (winner-take-all); `…-hex-fractions` gives each class's fractional coverage via a
+`frac` column. Area and share questions need the fractions asset. Classes 5 (Increased Greenness) and
+6 (Non-Processing Area Mask) are not severity levels; exclude them, and class 0 (Background), from any
+severity denominator.
+
+⚠️ **Severity is not a complete annual record.** Six source mosaics are permanently unavailable
+upstream — CONUS **2004** and **2017**, Alaska **1987, 1995, 2001, 2013** — and Alaska has no 2024.
+A missing year means *not mapped*, never "nothing burned". Perimeters cover all 41 years.
+
+⚠️ **Reburn makes "acres burned" ambiguous.** 45,128,351 H3 cells burned at least once, against
+57,552,314 (fire, cell) pairs — cumulative fire-years exceed unique ground by **27.5%**, and one cell
+burned 19 times. Any total must say which it means.
 
 ⚠️ **The FACTS layer is not "hazardous fuels treatments."** It is filtered to
 `FISCAL_YEAR_COMPLETED >= 2014` across **all** completed activity types. The agency's 5% claim uses an
@@ -103,6 +154,31 @@ use in area summaries.
 ⚠️ **This is the SILVIS WUI, not the HFRA WUI** the Draft EIS uses for its 9.8M-acre figure — different
 definitions, not interchangeable. `WUIFLAG2020`: `0` non-WUI, `1` intermix, `2` interface; the map is
 filtered to `> 0`.
+
+FPA-FOD source DOI [10.2737/RDS-2013-0009.7](https://doi.org/10.2737/RDS-2013-0009.7) —
+2,661,383 ignition points. Both layers colour by `NWCG_CAUSE_CLASSIFICATION`; the large-fire layer is
+filtered to `FIRE_SIZE_CLASS IN ('F','G')`.
+
+⛔ **FPA-FOD owns ignition counts; MTBS does not.** MTBS maps burned area above a size threshold and
+undercounts ignitions badly, since most fires never reach it. The two join per fire on `MTBS_ID`.
+
+⚠️ **The cause mix inside roadless areas inverts the national pattern.** Nationally: 2,034,178 human
+ignitions (76.4%) vs 356,409 natural (13.4%). Inside rule-affected roadless areas: **18,166 natural
+(71.6%) vs 6,697 human (26.4%)**. Nationally, natural ignitions are also likelier to become large
+fires — 8,201 reached ≥1,000 acres against 6,999 human-caused. State the base with either figure.
+
+⚠️ **Point precision has a ~1 km floor.** Many records are geolocated from PLSS descriptions, so any
+distance band below about a kilometre is not defensible — including the 0.5-mile (~800 m) buffer the
+roads claim uses. FPA-FOD is adjacent to claim 3 but cannot substitute for the roads layer. `FPA_ID`
+is the available precision proxy.
+
+⚠️ **`NWCG_GENERAL_CAUSE` carries no upstream domain** — its 13 values were enumerated from the
+ingested data, not from documentation. The `Missing data/not specified/undetermined` bucket is large
+(270,796 records) and belongs to neither cause. `OWNER_DESCR` holds both `PRIVATE` and `Private`;
+compare case-insensitively.
+
+⚠️ **This is the 7th edition, not the 6th plus four years.** It backfills previously underrepresented
+states and territories, so pre-2021 counts differ from figures quoted off the 1992–2020 edition.
 
 ### Land cover & modification
 
@@ -123,6 +199,13 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 The rulemaking under audit: **91 FR 53827** (published 2026-08-20), RIN **0596-AD66**, docket
 **FS-2025-0001**, action *remove and reserve 36 CFR part 294, subpart B*. **Comments close
 2026-09-21.** Notice of intent: 90 FR 42179 (2025-08-29).
+
+Every DEIS table and page number cited below is traceable to a fixed copy: the Federal Register
+notice, Draft EIS Volume I and Economic Analysis were captured on the publication date under
+[`catalog/usfs/roadless-rule-2026/`](https://github.com/boettiger-lab/data-workflows/tree/main/catalog/usfs/roadless-rule-2026) in
+`data-workflows`, with `sources.tsv` and `fetch-sources.sh` recording where each came from. Note that
+`docs/pi-2026-16965.pdf` is the **public-inspection** version, captured before it rotated out of
+circulation — that copy is the only one.
 
 ⛔ **eCFR returns the wrong regulation.** The printed text of 36 CFR §§ 294.10–294.18 is the **2005
 State Petitions Rule**. The 2001 Roadless Rule — the version in effect — must be read from
@@ -156,7 +239,7 @@ contains none of them, and the Draft EIS supplies the methods.
 
 | Claim | Agency method | Testable here? |
 |---|---|---|
-| ">40% high or very high wildfire hazard potential" | 11,479,564 ac (DEIS Vol I Table 22) ÷ PAE — **41.8% excluding Alaska**, 28.7% including it. WHP has no Alaska coverage; ">40%" is the excluding-Alaska figure. | ❌ needs WHP (pending) |
+| ">40% high or very high wildfire hazard potential" | 11,479,564 ac (DEIS Vol I Table 22) ÷ PAE — **41.8% excluding Alaska**, 28.7% including it. Non-burnable and water are **in** the denominator; total acres, not forested. | ✅ **WHP 2023 is now in the app.** Compute from the hex, not COG pixels; keep CONUS and Alaska classified domains separate. Alaska's high/very-high acreage is **0**, so Table 22 is internally consistent — the flaw is labelling that cell "Not Available" rather than "0", which hides that dropping Alaska is what lifts 28.7% to 41.8%. |
 | "only 5% received hazardous fuels treatments since 2014" | FACTS, *completed*, **fiscal** years 2014–2024, ÷ PAE (DEIS Vol I p. 94). **Activity codes never disclosed**, nor whether overlapping records were dissolved or summed. | ⚠️ partially — code choice is yours to publish |
 | "more than a quarter — 11.3M ac — already near existing roads" | Within **0.5 mi either side** of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives **13.3M / 30.8%** against the 44.7M base. | ❌ needs the roads layer (pending) |
 
@@ -183,15 +266,14 @@ added here as each lands.
 | Issue | Dataset | Why it matters |
 |---|---|---|
 | [#585](https://github.com/boettiger-lab/data-workflows/issues/585) | USFS administrative forest / proclaimed / surface ownership + ranger districts | The NFS denominators; settles the Montana claim |
-| [#586](https://github.com/boettiger-lab/data-workflows/issues/586) | Wildfire Hazard Potential v2023, 270 m | Claim 1 |
-| [#587](https://github.com/boettiger-lab/data-workflows/issues/587) | FPA-FOD wildfire occurrence 1992–2020 | Ignition history |
 | [#588](https://github.com/boettiger-lab/data-workflows/issues/588) | USFS RoadCore + Census TIGER roads | Claim 3 |
-| [#589](https://github.com/boettiger-lab/data-workflows/issues/589) | FR proposed rule + Draft EIS methods capture | The methods this page cites |
 | [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | Forest mask, condition class |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |
 | [#592](https://github.com/boettiger-lab/data-workflows/issues/592) | Wildfire Risk to Communities v2 | Exposure |
-| [#593](https://github.com/boettiger-lab/data-workflows/issues/593) | MTBS perimeters + burn severity 1984–2024 | Severity, reburn |
 | [#603](https://github.com/boettiger-lab/data-workflows/issues/603) | TWIG interagency fuel treatments + intersections | Interagency treatment record |
+| [#609](https://github.com/boettiger-lab/data-workflows/issues/609) | Mesic Analysis Platform — 30 m mesic persistence, valley bottoms | Water-resource condition |
+| [#610](https://github.com/boettiger-lab/data-workflows/issues/610) | USGS INHABIT v4 — fire-promoting invasive plants | Invasion-driven fire risk |
+| [#611](https://github.com/boettiger-lab/data-workflows/issues/611) | Wildfire Risk to Communities v2 — populated areas | Exposure, populated-area basis |
 
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `copernicus-glo90` (slope), `usgs-wbd-hu12` (watersheds), `census-2024-*` (states, counties,
