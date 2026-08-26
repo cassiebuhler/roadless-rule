@@ -51,8 +51,9 @@
         "message": "The USDA has proposed rescinding the 2001 Roadless Area Conservation Rule, and quoted several figures in support of it. This map holds the underlying data so you can check them yourself. Every percentage depends on which acreage base it is computed against — ask, and the assistant will say which one it used. See \"About\" below for sources and the four competing denominators. Try asking:",
         "examples": [
             "How many roadless acres would the proposal affect, and how does that differ from all inventoried roadless acres?",
+            "How much rule-affected roadless area is within half a mile of an existing road? Show the answer with and without the closed maintenance-level-1 roads.",
+            "Map ignition density inside rule-affected roadless areas, and say whether you counted all ignitions or normalised by area.",
             "Which states hold the most rule-affected roadless acreage, and what share is in the ten Western states?",
-            "How much rule-affected roadless area has a completed Forest Service treatment recorded since FY2014?",
             "What share of rule-affected roadless area has high or very high wildfire hazard potential, and does that match the agency's >40% claim?",
             "Is Montana's roadless area really \"nearly 60 percent of Forest Service land\"? Say which Forest Service extent layer you used."
         ]
@@ -95,7 +96,7 @@
                     "alias": "ira-idaho-colorado",
                     "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded",
                     "group": "Roadless areas · USFS 2001",
-                    "visible": true,
+                    "visible": false,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],
                     "default_style": {
                         "fill-color": "#7A8FA6",
@@ -113,6 +114,138 @@
                         }
                     ],
                     "tooltip_fields": ["NAME", "STATE", "FOREST", "ACRES", "CATEGORY"]
+                }
+            ]
+        },
+        {
+            "collection_id": "roadcore-fs",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json",
+            "group": {
+                "name": "Roads & access",
+                "collapsed": false
+            },
+            "assets": [
+                {
+                    "id": "roadcore-fs-pmtiles",
+                    "alias": "nfs-roads-open",
+                    "display_name": "NFS roads open to vehicles, 263,807 mi · USFS 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "OPER_MAINT_LEVEL"], ["2 - HIGH CLEARANCE VEHICLES", "3 - SUITABLE FOR PASSENGER CARS", "4 - MODERATE DEGREE OF USER COMFORT", "5 - HIGH DEGREE OF USER COMFORT"], true, false],
+                    "default_style": {
+                        "line-color": "#2B2B2B",
+                        "line-width": 0.7,
+                        "line-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Open to motor vehicles (ML 2–5) · 263,807 mi",
+                            "color": "#2B2B2B"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "ID", "OPER_MAINT_LEVEL", "SURFACE_TYPE", "SEG_LENGTH", "OPENFORUSETO"]
+                },
+                {
+                    "id": "roadcore-fs-pmtiles",
+                    "alias": "nfs-roads-ml1-closed",
+                    "display_name": "NFS roads closed & stored (ML1), 103,945 mi · USFS 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "OPER_MAINT_LEVEL"], ["1 - BASIC CUSTODIAL CARE (CLOSED)"], true, false],
+                    "default_style": {
+                        "line-color": "#9A9A9A",
+                        "line-width": 0.6,
+                        "line-opacity": 0.8,
+                        "line-dasharray": [2, 2]
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Closed & in storage (ML1) · 103,945 mi — 28.2% of the system",
+                            "color": "#9A9A9A"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "ID", "OPER_MAINT_LEVEL", "SURFACE_TYPE", "SEG_LENGTH", "OPENFORUSETO"]
+                }
+            ]
+        },
+        {
+            "collection_id": "fpa-fod-1992-2024",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
+            "group": {
+                "name": "Ignitions · FPA-FOD 1992–2024",
+                "collapsed": false
+            },
+            "assets": [
+                {
+                    "id": "fpa-fod-1992-2024-pmtiles",
+                    "alias": "fpa-fod-all",
+                    "display_name": "Ignitions by cause 1992–2024 · FPA-FOD",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
+                            "Human", "#D64545",
+                            "Natural", "#3B6BA5",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": 2.5,
+                        "circle-opacity": 0.55
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Human-caused ignition",
+                            "color": "#D64545"
+                        },
+                        {
+                            "label": "Natural (lightning) ignition",
+                            "color": "#3B6BA5"
+                        },
+                        {
+                            "label": "Cause undetermined / not specified",
+                            "color": "#9E9E9E"
+                        }
+                    ],
+                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
+                },
+                {
+                    "id": "fpa-fod-1992-2024-pmtiles",
+                    "alias": "fpa-fod-large",
+                    "display_name": "Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_filter": ["match", ["get", "FIRE_SIZE_CLASS"], ["F", "G"], true, false],
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
+                            "Human", "#D64545",
+                            "Natural", "#3B6BA5",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": 5,
+                        "circle-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Human-caused, reached ≥1,000 ac",
+                            "color": "#D64545"
+                        },
+                        {
+                            "label": "Natural (lightning), reached ≥1,000 ac",
+                            "color": "#3B6BA5"
+                        },
+                        {
+                            "label": "Cause undetermined, reached ≥1,000 ac",
+                            "color": "#9E9E9E"
+                        }
+                    ],
+                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
                 }
             ]
         },
@@ -405,6 +538,167 @@
             ]
         },
         {
+            "collection_id": "mtbs-perimeters-1984-2024",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json",
+            "group": {
+                "name": "Fuels & fire",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "mtbs-perimeters-1984-2024-pmtiles",
+                    "alias": "mtbs-wildfire",
+                    "display_name": "Wildfire perimeters 1984–2024 · MTBS",
+                    "visible": false,
+                    "default_filter": ["match", ["get", "Incid_Type"], ["Wildfire", "Wildland Fire Use"], true, false],
+                    "default_style": {
+                        "fill-color": "#B03A2E",
+                        "fill-opacity": 0.35
+                    },
+                    "outline_style": {
+                        "line-color": "#7B241C",
+                        "line-width": 0.4
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Wildfire / wildland fire use perimeter",
+                            "color": "#B03A2E"
+                        }
+                    ],
+                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
+                },
+                {
+                    "id": "mtbs-perimeters-1984-2024-pmtiles",
+                    "alias": "mtbs-rxfire",
+                    "display_name": "Prescribed fire perimeters 1984–2024 · MTBS",
+                    "visible": false,
+                    "default_filter": ["match", ["get", "Incid_Type"], ["Prescribed Fire"], true, false],
+                    "default_style": {
+                        "fill-color": "#2E86AB",
+                        "fill-opacity": 0.4
+                    },
+                    "outline_style": {
+                        "line-color": "#1B5A75",
+                        "line-width": 0.4
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Prescribed fire perimeter",
+                            "color": "#2E86AB"
+                        }
+                    ],
+                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
+                }
+            ]
+        },
+        {
+            "collection_id": "facts-common-attributes-2026-06",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json",
+            "group": {
+                "name": "Fuels & fire",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "common-attributes-2026-06-pmtiles",
+                    "display_name": "Completed treatments, FY2014+ · USFS FACTS 2026",
+                    "visible": false,
+                    "default_filter": [
+                        "all",
+                        ["!=", ["get", "FISCAL_YEAR_COMPLETED"], null],
+                        [">=", ["get", "FISCAL_YEAR_COMPLETED"], 2014]
+                    ],
+                    "default_style": {
+                        "fill-color": "#E08A2E",
+                        "fill-opacity": 0.7
+                    },
+                    "outline_style": {
+                        "line-color": "#A85F13",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Completed treatment, FY2014+",
+                            "color": "#E08A2E"
+                        }
+                    ],
+                    "tooltip_fields": ["ACTIVITY", "FISCAL_YEAR_COMPLETED", "GIS_ACRES", "ADMIN_FOREST", "NFPORS_CATEGORY"]
+                }
+            ]
+        },
+        {
+            "collection_id": "usgs-fires-2021-combined",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json",
+            "group": {
+                "name": "Fuels & fire",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "combined-pmtiles",
+                    "display_name": "Fire perimeters 1835–2020 · USGS 2021",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#C0392B",
+                        "fill-opacity": 0.35
+                    },
+                    "outline_style": {
+                        "line-color": "#8C2419",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Fire perimeter (1835–2020)",
+                            "color": "#C0392B"
+                        }
+                    ],
+                    "tooltip_fields": ["Listed_Fire_Names", "Fire_Year", "Assigned_Fire_Type", "GIS_Acres"]
+                }
+            ]
+        },
+        {
+            "collection_id": "silvis-wui-2020",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-wui/stac-collection.json",
+            "group": {
+                "name": "Fuels & fire",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "wui-2020-pmtiles",
+                    "display_name": "Wildland-urban interface · SILVIS 2020",
+                    "visible": false,
+                    "default_filter": [">", ["get", "WUIFLAG2020"], 0],
+                    "default_style": {
+                        "fill-color": [
+                            "match",
+                            ["get", "WUIFLAG2020"],
+                            1, "#C99A5B",
+                            2, "#8C4A2F",
+                            "#CCCCCC"
+                        ],
+                        "fill-opacity": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Intermix (housing among wildland vegetation)",
+                            "color": "#C99A5B"
+                        },
+                        {
+                            "label": "Interface (housing adjacent to wildland vegetation)",
+                            "color": "#8C4A2F"
+                        }
+                    ],
+                    "tooltip_fields": ["WUICLASS2020", "STATE", "HU2020", "POP2020", "VEG2019PC"]
+                }
+            ]
+        },
+        {
             "collection_id": "pad-us-4.1-combined",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json",
             "group": {
@@ -495,163 +789,42 @@
             ]
         },
         {
-            "collection_id": "facts-common-attributes-2026-06",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json",
+            "collection_id": "landfire-2024-vcc",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
             "group": {
-                "name": "Fuels & fire",
+                "name": "Vegetation condition · LANDFIRE 2024",
                 "collapsed": true
             },
             "assets": [
                 {
-                    "id": "common-attributes-2026-06-pmtiles",
-                    "display_name": "Completed treatments, FY2014+ · USFS FACTS 2026",
+                    "id": "vcc-cog",
+                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
                     "visible": false,
-                    "default_filter": [
-                        "all",
-                        ["!=", ["get", "FISCAL_YEAR_COMPLETED"], null],
-                        [">=", ["get", "FISCAL_YEAR_COMPLETED"], 2014]
-                    ],
-                    "default_style": {
-                        "fill-color": "#E08A2E",
-                        "fill-opacity": 0.7
-                    },
-                    "outline_style": {
-                        "line-color": "#A85F13",
-                        "line-width": 0.3
-                    },
                     "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Completed treatment, FY2014+",
-                            "color": "#E08A2E"
-                        }
-                    ],
-                    "tooltip_fields": ["ACTIVITY", "FISCAL_YEAR_COMPLETED", "GIS_ACRES", "ADMIN_FOREST", "NFPORS_CATEGORY"]
+                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    }
                 }
             ]
         },
         {
-            "collection_id": "usgs-fires-2021-combined",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json",
+            "collection_id": "landfire-2024-evt",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-evt/stac-collection.json",
             "group": {
-                "name": "Fuels & fire",
+                "name": "Vegetation condition · LANDFIRE 2024",
                 "collapsed": true
             },
             "assets": [
                 {
-                    "id": "combined-pmtiles",
-                    "display_name": "Fire perimeters 1835–2020 · USGS 2021",
+                    "id": "evt-cog",
+                    "display_name": "Existing vegetation type · LANDFIRE 2024 (CONUS only)",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#C0392B",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#8C2419",
-                        "line-width": 0.3
-                    },
                     "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Fire perimeter (1835–2020)",
-                            "color": "#C0392B"
-                        }
-                    ],
-                    "tooltip_fields": ["Listed_Fire_Names", "Fire_Year", "Assigned_Fire_Type", "GIS_Acres"]
-                }
-            ]
-        },
-        {
-            "collection_id": "mtbs-perimeters-1984-2024",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "mtbs-perimeters-1984-2024-pmtiles",
-                    "alias": "mtbs-wildfire",
-                    "display_name": "Wildfire perimeters 1984–2024 · MTBS",
-                    "visible": false,
-                    "default_filter": ["match", ["get", "Incid_Type"], ["Wildfire", "Wildland Fire Use"], true, false],
+                    "legend_label": "LANDFIRE existing vegetation type — 832 classes, official LANDFIRE palette",
                     "default_style": {
-                        "fill-color": "#B03A2E",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#7B241C",
-                        "line-width": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Wildfire / wildland fire use perimeter",
-                            "color": "#B03A2E"
-                        }
-                    ],
-                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
-                },
-                {
-                    "id": "mtbs-perimeters-1984-2024-pmtiles",
-                    "alias": "mtbs-rxfire",
-                    "display_name": "Prescribed fire perimeters 1984–2024 · MTBS",
-                    "visible": false,
-                    "default_filter": ["match", ["get", "Incid_Type"], ["Prescribed Fire"], true, false],
-                    "default_style": {
-                        "fill-color": "#2E86AB",
-                        "fill-opacity": 0.4
-                    },
-                    "outline_style": {
-                        "line-color": "#1B5A75",
-                        "line-width": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Prescribed fire perimeter",
-                            "color": "#2E86AB"
-                        }
-                    ],
-                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
-                }
-            ]
-        },
-        {
-            "collection_id": "silvis-wui-2020",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-wui/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "wui-2020-pmtiles",
-                    "display_name": "Wildland-urban interface · SILVIS 2020",
-                    "visible": false,
-                    "default_filter": [">", ["get", "WUIFLAG2020"], 0],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            ["get", "WUIFLAG2020"],
-                            1, "#C99A5B",
-                            2, "#8C4A2F",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Intermix (housing among wildland vegetation)",
-                            "color": "#C99A5B"
-                        },
-                        {
-                            "label": "Interface (housing adjacent to wildland vegetation)",
-                            "color": "#8C4A2F"
-                        }
-                    ],
-                    "tooltip_fields": ["WUICLASS2020", "STATE", "HU2020", "POP2020", "VEG2019PC"]
+                        "raster-opacity": 0.8
+                    }
                 }
             ]
         },
@@ -687,85 +860,6 @@
                     "colormap": "magma",
                     "rescale": "0,1",
                     "legend_label": "Human modification index (0 = none, 1 = fully modified)"
-                }
-            ]
-        },
-        {
-            "collection_id": "fpa-fod-1992-2024",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "fpa-fod-1992-2024-pmtiles",
-                    "alias": "fpa-fod-all",
-                    "display_name": "Ignitions by cause 1992–2024 · FPA-FOD",
-                    "visible": false,
-                    "layer_type": "circle",
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
-                            "Human", "#D64545",
-                            "Natural", "#3B6BA5",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": 2.5,
-                        "circle-opacity": 0.55
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Human-caused ignition",
-                            "color": "#D64545"
-                        },
-                        {
-                            "label": "Natural (lightning) ignition",
-                            "color": "#3B6BA5"
-                        },
-                        {
-                            "label": "Cause undetermined / not specified",
-                            "color": "#9E9E9E"
-                        }
-                    ],
-                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
-                },
-                {
-                    "id": "fpa-fod-1992-2024-pmtiles",
-                    "alias": "fpa-fod-large",
-                    "display_name": "Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD",
-                    "visible": false,
-                    "layer_type": "circle",
-                    "default_filter": ["match", ["get", "FIRE_SIZE_CLASS"], ["F", "G"], true, false],
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
-                            "Human", "#D64545",
-                            "Natural", "#3B6BA5",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": 5,
-                        "circle-opacity": 0.85
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Human-caused, reached ≥1,000 ac",
-                            "color": "#D64545"
-                        },
-                        {
-                            "label": "Natural (lightning), reached ≥1,000 ac",
-                            "color": "#3B6BA5"
-                        },
-                        {
-                            "label": "Cause undetermined, reached ≥1,000 ac",
-                            "color": "#9E9E9E"
-                        }
-                    ],
-                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
                 }
             ]
         }
