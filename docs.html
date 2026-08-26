@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Roadless Rule 2026 Rescission Proposal</title>
+<title>Data &amp; Methods — Roadless Rule 2026 Rescission Proposal</title>
 <style>
 :root {
     --ink: #1a2e1f;
@@ -226,7 +226,7 @@ li { margin: 0.25rem 0; }
         <h1>Roadless Rule: 2026 Rescission Proposal
             <span class="badge">proposed &middot; not enacted</span>
         </h1>
-        <p class="tag">An interactive map and data assistant for checking the figures behind USDA's proposal to rescind the 2001 Roadless Area Conservation Rule. Five different acreage bases are in circulation, so every percentage here names the one it uses.</p>
+        <p class="tag">Data sources and methods for the map and data assistant covering the 2001 Roadless Area Conservation Rule and USDA's 2026 rescission proposal. Roadless acreage is reported against several different bases, so every percentage here names the one it uses.</p>
         <a href="/" class="cta">&larr; Open the map</a>
     </div>
 </header>
@@ -234,8 +234,8 @@ li { margin: 0.25rem 0; }
 <main>
 
 <section>
-    <h2>What this app audits</h2>
-    <p class="lede">On 2026-08-20 the USDA Forest Service published a proposed rule to <em>remove and reserve</em> 36 CFR part 294, subpart B, the 2001 Roadless Area Conservation Rule. The announcement quotes several figures in support. This app holds the underlying public datasets so those figures can be reproduced.</p>
+    <h2>About this data</h2>
+    <p class="lede">On 2026-08-20 the USDA Forest Service published a proposed rule to <em>remove and reserve</em> 36 CFR part 294, subpart B, the 2001 Roadless Area Conservation Rule. This app holds the public datasets referenced by that rulemaking, so figures drawn from them can be recomputed directly.</p>
 
     <div class="table-wrap">
     <table>
@@ -262,8 +262,8 @@ li { margin: 0.25rem 0; }
 </section>
 
 <section>
-    <h2>The five denominators</h2>
-    <p>The percentages in the press release and Draft EIS are computed against the <strong>potentially affected environment</strong>, not against total roadless acreage. The two differ by more than 18 million acres.</p>
+    <h2>Acreage bases</h2>
+    <p>Roadless acreage appears in the Draft EIS against several different bases. The largest, all inventoried roadless area, and the smallest, the <strong>potentially affected environment</strong>, differ by more than 18 million acres, so any percentage depends on which is used as the denominator. The derivation below is DEIS Vol I Table 12 and its footnotes.</p>
 
     <div class="table-wrap">
     <table>
@@ -273,7 +273,7 @@ li { margin: 0.25rem 0; }
         <tbody>
             <tr><td>All inventoried roadless areas (IRA)</td><td class="num">58,419,694</td><td>Roadless areas layer, 11,391 polygons</td></tr>
             <tr><td>&minus; Idaho (9,285,370) + Colorado (4,433,322)</td><td class="num">&minus;13,718,692</td><td>Same layer, <code>STATE IN ('ID','CO')</code></td></tr>
-            <tr class="key"><td>= rule-affected</td><td class="num">44,701,002</td><td>Matches &ldquo;more than 44 million acres&rdquo;</td></tr>
+            <tr class="key"><td>= rule-affected</td><td class="num">44,701,002</td><td>The base excluding state-rule acreage</td></tr>
             <tr><td>&minus; not on National Forest System lands</td><td class="num">&minus;400,000</td><td>DEIS Vol I p. 30, fn. 9</td></tr>
             <tr><td>= on NFS lands</td><td class="num">44,300,000</td><td></td></tr>
             <tr><td>&minus; designated wilderness</td><td class="num">&minus;1,300,000</td><td>DEIS Vol I fn. 14</td></tr>
@@ -285,53 +285,15 @@ li { margin: 0.25rem 0; }
     </div>
 
     <div class="callout">
-        <p><strong>Why the base matters.</strong> The ten Western states (AK, AZ, CA, MT, NV, NM, OR, UT, WA, WY) hold <strong>95.61%</strong> of the rule-affected base and <strong>73.16%</strong> of the all-IRA base. The &ldquo;more than 95 percent&rdquo; claim holds against the first and not the second. Ask the assistant for any percentage and it will report which base it used.</p>
+        <p><strong>The base changes the answer.</strong> The ten Western states (AK, AZ, CA, MT, NV, NM, OR, UT, WA, WY) hold <strong>95.61%</strong> of the rule-affected base and <strong>73.16%</strong> of the all-IRA base. The same geography yields either figure depending on the denominator. The assistant reports which base it used with any percentage it computes.</p>
     </div>
 
     <h3>A fifth base, answering a different question</h3>
-    <p>All four steps above are bases of <em>roadless</em> acreage. A claim of the form &ldquo;X percent of <strong>Forest Service land</strong>&rdquo; is measured instead against Forest Service surface ownership, <strong>193,174,461 acres</strong> nationally, and should not be substituted into the ladder above.</p>
+    <p>All four steps above are bases of <em>roadless</em> acreage. A percentage of <strong>Forest Service land</strong> is measured instead against Forest Service surface ownership, <strong>193,174,461 acres</strong> nationally, which is a different quantity and does not belong in the ladder above.</p>
 
     <div class="callout warn">
         <p><strong>Surface ownership is not an administrative envelope.</strong> The Forest Service also publishes three boundary datasets that are not ownership: proclaimed forest (225.1M ac), administrative forest (236.8M ac) and ranger districts (237.1M ac). These enclose inholdings and private, state and other-federal parcels the agency does not own. Substituting one inflates the denominator by up to 22.6%. On the map all three are drawn as outlines with no fill.</p>
-        <p>PAD-US 4.1 <code>fee</code> filtered to <code>Mang_Name = 'USFS'</code> gives 193,275,732 acres, 0.05% from the USFS figure and consistent with the announcement's &ldquo;193 million.&rdquo;</p>
-    </div>
-</section>
-
-<section>
-    <h2>The three headline claims</h2>
-    <p>All three are press-release claims attributed to Chief Tom Schultz. The Federal Register preamble contains none of them; the Draft EIS supplies the methods.</p>
-
-    <div class="table-wrap">
-    <table>
-        <thead>
-            <tr><th>Claim</th><th>Agency method</th><th>Status here</th></tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>&ldquo;More than 40% has high or very high wildfire hazard potential&rdquo;</strong></td>
-                <td>11,479,564 ac (DEIS Vol I Table 22) &divide; PAE. Non-burnable and water are in the denominator; total acres, not forested acres.</td>
-                <td><strong>Testable.</strong> 41.8% excluding Alaska, <strong>28.7% including it.</strong> Alaska's high/very-high acreage measures 0, so Table 22 is internally consistent. Labelling that cell &ldquo;Not Available&rdquo; rather than &ldquo;0&rdquo; obscures that excluding Alaska is what raises 28.7% to 41.8%.</td>
-            </tr>
-            <tr>
-                <td><strong>&ldquo;Only 5% received hazardous fuels treatments since 2014&rdquo;</strong></td>
-                <td>FACTS, <em>completed</em>, fiscal years 2014&ndash;2024, &divide; PAE (DEIS Vol I p. 94).</td>
-                <td><strong>Partially.</strong> The activity codes are not disclosed, nor whether overlapping records were dissolved or summed. Reproducing the figure means choosing codes yourself and stating them.</td>
-            </tr>
-            <tr>
-                <td><strong>&ldquo;More than a quarter, 11.3M ac, is already near existing roads&rdquo;</strong></td>
-                <td>Within 0.5 mi either side of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's Economic Analysis gives <strong>13.3M / 30.8%</strong> against the 44.7M base.</td>
-                <td><strong>Testable in the assistant, not on the map.</strong> Both road datasets are present: the Forest Service half is mapped, the Census TIGER half is query-only. 28.2% of the Forest Service road system is closed and in storage, so ask for the result broken out by maintenance level.</td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>The Montana figure does not reconcile against any base.</strong> The announcement calls Montana roadless area &ldquo;nearly 60 percent of Forest Service land.&rdquo; Montana holds 6,395,401 IRA acres, so 60% implies an NFS base near 10,659,001 acres. No Forest Service extent layer is that small: against Montana surface ownership the share is roughly <strong>37%</strong>, and against the proclaimed boundary it is lower. The announcement publishes no method, so the figure cannot be reproduced here. That is not the same as showing it to be wrong.</p>
-    </div>
-
-    <div class="callout">
-        <p><strong>The rule does not prohibit fuels work.</strong> &sect; 294.13(b)(1)(ii) of the 2001 rule permits cutting small-diameter timber &ldquo;to maintain or restore the characteristics of ecosystem composition and structure, such as to reduce the risk of uncharacteristic wildfire effects.&rdquo; The Draft EIS states that the rule &ldquo;does not prohibit and has not entirely prevented hazardous fuels reduction in IRAs&rdquo; and that &ldquo;there are no prohibitions on the use of prescribed fire.&rdquo; The agency's argument concerns frequency and administrative friction. The DEIS also cites Healey (2020), which reaches a different conclusion from comparable agency data.</p>
+        <p>PAD-US 4.1 <code>fee</code> filtered to <code>Mang_Name = 'USFS'</code> gives 193,275,732 acres, within 0.05% of the USFS figure from an unrelated publisher.</p>
     </div>
 </section>
 
@@ -347,8 +309,8 @@ li { margin: 0.25rem 0; }
     <h2>Working with the data assistant</h2>
     <p>Transparency, CSV export, layer filters and cross-dataset queries are all available by asking in plain language:</p>
     <ul>
-        <li><strong>Any percentage, with its base named:</strong> <em>&ldquo;What share of rule-affected roadless area has high or very high wildfire hazard, and does that match the agency's &gt;40% claim?&rdquo;</em></li>
-        <li><strong>Reproduce a claim:</strong> <em>&ldquo;Is Montana's roadless area really nearly 60 percent of Forest Service land? Say which extent layer you used.&rdquo;</em></li>
+        <li><strong>Any percentage, with its base named:</strong> <em>&ldquo;What share of rule-affected roadless area has high or very high wildfire hazard?&rdquo;</em></li>
+        <li><strong>Compare against a specific base:</strong> <em>&ldquo;What percent of Forest Service land in Montana is roadless? Say which extent layer you used.&rdquo;</em></li>
         <li><strong>Show, hide, filter and restyle layers:</strong> <em>&ldquo;Make the rule-affected layer 50% transparent&rdquo;</em>, <em>&ldquo;show only fires after 2015.&rdquo;</em></li>
         <li><strong>Zoom and pan:</strong> <em>&ldquo;Zoom to the Tongass&rdquo;</em>, <em>&ldquo;center on Montana.&rdquo;</em></li>
         <li><strong>Export results:</strong> <em>&ldquo;Give me a CSV of rule-affected roadless acreage by state.&rdquo;</em></li>
@@ -394,7 +356,7 @@ li { margin: 0.25rem 0; }
         <h3>National Forest System extent &middot; USFS 2025</h3>
         <div class="layer">
             <div class="name">Forest Service ownership, 193.2M ac</div>
-            <div class="source">USDA Forest Service Enterprise Data Warehouse, 2025-06-22 snapshot: 97,493 parcels, 193,174,461 ac. The only ownership layer of the four, and the base for &ldquo;share of Forest Service land&rdquo; claims. Filtered in the map to <code>OWNERCLASS = 'USDA FOREST SERVICE'</code>; the parquet also retains 19,663 <code>NON-FS</code> inholding parcels (11.0M ac). Public domain.</div>
+            <div class="source">USDA Forest Service Enterprise Data Warehouse, 2025-06-22 snapshot: 97,493 parcels, 193,174,461 ac. The only ownership layer of the four, and the correct base for percentages of Forest Service land. Filtered in the map to <code>OWNERCLASS = 'USDA FOREST SERVICE'</code>; the parquet also retains 19,663 <code>NON-FS</code> inholding parcels (11.0M ac). Public domain.</div>
             <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/nfs-surface-ownership/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.SurfaceOwnership.zip" target="_blank" rel="noopener">Source</a></div>
         </div>
         <div class="layer">
@@ -457,7 +419,7 @@ li { margin: 0.25rem 0; }
         </div>
         <div class="layer">
             <div class="name">Completed treatments, FY2014+ &middot; USFS FACTS 2026</div>
-            <div class="source">USDA Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands. Filtered to <code>FISCAL_YEAR_COMPLETED &gt;= 2014</code> across <strong>all</strong> completed activity types, so this is not &ldquo;hazardous fuels treatments&rdquo;. Fiscal years, not calendar. Public domain.</div>
+            <div class="source">USDA Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands. Filtered to <code>FISCAL_YEAR_COMPLETED &gt;= 2014</code> across <strong>all</strong> completed activity types, which is a broader set than hazardous fuels treatments alone. Fiscal years, not calendar. Public domain.</div>
             <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
         </div>
         <div class="layer">
@@ -503,15 +465,15 @@ li { margin: 0.25rem 0; }
     </div>
 
     <div class="callout warn">
-        <p><strong>Alaska's high/very-high WHP acreage is zero, not missing.</strong> USFS land in Alaska is Tongass and Chugach coastal temperate rainforest, at the bottom of the Alaska hazard distribution. DEIS Table 22 labels the cell &ldquo;Not Available&rdquo;; the measured value is 0.</p>
+        <p><strong>Alaska's high/very-high WHP acreage is zero, not missing.</strong> USFS land in Alaska is Tongass and Chugach coastal temperate rainforest, which sits at the bottom of the Alaska hazard distribution. A national high/very-high share therefore changes substantially depending on whether Alaska is in the denominator.</p>
         <p><strong>The mapped WHP layer is the continuous index; the classified 1&ndash;5 product is SQL-only.</strong> The classified rasters carry no colour table upstream, so any map legend for them would be invented.</p>
         <p><strong>MTBS perimeters mix fire types, and the two map layers do not sum to the dataset.</strong> 4,689 <code>Unknown</code> records appear in neither layer.</p>
         <p><strong>MTBS severity has two hex assets and they are not interchangeable.</strong> <code>&hellip;-hex</code> gives the dominant class per cell (winner-take-all); <code>&hellip;-hex-fractions</code> gives each class's fractional coverage. Area and share questions need the fractions asset. Classes 5 (Increased Greenness) and 6 (Non-Processing Area Mask) are not severity levels; exclude them, and class 0 (Background), from any severity denominator.</p>
         <p><strong>Severity is not a complete annual record.</strong> Six source mosaics are permanently unavailable upstream (CONUS 2004 and 2017, Alaska 1987, 1995, 2001 and 2013), and Alaska has no 2024. A missing year means not mapped, never &ldquo;nothing burned&rdquo;. Perimeters cover all 41 years.</p>
         <p><strong>Reburn makes &ldquo;acres burned&rdquo; ambiguous.</strong> 45,128,351 hex cells burned at least once, against 57,552,314 (fire, cell) pairs: cumulative fire-years exceed unique ground by 27.5%, and one cell burned 19 times. Any total must say which it means.</p>
         <p><strong>The cause mix inside roadless areas differs from the national pattern.</strong> Nationally: 2,034,178 human ignitions (76.4%) against 356,409 natural (13.4%). Inside rule-affected roadless areas: <strong>18,166 natural (71.6%) against 6,697 human (26.4%)</strong>. State the base with either figure.</p>
-        <p><strong>FPA-FOD point precision has a ~1 km floor.</strong> Many records are geolocated from PLSS descriptions, so distance bands below about a kilometre are not defensible, including the 0.5-mile (~800 m) buffer the roads claim uses. This is also the <strong>7th edition</strong>, not the 6th plus four years: it backfills previously underrepresented states, so pre-2021 counts differ from figures quoted off the 1992&ndash;2020 edition.</p>
-        <p><strong>This is the SILVIS WUI, not the HFRA WUI</strong> the Draft EIS uses for its 9.8M-acre figure. The definitions differ and are not interchangeable.</p>
+        <p><strong>FPA-FOD point precision has a ~1 km floor.</strong> Many records are geolocated from PLSS descriptions, so distance bands below about a kilometre are not defensible, including 0.5-mile (~800 m) buffers. This is also the <strong>7th edition</strong>, not the 6th plus four years: it backfills previously underrepresented states, so pre-2021 counts differ from figures quoted off the 1992&ndash;2020 edition.</p>
+        <p><strong>This is the SILVIS WUI, not the HFRA WUI</strong> used in the Draft EIS. The two definitions differ and are not interchangeable.</p>
     </div>
 
     <div class="layer-group">
@@ -547,27 +509,27 @@ li { margin: 0.25rem 0; }
     </div>
 
     <div class="callout warn">
-        <p><strong>The mapped roads are Forest Service roads only.</strong> <code>SYSTEM</code> is <code>NFSR</code> and <code>JURISDICTION</code> is <code>FS</code> on every record, so state, county and private roads are absent by construction. The Draft EIS buffered &ldquo;National Forest System roads <em>and</em> other authorized public roads&rdquo; (Vol I fn. 10). That second half is Census TIGER roads, 16,490,899 features, which the assistant can query but which has no map layer: the PMTiles asset its catalog entry declares was never published.</p>
-        <p><strong>No dataset reproduces the regulatory definition.</strong> 36 CFR 294.11 counts unclassified and temporary roads, and the Forest Service maintains no national database of temporary roads (DEIS Vol I fn. 20). Every road-proximity figure computed here is a floor. A further 8,204 records holding 4,745 miles carry no geometry at all (an upstream referencing failure the agency flags), so they cannot be buffered.</p>
+        <p><strong>The mapped roads are Forest Service roads only.</strong> <code>SYSTEM</code> is <code>NFSR</code> and <code>JURISDICTION</code> is <code>FS</code> on every record, so state, county and private roads are absent by construction. The Draft EIS road-proximity analysis buffered &ldquo;National Forest System roads <em>and</em> other authorized public roads&rdquo; (Vol I fn. 10); that second category is Census TIGER roads, 16,490,899 features, which the assistant can query but which has no map layer, because the PMTiles asset its catalog entry declares was never published.</p>
+        <p><strong>No dataset reproduces the regulatory definition of a road.</strong> 36 CFR 294.11 counts unclassified and temporary roads, and the Forest Service maintains no national database of temporary roads (DEIS Vol I fn. 20), so any road-proximity figure computed from these layers is a lower bound. A further 8,204 records holding 4,745 miles carry no geometry at all (an upstream referencing failure the agency flags), so they cannot be buffered.</p>
     </div>
 
     <div class="layer-group">
         <h3>Vegetation condition &middot; LANDFIRE 2024</h3>
         <div class="layer">
             <div class="name">Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</div>
-            <div class="source">LANDFIRE (USGS EROS + USDA Forest Service), LF 2024 version 2.5.0, 30 m. How far current vegetation has departed from its estimated historical reference condition, on a six-step scale from Class I.A (0&ndash;16% departure) to Class III.B (84&ndash;100%). Relevant to claims about stand condition. Public domain.</div>
+            <div class="source">LANDFIRE (USGS EROS + USDA Forest Service), LF 2024 version 2.5.0, 30 m. How far current vegetation has departed from its estimated historical reference condition, on a six-step scale from Class I.A (0&ndash;16% departure) to Class III.B (84&ndash;100%). Public domain.</div>
             <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://landfire.gov" target="_blank" rel="noopener">Source</a></div>
         </div>
         <div class="layer">
             <div class="name">Existing vegetation type &middot; LANDFIRE 2024 (CONUS only)</div>
-            <div class="source">The same release: 832 vegetation-type classes drawn in the official LANDFIRE palette. Descriptive context, not a test of any claim. Public domain.</div>
+            <div class="source">The same release: 832 vegetation-type classes drawn in the official LANDFIRE palette. Public domain.</div>
             <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-evt/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://landfire.gov" target="_blank" rel="noopener">Source</a></div>
         </div>
     </div>
 
     <div class="callout warn">
         <p><strong>Five condition-class codes are not rated for departure at all</strong>: water, snow/ice, developed, barren or sparsely vegetated, and agriculture. They are unrated, not low-departure, and belong out of the denominator of any &ldquo;share of land that is departed&rdquo; statistic. Inside rule-affected roadless area they are 4.1% of cells.</p>
-        <p><strong>Measured across rule-affected roadless area, 14.6% of rated land is Class III</strong> (high departure, 67&ndash;100%) and 33.0% is Class II.B or worse. These are shares of <em>cells</em>, not acres, because the per-class fractional-coverage table that acre accounting needs is not published for this layer.</p>
+        <p><strong>Departure shares from this layer are shares of <em>cells</em>, not acres</strong>, because the per-class fractional-coverage table that acre accounting requires is not published for it. For reference, across rule-affected roadless area 14.6% of rated land is Class III (high departure, 67&ndash;100%) and 33.0% is Class II.B or worse.</p>
         <p><strong>LANDFIRE 2024 is not the same vintage as WHP 2023.</strong> The wildfire hazard layers are built from LANDFIRE 2020 version 2.2.0 fuels, three updates older, so the two are not one snapshot. Both LANDFIRE layers are also CONUS only, the same Alaska gap as NLCD.</p>
     </div>
 
