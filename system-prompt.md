@@ -248,21 +248,31 @@ describes:
 ### Building an ignition-density layer
 
 The FPA-FOD map layers are individual points; at national zoom they overplot into something that
-*looks* like density but is not one. When a user asks for ignition density, build it:
+*looks* like density but is not one. No new data is needed to build a real one — `register_hex_tiles`
+aggregates straight off the hex asset already in the catalog and returns a render recipe.
 
-1. Aggregate the FPA-FOD hex (`fpa-fod-1992-2024/hex/…`, native **res 10**) up to res 7 or 8 —
-   res 10 cells are ~0.015 km² and far too fine to read as a density surface at national zoom.
-   Count **distinct fire records**, not hex rows.
-2. Register the result with `register_hex_tiles`, then render it with `add_hex_tile_layer`.
+Pass SQL whose **first column is an H3 index**, projected to the resolution you want the surface at:
 
-⚠️ State the normalisation you chose. Ignition **counts per cell** and ignitions **per unit area**
-are different maps, and counts alone track population and reporting effort as much as fire. If the
-question is about the roadless rule, say whether you counted all ignitions or only those inside
-rule-affected roadless area.
+```sql
+SELECT h3_cell_to_parent(h10, 7) AS h7
+FROM read_parquet('s3://public-fire/fpa-fod-1992-2024/hex/h0=*/data_0.parquet')
+```
 
-⚠️ **Do not build a density surface finer than about 1 km.** FPA-FOD coordinates are accurate only to
-a PLSS section (~1.6 km) for an unflagged subset of records, so a res-9-or-finer density map implies
-precision the data does not have.
+Leave `agg` at its default `COUNT` for that form — the hex holds one row per fire (2,661,383 rows
+for 2,661,369 distinct `FPA_ID`), so a row count *is* an ignition count and needs no deduplication.
+Only switch to `SUM`/`AVG`/`MAX` if you wrote your own `GROUP BY` and are carrying a value column.
+If the call returns `status: "running"`, poll `get_hex_tile_status` with `wait_seconds: 30`.
+
+⚠️ **Project to res 7 or 8, not the native 10.** Res-10 cells are ~0.015 km² and read as noise at
+national zoom.
+
+⚠️ **Never build finer than about 1 km.** FPA-FOD coordinates are accurate only to a PLSS section
+(~1.6 km) for an unflagged subset of records, so a res-9-or-finer surface implies precision the data
+does not have.
+
+⚠️ **State the normalisation.** Ignition **counts per cell** and ignitions **per unit area** are
+different maps, and counts alone track population and reporting effort as much as fire. Say whether
+you counted all ignitions or only those inside rule-affected roadless area.
 
 **Datasets the claims need that are not here yet.** Say so plainly when a question requires one;
 never improvise a substitute. Pending: Insect & Disease Survey · Wildfire Risk to Communities ·
