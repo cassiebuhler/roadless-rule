@@ -340,7 +340,6 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
 | `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
-| `Existing vegetation type · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-evt` |
 
 Vegetation Condition Class measures how far current vegetation has departed from its estimated
 historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
@@ -364,14 +363,13 @@ Measured across rule-affected roadless area (res-10 cells, rated classes only):
 
 So **14.6% of rated rule-affected roadless area is Class III** (high departure) and 33.0% is Class
 II.B or worse. Report this as a share of *cells*, not acres — the per-class fractional-coverage table
-that acre accounting needs is not published for these layers, and the hex carries only the dominant
+that acre accounting needs is not published for this layer, and the hex carries only the dominant
 class per cell.
 
 ⛔ **LANDFIRE 2024 and WHP 2023 are not the same vintage.** WHP 2023 is built from **LANDFIRE 2020
 v2.2.0** fuels — three updates older. Never present them as one snapshot.
 
-⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres. EVT carries 832
-classes with the official LANDFIRE palette; VCC carries 14.
+⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres.
 
 ## Reproducing the agency's numbers
 
@@ -455,7 +453,7 @@ added here as each lands.
 
 | Issue | Dataset | Why it matters |
 |---|---|---|
-| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | The other two products, VCC and EVT, are now in the app |
+| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | VCC, the departure layer, is now in the app |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |
 | [#592](https://github.com/boettiger-lab/data-workflows/issues/592) | Wildfire Risk to Communities v2 | Exposure |
 | [#603](https://github.com/boettiger-lab/data-workflows/issues/603) | TWIG interagency fuel treatments + intersections | Interagency treatment record |
@@ -468,7 +466,9 @@ Already in the catalog and available to the assistant via SQL even though not on
 (watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
 (drinking-water source areas).
 
-⚠️ **`census-2025/roads` is SQL-only for a reason worth recording.** Its STAC collection declares a
+Two datasets here are SQL-only, for different reasons — both worth recording.
+
+⚠️ **`census-2025/roads`.** Its STAC collection declares a
 PMTiles asset at `census-2025/roads.pmtiles`, but that file **does not exist** — the build published
 the GeoParquet and the H3 hex without it. A declared asset is not a live asset; the map layer was
 left out rather than pointing at a 404.
