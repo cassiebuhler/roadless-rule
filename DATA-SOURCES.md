@@ -371,6 +371,13 @@ v2.2.0** fuels — three updates older. Never present them as one snapshot.
 
 ⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres.
 
+⚠️ **Three fill codes still appear in the legend, and two of them paint.** `-9999` matches the band
+nodata and renders transparent, but `-1111` (Fill-Not Mapped) paints grey and `32767` (band sentinel)
+paints white. This cannot be fixed from `layers-input.json`: for a raster asset the app takes both the
+legend and the TiTiler colormap from the STAC `classification:classes`, and — unlike the vector path —
+ignores any `legend_classes` override. Tracked upstream at
+[data-workflows#628](https://github.com/boettiger-lab/data-workflows/issues/628).
+
 ## Reproducing the agency's numbers
 
 The rulemaking under audit: **91 FR 53827** (published 2026-08-20), RIN **0596-AD66**, docket
