@@ -35,6 +35,10 @@ in the map only; the underlying parquet is complete and the assistant can query 
 | **LANDFIRE** | Landscape Fire and Resource Management Planning Tools (USGS EROS + USDA Forest Service) |
 | **NRM** | Natural Resource Manager — the Forest Service system of record for roads |
 | **TIGER** | Topologically Integrated Geographic Encoding and Referencing (US Census Bureau) |
+| **NFST** | National Forest System Trails (the USFS trails inventory) |
+| **GTLF** | Ground Transportation Linear Features (the BLM trails inventory) |
+| **NTS** | National Trails System — the designated Scenic, Historic and Recreation trails |
+| **NRI** | Nationwide Rivers Inventory (National Park Service) |
 
 ## Layers
 
@@ -169,6 +173,65 @@ Neither is a comparison stratum for this audit. Both remain queryable via the ca
 ⚠️ **PAD-US carries its own `Des_Tp = 'IRA'` records** (~58.2M ac, close to the USFS 58.4M). It is a
 different rendering of the same inventory, not an independent one — never add it to the USFS roadless
 layer.
+
+### Trails & recreation access
+
+| Layer | Publisher | Coverage | Vintage | License | Collection |
+|---|---|---|---|---|---|
+| `USFS trails, 134,983 mi · Federal Trails 2026` | USDA Forest Service (NFST) | National | 2026 | Public domain | `federal-trails-2026` |
+| `NPS & BLM trails, 25,916 mi · Federal Trails 2026` | NPS + BLM (GTLF) | National | 2026 | Public domain | `federal-trails-2026` |
+| `National Trails System routes, 12,488 mi · Federal Trails 2026` | USFS + NPS + BLM | National | 2026 | Public domain | `federal-trails-2026` |
+| `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` | National Park Service | 50 states + PR + territories | 2024 | Public domain | `american-rivers-nri-2024` |
+
+**Why recreation data is in a rule-audit app.** The 2001 rule prohibits road construction and
+reconstruction. It does not close land to the public. A map carrying only roads invites the
+inference that a roadless area is unreachable; ~135,000 miles of Forest Service trail says
+otherwise. These layers make that testable rather than rhetorical.
+
+The first three layers are one dataset (`federal-trails-2026`, 127,619 segments) filtered on
+`admin_agency` and `nts_designation`. `length_miles` is recomputed in EPSG:5070, not carried from
+the source.
+
+| `admin_agency` | Segments | Miles |
+|---|---:|---:|
+| `USFS` | 77,234 | 134,983 |
+| `NPS` | 31,281 | 17,046 |
+| `BLM` | 19,104 | 8,870 |
+
+⛔ **The National Trails System layer is a subset, not a third category.** Its 4,382 segments are
+already inside the USFS and NPS/BLM layers; adding the three mileages triple-counts the designated
+routes. The 16 designation codes are `NRT` (1,853 segments), `PCT` (792), `NST` (700), `CDT` (404),
+`AT` (225), `NCT` (203), `INHT` (64), `ANZA` (45), `PENHT` (36), `FNST` (30), `ANT` (12), `IANST`
+(8), `OSNHT` (5), `PNT` (2), `NTNST` (2) and `PHT` (1).
+
+⛔ **A trail is not a road, and this app never counts it as one.** 36 CFR 294.11 defines a road as
+"a motor vehicle travelway over 50 inches wide". No trail mileage enters any road-proximity figure
+here — the same rule that excludes the TIGER walkway and bridle-path classes.
+
+⚠️ **The trail schema is only partly harmonized, despite what the collection description implies.**
+`admin_agency` (3 clean values) and `nts_designation` (16 clean codes) are safe to filter on.
+`trail_type`, `trail_class` and `trail_surface` are **not**: they carry each source agency's raw
+vocabulary. `trail_type` has 41 distinct values that collapse to 31 once case is folded — `4WD Low`,
+`4WD LOW` and `4wd Low` are three rows for one thing — plus 3,367 blank or `<Null>` records.
+`trail_surface` has 62 values, `trail_class` 20 (mixing bare `1`–`6` with `Class 1: Undeveloped`).
+Grouping on any of the three splits one category across several rows.
+
+⚠️ **Use the GeoParquet, not the hex, for trail-miles questions.** Lines are hexed by circumradius
+buffering, so `length_miles` repeats on every cell a buffered segment touches. `SUM(length_miles)`
+on hex overcounts — the same defect as `SEG_LENGTH` on RoadCore.
+
+⛔ **NRI is an inventory, not a protection.** Listing records that the Park Service assessed a
+free-flowing segment and found at least one outstanding natural, cultural or recreational value,
+making it *potentially eligible* for Wild & Scenic designation. It confers nothing. The app's
+designated Wild & Scenic stratum is a **different dataset** — PAD-US `Des_Tp`, under *Comparison
+strata*, where it serves as a DEIS Table 12 deduction. Never combine or compare the two as though
+one updated the other.
+
+⚠️ **`Management` on the NRI layer is free text and cannot be filtered as an agency column.** 1,827
+of 4,496 segments leave it blank; the rest name individual units (`Tongass National Forest`,
+`Grand Staircase-Escalante National Monument`). Attributing NRI mileage to an agency needs a spatial
+join, not a `GROUP BY`. `Classifica` is likewise multi-valued (`Wild, Scenic, Recreational`) and
+blank on 1,667 segments, so it is not a clean stratum either.
 
 ### Fuels & fire
 

@@ -324,6 +324,109 @@
             ]
         },
         {
+            "collection_id": "federal-trails-2026",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-trails/federal-trails-2026/stac-collection.json",
+            "group": {
+                "name": "Trails & recreation access",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "federal-trails-2026-pmtiles",
+                    "alias": "trails-usfs",
+                    "display_name": "USFS trails, 134,983 mi · Federal Trails 2026",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "admin_agency"], ["USFS"], true, false],
+                    "default_style": {
+                        "line-color": "#0E7C7B",
+                        "line-width": 0.8,
+                        "line-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Forest Service trail · 77,234 segments, 134,983 mi — a trail is not a road under 36 CFR 294.11",
+                            "color": "#0E7C7B"
+                        }
+                    ],
+                    "tooltip_fields": ["trail_name", "admin_agency", "admin_unit", "nts_designation", "trail_type", "length_miles"]
+                },
+                {
+                    "id": "federal-trails-2026-pmtiles",
+                    "alias": "trails-nps-blm",
+                    "display_name": "NPS & BLM trails, 25,916 mi · Federal Trails 2026",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "admin_agency"], ["NPS", "BLM"], true, false],
+                    "default_style": {
+                        "line-color": "#6FB7B5",
+                        "line-width": 0.7,
+                        "line-opacity": 0.8
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "NPS or BLM trail · 50,385 segments, 25,916 mi — not National Forest System",
+                            "color": "#6FB7B5"
+                        }
+                    ],
+                    "tooltip_fields": ["trail_name", "admin_agency", "admin_unit", "nts_designation", "trail_type", "length_miles"]
+                },
+                {
+                    "id": "federal-trails-2026-pmtiles",
+                    "alias": "trails-nts-designated",
+                    "display_name": "National Trails System routes, 12,488 mi · Federal Trails 2026",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "nts_designation"], ["NRT", "PCT", "NST", "CDT", "AT", "NCT", "INHT", "ANZA", "PENHT", "FNST", "ANT", "IANST", "OSNHT", "PNT", "NTNST", "PHT"], true, false],
+                    "default_style": {
+                        "line-color": "#E07A2F",
+                        "line-width": 1.4,
+                        "line-opacity": 0.95
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "National Scenic, Historic or Recreation Trail (PCT, AT, CDT, …) · 4,382 segments, 12,488 mi — a subset of the two layers above, never an addition to them",
+                            "color": "#E07A2F"
+                        }
+                    ],
+                    "tooltip_fields": ["trail_name", "nts_designation", "admin_agency", "admin_unit", "length_miles"]
+                }
+            ]
+        },
+        {
+            "collection_id": "american-rivers-nri-2024",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-rivers/american-rivers/nri-2024/stac-collection.json",
+            "group": {
+                "name": "Trails & recreation access",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "nri-2024-pmtiles",
+                    "alias": "nri-2024-rivers",
+                    "display_name": "Rivers with outstanding values, 90,476 mi · NPS NRI 2024",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_style": {
+                        "line-color": "#1B54A8",
+                        "line-width": 1.1,
+                        "line-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Free-flowing segment with outstanding natural, cultural or recreational value · 4,496 segments, 90,476 mi — inventoried, not designated",
+                            "color": "#1B54A8"
+                        }
+                    ],
+                    "tooltip_fields": ["River", "Reach", "Classifica", "ORV", "GIS_Miles", "Management", "State1"]
+                }
+            ]
+        },
+        {
             "collection_id": "nfs-surface-ownership",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/nfs-surface-ownership/stac-collection.json",
             "group": {

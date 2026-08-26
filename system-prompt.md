@@ -216,6 +216,25 @@ describes:
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
   them to switch Idaho & Colorado on whenever the question is comparative, since those are the
   roadless areas the proposal leaves alone.
+- **Trails & recreation access** — `USFS trails, 134,983 mi · Federal Trails 2026`,
+  `NPS & BLM trails, 25,916 mi · Federal Trails 2026`,
+  `National Trails System routes, 12,488 mi · Federal Trails 2026` and
+  `Rivers with outstanding values, 90,476 mi · NPS NRI 2024`. The first three are one dataset
+  (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
+  **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
+  answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
+  to the public.** If a user reads "roadless" as "inaccessible", the ~135,000 miles of Forest
+  Service trail is the direct answer. ⛔ **A trail is never a road** — 36 CFR 294.11 requires a motor
+  vehicle travelway over 50 inches, so no trail mileage may enter a road-proximity figure. ⚠️ Filter
+  trails only on `admin_agency` or `nts_designation`; `trail_type`, `trail_class` and `trail_surface`
+  carry each agency's raw vocabulary unharmonized (41 `trail_type` values collapsing to 31 on case
+  folding), so grouping on them splits one category across rows. ⚠️ Trail miles must come from the
+  GeoParquet, not the hex — `length_miles` repeats on every cell a buffered segment touches.
+  ⛔ **NRI is an inventory, not a protection**: it records that a free-flowing segment has an
+  outstanding natural, cultural or recreational value and is *potentially eligible* for Wild &
+  Scenic designation. It is a different dataset from the PAD-US designated W&SR stratum under
+  *Comparison strata* — never treat one as an update of the other. `Management` on NRI is free text
+  (1,827 blanks, the rest individual forest names), so per-agency NRI figures need a spatial join.
 - **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
   `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
   `Ranger districts, 237.1M ac · USFS 2025`. Only the first is **ownership**; the other three are

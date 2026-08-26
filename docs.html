@@ -253,6 +253,26 @@ li { margin: 0.25rem 0; }
     </table>
     </div>
 
+    <h3>Trails &amp; recreation access</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>USFS trails, 134,983 mi &middot; Federal Trails 2026</td><td>Composite federal trails network (USFS NFST + NPS Public Trails + BLM GTLF), 2026. This layer is the Forest Service share: 77,234 segments. A trail is <em>not</em> a road under 36 CFR 294.11, so none of this mileage appears in any road figure here.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-trails/federal-trails-2026/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>NPS &amp; BLM trails, 25,916 mi &middot; Federal Trails 2026</td><td>Same dataset, the other two agencies: 50,385 segments. Outside the National Forest System, so outside the rule.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-trails/federal-trails-2026/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>National Trails System routes, 12,488 mi &middot; Federal Trails 2026</td><td>Same dataset, the 4,382 segments carrying a National Scenic, Historic or Recreation Trail designation &mdash; PCT, AT, CDT and 13 others. A <em>subset</em> of the two layers above, not an addition to them.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-trails/federal-trails-2026/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Rivers with outstanding values, 90,476 mi &middot; NPS NRI 2024</td><td>National Park Service Nationwide Rivers Inventory, 2024: 4,496 free-flowing segments across 2,899 rivers, each carrying at least one outstanding natural, cultural or recreational value. Inventoried as <em>potentially eligible</em> for Wild &amp; Scenic designation &mdash; not designated, and carrying no protection of its own.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-rivers/american-rivers/nri-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>These layers are here because &ldquo;roadless&rdquo; is not &ldquo;inaccessible.&rdquo;</strong> The 2001 rule prohibits road construction and reconstruction; it does not close land to the public. Roughly 135,000 miles of Forest Service trail run across the National Forest System, and the rivers layer marks reaches the Park Service inventoried for their recreational and scenic value. A map showing only roads invites the inference that a roadless area is unreachable, which the trail network contradicts.</p>
+        <p><strong>Do not read a trail as a road, in either direction.</strong> Trails are excluded from every road-proximity figure in this app, matching 36 CFR 294.11 (&ldquo;a motor vehicle travelway over 50 inches wide&rdquo;). The National Trails System layer is a subset of the two agency layers, so adding the three mileages triple-counts the designated routes.</p>
+        <p><strong>The trail schema is only partly harmonized.</strong> <code>admin_agency</code> and <code>nts_designation</code> are clean and safe to filter on. <code>trail_type</code>, <code>trail_class</code> and <code>trail_surface</code> are not: they carry each source agency&rsquo;s raw vocabulary, so <code>trail_type</code> has 41 distinct values that collapse to 31 once case is folded (<code>4WD Low</code>, <code>4WD LOW</code>, <code>4wd Low</code>), and <code>trail_surface</code> has 62. Any count grouped on those columns will split the same category across several rows.</p>
+        <p><strong>The rivers inventory is not a protection layer.</strong> NRI listing records that a segment was assessed and found to have outstanding values; it confers no designation. The app&rsquo;s Wild &amp; Scenic <em>designated</em> stratum lives under Comparison strata and comes from PAD-US &mdash; a different dataset answering a different question. Do not combine the two. <code>Management</code> on the NRI layer is free text (1,827 segments leave it blank, the rest name individual forests and monuments), so it cannot be filtered as an agency column.</p>
+    </div>
+
     <h3>National Forest System extent</h3>
     <div class="table-wrap">
     <table>
