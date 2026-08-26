@@ -96,7 +96,7 @@
                     "alias": "ira-idaho-colorado",
                     "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded",
                     "group": "Roadless areas · USFS 2001",
-                    "visible": true,
+                    "visible": false,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],
                     "default_style": {
                         "fill-color": "#7A8FA6",
