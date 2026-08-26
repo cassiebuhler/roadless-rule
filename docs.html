@@ -140,43 +140,6 @@ thead th {
 td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 tr.key td { background: #f4f8f5; font-weight: 600; }
 
-.layer-group {
-    background: #fff;
-    border: 1px solid var(--rule);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin: 0.9rem 0;
-}
-.layer-group h3 {
-    margin-top: 0;
-    color: var(--accent-dark);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-.layer-group h3::before {
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 1.1em;
-    background: var(--accent);
-    border-radius: 2px;
-    flex: 0 0 auto;
-}
-.layer {
-    padding: 0.55rem 0;
-    border-top: 1px solid var(--rule);
-}
-.layer:first-of-type { border-top: 0; padding-top: 0; }
-.layer .name { font-weight: 600; color: var(--ink); }
-.layer .source {
-    color: var(--ink-soft);
-    font-size: 0.93rem;
-    margin: 0.1rem 0 0.15rem;
-}
-.layer .links { font-size: 0.88rem; }
-.layer .links a { margin-right: 0.9rem; }
-
 .callout {
     background: var(--accent-soft);
     border-left: 3px solid var(--accent);
@@ -226,7 +189,7 @@ li { margin: 0.25rem 0; }
         <h1>Roadless Rule: 2026 Rescission Proposal
             <span class="badge">proposed &middot; not enacted</span>
         </h1>
-        <p class="tag">Data sources and methods for the map and data assistant covering the 2001 Roadless Area Conservation Rule and USDA's 2026 rescission proposal. Roadless acreage is reported against several different bases, so every percentage here names the one it uses.</p>
+        <p class="tag">The datasets and methods behind the map and data assistant for the 2001 Roadless Area Conservation Rule and USDA's 2026 proposal to rescind it. The proposal is not law; the 2001 rule remains in force.</p>
         <a href="/" class="cta">&larr; Open the map</a>
     </div>
 </header>
@@ -234,16 +197,116 @@ li { margin: 0.25rem 0; }
 <main>
 
 <section>
-    <h2>About this data</h2>
-    <p class="lede">On 2026-08-20 the USDA Forest Service published a proposed rule to <em>remove and reserve</em> 36 CFR part 294, subpart B, the 2001 Roadless Area Conservation Rule. This app holds the public datasets referenced by that rulemaking, so figures drawn from them can be recomputed directly.</p>
+    <h2>Datasets in this app</h2>
+    <p class="lede">Every layer is a published government or academic dataset, converted to a cloud-native format and served as-is. Sidebar labels follow one form: <strong><code>what it is &middot; PUBLISHER vintage</code></strong>. &ldquo;STAC&rdquo; opens the machine-readable metadata: schema, column descriptions, license, lineage and download URLs. Public domain unless noted.</p>
+
+    <h3>Roadless areas &middot; USFS 2001</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Rule-affected, 44.7M ac &mdash; PROPOSED for rescission</td><td>USFS inventory designated by the 2001 rule: 11,391 polygons, 58.4M ac. This layer is everything outside Idaho and Colorado.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Idaho &amp; Colorado, 13.7M ac &mdash; state rules, excluded</td><td>Same dataset, the complement. Both states have their own roadless rules.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Roads &amp; access</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>NFS roads open to vehicles, 263,807 mi &middot; USFS 2025</td><td>Forest Service RoadCore (NRM, 2025-05-11): 367,666 segments, 368,103 mi nationally. This layer is maintenance levels 2&ndash;5.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>NFS roads closed &amp; stored (ML1), 103,945 mi &middot; USFS 2025</td><td>Same dataset, maintenance level 1: closed to motor vehicles, often impassable. 28.2% of the road system.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>All motor-vehicle roads, 16,470,232 segments &middot; TIGER 2025</td><td>Census TIGER/Line 2025 roads, 3,233 counties: every road regardless of jurisdiction. Supplies the &ldquo;other authorized public roads&rdquo; half of the Draft EIS analysis.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Highways &amp; secondary roads, 268,817 segments &middot; TIGER 2025</td><td>A <em>subset</em> of the layer above (primary and secondary classes only), drawn heavier so the network reads at national zoom.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Walkways &amp; paths, 20,667 segments &middot; TIGER 2025</td><td>Walkways, stairways, bike and bridle paths: not motor vehicle travelways, so excluded from every road figure here. Drawn so the exclusion is visible.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Fuels &amp; fire</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Wildfire hazard index &middot; WHP 2023 (CONUS) and (Alaska)</td><td>USFS Wildfire Hazard Potential, Dillon 4th ed., v2023 at 270 m. Two layers because the classification is computed within each domain.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
+            <tr><td>Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</td><td>LANDFIRE LF 2024 v2.5.0 at 30 m: departure of current vegetation from its estimated historical reference condition, six classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wildfire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Monitoring Trends in Burn Severity (USGS / USFS), national: 17,171 wildfire and wildland-fire-use perimeters.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Prescribed fire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Same dataset, the 8,870 prescribed-fire records.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Burn severity by year &middot; MTBS (CONUS) and (Alaska)</td><td>Annual severity mosaics behind a year selector: 39 CONUS years and 36 Alaska years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
+            <tr><td>Fire perimeters 1835&ndash;2020 &middot; USGS 2021</td><td>USGS Wildland Fire Combined Dataset: a synthesis of federal, state and tribal perimeters. Not an annual fire history.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Completed treatments, FY2014+ &middot; USFS FACTS 2026</td><td>Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands: all completed activity types, a broader set than fuels treatments alone. Fiscal years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wildland-urban interface &middot; SILVIS 2020</td><td>SILVIS Lab, University of Wisconsin&ndash;Madison, v4, census blocks. Intermix and interface blocks. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-wui/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Ignitions &middot; FPA-FOD 1992&ndash;2024</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Ignitions by cause 1992&ndash;2024 &middot; FPA-FOD</td><td>USFS Fire Program Analysis fire-occurrence database, Short 7th ed.: 2,661,383 ignition points, national. Coloured by cause class.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Large-fire ignitions &ge;1,000 ac &middot; FPA-FOD</td><td>Same dataset, the two largest size classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>National Forest System extent</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Forest Service ownership, 193.2M ac</td><td>USFS Enterprise Data Warehouse surface ownership, 2025-06-22: 97,493 parcels. The only ownership layer of the four, and the right base for &ldquo;share of Forest Service land&rdquo;.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/nfs-surface-ownership/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Proclaimed boundary, 225.1M ac</td><td>154 units. An administrative envelope, not ownership. Outline only.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/proclaimed-forest/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Administrative boundary, 236.8M ac</td><td>112 units. Administrative envelope. Outline only.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/administrative-forest/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Ranger districts, 237.1M ac</td><td>503 districts. Administrative envelope. Outline only.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/ranger-district/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Comparison strata</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Designated wilderness</td><td>USGS Gap Analysis Project, PAD-US 4.1 <em>combined</em> (Mar 2025). 994 features / 112.5M ac all managers; 475 / 37.11M ac USFS-managed.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wilderness study areas</td><td>Same dataset. 722 / 24.16M ac all managers; 42 / 3.40M ac USFS-managed.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wild &amp; Scenic Rivers, wild segments</td><td>Same dataset, designated wild classification only. 163 / 1.36M ac all managers; 91 / 0.58M ac USFS-managed.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Land cover &amp; modification</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Land cover &middot; NLCD 2024 (CONUS only)</td><td>MRLC / USGS EROS, Annual NLCD Collection 1.2. Classified raster.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Human modification &middot; Theobald 2016</td><td>Theobald et al., global, ~1 km. A continuous 0&ndash;1 index. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>In the catalog, no map layer</h3>
+    <p>The assistant can query these in SQL even though they are not drawn: WHP 2023 <em>classified</em> (1&ndash;5), PAD-US 4.1 <code>fee</code> and <code>easement</code>, <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024/*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas). Browse everything at <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-data/stac/catalog.json" target="_blank" rel="noopener">STAC Browser</a>.</p>
+
+    <p>More datasets are being ingested. What is in flight, and what is blocked, is tracked under the <a href="https://github.com/boettiger-lab/data-workflows/issues?q=is%3Aissue+label%3Aroadless" target="_blank" rel="noopener"><code>roadless</code> label</a> in <code>boettiger-lab/data-workflows</code>, coordinated by <a href="https://github.com/boettiger-lab/data-workflows/issues/594" target="_blank" rel="noopener">#594</a>. Layers appear here as each one lands.</p>
+</section>
+
+<section>
+    <h2>Methods</h2>
+
+    <h3>The rulemaking</h3>
+    <p>On 2026-08-20 the Forest Service proposed to <em>remove and reserve</em> 36 CFR part 294, subpart B &mdash; the 2001 Roadless Area Conservation Rule. This app holds the public datasets that rulemaking draws on, so its figures can be recomputed directly.</p>
 
     <div class="table-wrap">
     <table>
         <tbody>
-            <tr><td>Federal Register citation</td><td><strong>91 FR 53827</strong> (published 2026-08-20)</td></tr>
+            <tr><td>Federal Register citation</td><td><strong>91 FR 53827</strong> (2026-08-20)</td></tr>
             <tr><td>RIN</td><td><code>0596-AD66</code></td></tr>
             <tr><td>Docket</td><td><a href="https://www.regulations.gov/docket/FS-2025-0001" target="_blank" rel="noopener">FS-2025-0001</a></td></tr>
-            <tr><td>Action</td><td>Remove and reserve 36 CFR part 294, subpart B</td></tr>
             <tr><td>Notice of intent</td><td>90 FR 42179 (2025-08-29)</td></tr>
             <tr class="key"><td>Comment period closes</td><td>2026-09-21</td></tr>
         </tbody>
@@ -251,19 +314,80 @@ li { margin: 0.25rem 0; }
     </div>
 
     <div class="callout warn">
-        <p><strong>This is a proposal, not law.</strong> The 2001 rule remains in force. Descriptions on this site use the conditional: the proposal <em>would</em> remove protections from the areas shown. Layer labels carry legal status as its own field, so <code>PROPOSED for rescission</code> reads as a status.</p>
+        <p><strong>This is a proposal, not law.</strong> The 2001 rule remains in force, so copy here uses the conditional: the proposal <em>would</em> remove protections from the areas shown. Layer labels carry legal status as its own field, so <code>PROPOSED for rescission</code> reads as a status.</p>
     </div>
 
     <div class="callout stop">
-        <p><strong>eCFR returns the wrong regulation.</strong> The printed text of 36 CFR &sect;&sect; 294.10&ndash;294.18 is the 2005 State Petitions Rule. The 2001 Roadless Rule, the version in effect, must be read from <strong>66 FR 3244</strong>.</p>
+        <p><strong>eCFR returns the wrong regulation.</strong> The printed text of 36 CFR &sect;&sect; 294.10&ndash;294.18 is the 2005 State Petitions Rule. The 2001 rule, the version in effect, must be read from <strong>66 FR 3244</strong>.</p>
     </div>
 
-    <p>Every Draft EIS table and page number cited here is traceable to a fixed copy. The Federal Register notice, Draft EIS Volume I and the Economic Analysis were captured on the publication date under <code>catalog/usfs/roadless-rule-2026</code> in <code>data-workflows</code> (<a href="https://github.com/boettiger-lab/data-workflows/issues/589" target="_blank" rel="noopener">#589</a>, not yet merged to <code>main</code>), with <code>sources.tsv</code> recording provenance.</p>
-</section>
+    <p>Every Draft EIS table and page cited here is traceable to a fixed copy: the Federal Register notice, DEIS Volume I and the Economic Analysis were captured on the publication date under <code>catalog/usfs/roadless-rule-2026</code> in <code>data-workflows</code> (<a href="https://github.com/boettiger-lab/data-workflows/issues/589" target="_blank" rel="noopener">#589</a>).</p>
 
-<section>
-    <h2>Acreage bases</h2>
-    <p>Roadless acreage appears in the Draft EIS against several different bases. The largest, all inventoried roadless area, and the smallest, the <strong>potentially affected environment</strong>, differ by more than 18 million acres, so any percentage depends on which is used as the denominator. The derivation below is DEIS Vol I Table 12 and its footnotes.</p>
+    <h3>How it works</h3>
+    <p>The map reads cloud-native files (PMTiles, Cloud-Optimized GeoTIFFs, GeoParquet) hosted on the <a href="https://nrp.ai" target="_blank" rel="noopener">National Research Platform</a> directly in your browser &mdash; there is no tile server, and only the bytes for the current view are fetched. The assistant turns plain-English questions into <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> SQL over the same Parquet files, discovering schemas through a <a href="https://stacspec.org" target="_blank" rel="noopener">STAC</a> catalog. Nothing is modeled or estimated by the app: the processing is format conversion, plus a display-time filter where a label says so.</p>
+    <p>The deployed assistant runs on the NRP open-llm-proxy, a shared university inference service using open-weight models. The full stack is open source &mdash; see the <a href="https://github.com/cassiebuhler/roadless-rule" target="_blank" rel="noopener">project repository</a> and the <a href="https://github.com/boettiger-lab/geo-agent" target="_blank" rel="noopener">geo-agent core library</a>.</p>
+
+    <h3>Asking the assistant</h3>
+    <ul>
+        <li><strong>Any percentage, with its base named:</strong> <em>&ldquo;What share of rule-affected roadless area has high or very high wildfire hazard?&rdquo;</em></li>
+        <li><strong>Compare against a specific base:</strong> <em>&ldquo;What percent of Forest Service land in Montana is roadless? Say which extent layer you used.&rdquo;</em></li>
+        <li><strong>Show, hide, filter, restyle, zoom:</strong> <em>&ldquo;Make the rule-affected layer 50% transparent&rdquo;</em>, <em>&ldquo;show only fires after 2015&rdquo;</em>, <em>&ldquo;zoom to the Tongass.&rdquo;</em></li>
+        <li><strong>Export:</strong> <em>&ldquo;Give me a CSV of rule-affected roadless acreage by state.&rdquo;</em></li>
+        <li><strong>Query what isn't drawn:</strong> slope, watersheds, census geographies and drinking-water source areas have no map layer but are queryable.</li>
+    </ul>
+    <p>Vector layers have no fixed legend &mdash; hover a feature for its attributes. Every tool call is logged in the per-turn timeline. The assistant panel resizes by dragging its edge.</p>
+
+    <h3>Notes on specific datasets</h3>
+
+    <div class="callout stop">
+        <p><strong><code>CATEGORY</code> is not rule status.</strong> In the roadless layer, <code>CATEGORY</code> (<code>1B</code> / <code>1B-1</code> / <code>1C</code>) records forest-plan direction from before the rule took effect. <code>1C</code> reads as though road construction were allowed; it was not. The 2001 rule prohibits it across every inventoried roadless area regardless of category.</p>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>Idaho and Colorado boundaries here are the superseded 2001 ones.</strong> Both states adopted their own rules (2008 and 2012) and the operative boundaries are published as separate datasets, not included here. No attribute in the data records which rule governs an area; the 58.4M / 44.7M split is a filter on <code>STATE</code> alone.</p>
+        <p>USFS cautions that source scales vary and that these boundaries will not align with other datasets, so treat adjacency and buffer results as approximate.</p>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>The three PAD-US strata are the deduction behind the smallest acreage base</strong>, but each is drawn for <em>all</em> managers, so no single layer is itself the deduction &mdash; and they can overlap each other (a wild river segment can run through wilderness), so do not add their acreages. The <em>combined</em> layer also stacks overlapping polygons for the same ground: unfiltered it totals 8.68B acres for a country with ~2.3B, so <code>SUM(GIS_Acres)</code> over it is not meaningful at national scale.</p>
+        <p><strong>Wild segments are defined by classification, not by designation type.</strong> PAD-US files all Wild &amp; Scenic River records under one type (910 features, 5.3M ac) regardless of class; using all of them would be 4&times; the acreage. Eligible and suitable segments are excluded as candidates, not designations.</p>
+        <p><strong>PAD-US carries its own roadless records</strong> (~58.2M ac, close to the USFS 58.4M). It is a different rendering of the same inventory, so never add it to the USFS roadless layer.</p>
+        <p><strong>Four antimeridian-wrapping units are dropped from the wilderness layer</strong> (Papah&#257;naumoku&#257;kea, Pacific Remote Islands, Alaska Maritime NWR, Aleutian Islands WA) because their unwrapped longitudes make MapLibre draw each as a stripe across the map. All four are FWS-managed, so none is a comparison stratum for NFS roadless area, but the map understates Alaska and Pacific protected area until <a href="https://github.com/boettiger-lab/data-workflows/issues/617" target="_blank" rel="noopener">data-workflows#617</a> lands. The parquet is unaffected.</p>
+    </div>
+
+    <div class="callout stop">
+        <p><strong>WHP measures hazard, not risk.</strong> It indexes relative potential for high-intensity fire that would be difficult to control. Its own metadata states that it is not a measure of risk to homes, communities or people, and does not account for what is exposed.</p>
+        <p><strong>CONUS and Alaska cannot be pooled.</strong> The class breaks are percentiles computed within each domain, so &ldquo;Very High&rdquo; is index &gt; 1,985 in CONUS and &gt; 8,912 in Alaska, 4.5&times; apart. Use the continuous index for any CONUS-vs-Alaska comparison, and turn on both toggles for national coverage (<a href="https://github.com/boettiger-lab/geo-agent/issues/349" target="_blank" rel="noopener">geo-agent#349</a>).</p>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>Alaska's high/very-high WHP acreage is zero, not missing.</strong> USFS land in Alaska is Tongass and Chugach coastal temperate rainforest, at the bottom of the Alaska hazard distribution. A national high/very-high share changes substantially depending on whether Alaska is in the denominator.</p>
+        <p><strong>The classified 1&ndash;5 WHP product is query-only</strong> because its rasters carry no colour table upstream, so any map legend for them would be invented.</p>
+        <p><strong>MTBS perimeters mix fire types, and the two map layers do not sum to the dataset:</strong> 4,689 <code>Unknown</code> records appear in neither.</p>
+        <p><strong>MTBS severity has two hex assets and they are not interchangeable.</strong> One gives the dominant class per cell, the other each class's fractional coverage; area and share questions need the fractions. Increased Greenness, the processing mask and background are not severity levels &mdash; keep them out of any severity denominator.</p>
+        <p><strong>Severity is not a complete annual record.</strong> Six source mosaics are permanently unavailable upstream (CONUS 2004 and 2017, Alaska 1987, 1995, 2001, 2013) and Alaska has no 2024. A missing year means not mapped, never &ldquo;nothing burned&rdquo;. Perimeters cover all 41 years.</p>
+        <p><strong>Reburn makes &ldquo;acres burned&rdquo; ambiguous.</strong> 45,128,351 hex cells burned at least once against 57,552,314 (fire, cell) pairs &mdash; cumulative fire-years exceed unique ground by 27.5%, and one cell burned 19 times.</p>
+        <p><strong>FPA-FOD point precision has a ~1 km floor.</strong> Many records are geolocated from PLSS descriptions, so distance bands below about a kilometre are not defensible, 0.5-mile buffers included. This is also the 7th edition, which backfills previously underrepresented states, so pre-2021 counts differ from figures quoted off the 1992&ndash;2020 edition.</p>
+        <p><strong>The cause mix inside roadless areas differs from the national pattern.</strong> Nationally, 76.4% of ignitions are human and 13.4% natural; inside rule-affected roadless areas it is <strong>71.6% natural against 26.4% human</strong>. State the base with either figure.</p>
+        <p><strong>This is the SILVIS WUI, not the HFRA WUI</strong> used in the Draft EIS. The definitions differ and are not interchangeable.</p>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>The two road sources overlap, and nobody has deduplicated them.</strong> Forest Service roads frequently reappear in TIGER as vehicular trails or private service roads: in a test area on the Bitterroot National Forest, 97 of 112 RoadCore segments (87%) fell within 25 m of a TIGER line. Combine the two by distance to the <em>nearest</em> road across both, never by summing. TIGER also carries no length column, which is why its layers are labelled in segments and RoadCore's in miles &mdash; the units are not comparable.</p>
+        <p><strong>Neither source alone is the Draft EIS analysis.</strong> RoadCore is Forest Service roads only; the DEIS buffered &ldquo;National Forest System roads <em>and</em> other authorized public roads&rdquo; (Vol I fn. 10), so a reproduction needs the TIGER layers too.</p>
+        <p><strong>Which TIGER classes count as &ldquo;authorized public roads&rdquo; is a judgment call the agency never published.</strong> Four non-motorized classes are excluded here outright. Two more are genuinely contestable and together carry 1,436,550 segments &mdash; private service roads (logging, oil field, ranch) and internal Census use. They are inside the mapped motor-vehicle layer, and dropping them moves any proximity figure.</p>
+        <p><strong>No dataset reproduces the regulatory definition of a road.</strong> 36 CFR 294.11 counts unclassified and temporary roads, and the Forest Service maintains no national database of temporary roads (DEIS Vol I fn. 20), so any road-proximity figure from these layers is a lower bound. A further 8,204 records holding 4,745 miles carry no geometry at all.</p>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>NLCD and LANDFIRE both stop at the CONUS border</strong>, and Alaska holds 14,778,681 roadless acres &mdash; 25% of the all-IRA total and the largest single state. Any land-cover or condition share computed from them silently drops it.</p>
+        <p><strong>Five vegetation condition codes are not rated for departure at all</strong>: water, snow/ice, developed, barren and agriculture. They are unrated, not low-departure, and belong out of the denominator of any &ldquo;share of land that is departed&rdquo; statistic. Inside rule-affected roadless area they are 4.1% of cells.</p>
+        <p><strong>Departure shares are shares of <em>cells</em>, not acres</strong>, because the fractional-coverage table that acre accounting requires is not published for this layer. For reference, across rule-affected roadless area 14.6% of rated land is Class III (high departure) and 33.0% is Class II.B or worse.</p>
+        <p><strong>LANDFIRE 2024 and WHP 2023 are not one snapshot.</strong> The hazard layers are built from LANDFIRE 2020 fuels, three updates older.</p>
+    </div>
+
+    <h3>Acreage bases</h3>
+    <p>Roadless acreage appears in the Draft EIS against several different bases. The largest and the smallest differ by more than 18 million acres, so every percentage depends on which one is the denominator. This ladder is DEIS Vol I Table 12 and its footnotes.</p>
 
     <div class="table-wrap">
     <table>
@@ -271,12 +395,12 @@ li { margin: 0.25rem 0; }
             <tr><th>Step</th><th class="num">Acres</th><th>Source</th></tr>
         </thead>
         <tbody>
-            <tr><td>All inventoried roadless areas (IRA)</td><td class="num">58,419,694</td><td>Roadless areas layer, 11,391 polygons</td></tr>
+            <tr><td>All inventoried roadless areas (IRA)</td><td class="num">58,419,694</td><td>Roadless layer, 11,391 polygons</td></tr>
             <tr><td>&minus; Idaho (9,285,370) + Colorado (4,433,322)</td><td class="num">&minus;13,718,692</td><td>Same layer, <code>STATE IN ('ID','CO')</code></td></tr>
-            <tr class="key"><td>= rule-affected</td><td class="num">44,701,002</td><td>The base excluding state-rule acreage</td></tr>
+            <tr class="key"><td>= rule-affected</td><td class="num">44,701,002</td><td>Excludes state-rule acreage</td></tr>
             <tr><td>&minus; not on National Forest System lands</td><td class="num">&minus;400,000</td><td>DEIS Vol I p. 30, fn. 9</td></tr>
             <tr><td>= on NFS lands</td><td class="num">44,300,000</td><td></td></tr>
-            <tr><td>&minus; designated wilderness</td><td class="num">&minus;1,300,000</td><td>DEIS Vol I fn. 14</td></tr>
+            <tr><td>&minus; designated wilderness</td><td class="num">&minus;1,300,000</td><td>fn. 14</td></tr>
             <tr><td>&minus; wilderness study areas</td><td class="num">&minus;2,800,000</td><td>fn. 15</td></tr>
             <tr><td>&minus; Wild &amp; Scenic wild segments</td><td class="num">&minus;85,000</td><td>fn. 16</td></tr>
             <tr class="key"><td>= potentially affected environment (PAE)</td><td class="num">40,049,537</td><td>DEIS Vol I Table 12</td></tr>
@@ -285,291 +409,12 @@ li { margin: 0.25rem 0; }
     </div>
 
     <div class="callout">
-        <p><strong>The base changes the answer.</strong> The ten Western states (AK, AZ, CA, MT, NV, NM, OR, UT, WA, WY) hold <strong>95.61%</strong> of the rule-affected base and <strong>73.16%</strong> of the all-IRA base. The same geography yields either figure depending on the denominator. The assistant reports which base it used with any percentage it computes.</p>
-    </div>
-
-    <h3>A fifth base, answering a different question</h3>
-    <p>All four steps above are bases of <em>roadless</em> acreage. A percentage of <strong>Forest Service land</strong> is measured instead against Forest Service surface ownership, <strong>193,174,461 acres</strong> nationally, which is a different quantity and does not belong in the ladder above.</p>
-
-    <div class="callout warn">
-        <p><strong>Surface ownership is not an administrative envelope.</strong> The Forest Service also publishes three boundary datasets that are not ownership: proclaimed forest (225.1M ac), administrative forest (236.8M ac) and ranger districts (237.1M ac). These enclose inholdings and private, state and other-federal parcels the agency does not own. Substituting one inflates the denominator by up to 22.6%. On the map all three are drawn as outlines with no fill.</p>
-        <p>PAD-US 4.1 <code>fee</code> filtered to <code>Mang_Name = 'USFS'</code> gives 193,275,732 acres, within 0.05% of the USFS figure from an unrelated publisher.</p>
-    </div>
-</section>
-
-<section>
-    <h2>How it works</h2>
-    <p>The map renders open geospatial datasets directly from cloud-native formats (PMTiles, Cloud-Optimized GeoTIFFs, GeoParquet) hosted on the <a href="https://nrp.ai" target="_blank" rel="noopener">National Research Platform</a>. There is no tile server; your browser fetches only the bytes needed for the current view.</p>
-    <p>The data assistant translates plain-English questions into SQL using <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> over the same Parquet files, with column schemas and dataset descriptions discovered through a <a href="https://stacspec.org" target="_blank" rel="noopener">SpatioTemporal Asset Catalog (STAC)</a>. Nothing on the map is modeled, estimated or synthesized by the app: the processing is format conversion, plus a display-time filter where a label says so.</p>
-    <p>The deployed assistant runs on the NRP open-llm-proxy, a shared university inference service using open-weight models.</p>
-    <p>The full stack (map, chat, MCP tool server and STAC catalog) is open source. See the <a href="https://github.com/cassiebuhler/roadless-rule" target="_blank" rel="noopener">project repository</a> and the <a href="https://github.com/boettiger-lab/geo-agent" target="_blank" rel="noopener">geo-agent / GLEN core library</a>.</p>
-</section>
-
-<section>
-    <h2>Working with the data assistant</h2>
-    <p>Transparency, CSV export, layer filters and cross-dataset queries are all available by asking in plain language:</p>
-    <ul>
-        <li><strong>Any percentage, with its base named:</strong> <em>&ldquo;What share of rule-affected roadless area has high or very high wildfire hazard?&rdquo;</em></li>
-        <li><strong>Compare against a specific base:</strong> <em>&ldquo;What percent of Forest Service land in Montana is roadless? Say which extent layer you used.&rdquo;</em></li>
-        <li><strong>Show, hide, filter and restyle layers:</strong> <em>&ldquo;Make the rule-affected layer 50% transparent&rdquo;</em>, <em>&ldquo;show only fires after 2015.&rdquo;</em></li>
-        <li><strong>Zoom and pan:</strong> <em>&ldquo;Zoom to the Tongass&rdquo;</em>, <em>&ldquo;center on Montana.&rdquo;</em></li>
-        <li><strong>Export results:</strong> <em>&ldquo;Give me a CSV of rule-affected roadless acreage by state.&rdquo;</em></li>
-        <li><strong>Query datasets that aren't on the map:</strong> slope, watersheds, census geographies and drinking-water source areas are in the catalog and queryable without a map layer.</li>
-    </ul>
-    <p>Some interface details that aren't visually obvious:</p>
-    <ul>
-        <li>The assistant panel is resizable by dragging its edge; the header button minimizes it.</li>
-        <li>PMTiles layers have no fixed legend. Hover over a feature for a tooltip with its attributes from the source data.</li>
-        <li>Every tool call is logged in the per-turn timeline with timings.</li>
-        <li>The two roadless layers open on. Every other group starts collapsed and off.</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Data layers &amp; sources</h2>
-    <p>Every layer draws from a published government or academic dataset. The sidebar is grouped by what the data describes, and labels follow one form: <strong><code>what it is &middot; PUBLISHER vintage</code></strong>. Click &ldquo;STAC&rdquo; beside any entry for machine-readable metadata: schemas, column descriptions, license, lineage and download URLs.</p>
-
-    <div class="layer-group">
-        <h3>Roadless areas &middot; USFS 2001</h3>
-        <div class="layer">
-            <div class="name">Rule-affected &middot; 44.7M ac &mdash; PROPOSED for rescission</div>
-            <div class="source">USDA Forest Service, Geospatial Service and Technology Center: the inventory designated by the 2001 rule. 11,391 polygons, 58,419,694 ac nationally across 38 states and Puerto Rico. This layer is the subset <code>STATE NOT IN ('ID','CO')</code>. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.RoadlessArea_2001.zip" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Idaho &amp; Colorado &middot; 13.7M ac &mdash; state rules, excluded</div>
-            <div class="source">The complement of the layer above, from the same dataset, split on <code>STATE</code>. No attribute in the data records which rule governs an area; the 58.4M / 44.7M split is that filter alone.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadless-areas-2001/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
-        </div>
-    </div>
-
-    <div class="callout stop">
-        <p><strong>The <code>CATEGORY</code> column is not rule status.</strong> <code>CATEGORY</code> (<code>1B</code> / <code>1B-1</code> / <code>1C</code>) records forest-plan direction from before the rule took effect. <code>1C</code> reads as though road construction were allowed; it was not. The 2001 rule prohibits road construction across every inventoried roadless area regardless of category, so do not style, filter or label as though this column carried protection level.</p>
+        <p><strong>The base changes the answer.</strong> The ten Western states (AK, AZ, CA, MT, NV, NM, OR, UT, WA, WY) hold <strong>95.61%</strong> of the rule-affected base and <strong>73.16%</strong> of the all-IRA base &mdash; the same geography, either figure. The assistant names the base with any percentage it computes.</p>
     </div>
 
     <div class="callout warn">
-        <p><strong>Idaho and Colorado boundaries here are the superseded 2001 ones.</strong> Both states adopted their own roadless rules (2008 and 2012); the Forest Service publishes the operative boundaries as separate datasets, not included here.</p>
-        <p>USFS cautions that source scales vary and that boundaries will not align with other datasets; the National Forest Planning Record documents remain the official inventory. Treat adjacency and buffer results as approximate.</p>
+        <p><strong>A percentage of Forest Service land uses a different base entirely:</strong> Forest Service surface ownership, <strong>193,174,461 acres</strong> nationally. The proclaimed, administrative and ranger-district boundaries are not ownership &mdash; they enclose private, state and other-federal inholdings, and substituting one inflates the denominator by up to 22.6%. That is why all three are drawn as outlines with no fill. (PAD-US 4.1 <code>fee</code> filtered to USFS gives 193,275,732 acres, within 0.05% from an unrelated publisher.)</p>
     </div>
-
-    <div class="layer-group">
-        <h3>National Forest System extent &middot; USFS 2025</h3>
-        <div class="layer">
-            <div class="name">Forest Service ownership, 193.2M ac</div>
-            <div class="source">USDA Forest Service Enterprise Data Warehouse, 2025-06-22 snapshot: 97,493 parcels, 193,174,461 ac. The only ownership layer of the four, and the correct base for percentages of Forest Service land. Filtered in the map to <code>OWNERCLASS = 'USDA FOREST SERVICE'</code>; the parquet also retains 19,663 <code>NON-FS</code> inholding parcels (11.0M ac). Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/nfs-surface-ownership/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.SurfaceOwnership.zip" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Proclaimed boundary, 225.1M ac</div>
-            <div class="source">154 units. An administrative envelope, not ownership. Outline only. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/proclaimed-forest/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.ProclaimedForest.zip" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Administrative boundary, 236.8M ac</div>
-            <div class="source">112 units. Administrative envelope, outline only. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/administrative-forest/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.AdministrativeForest.zip" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Ranger districts, 237.1M ac</div>
-            <div class="source">503 districts. Administrative envelope, outline only. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/ranger-district/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.RangerDistrict.zip" target="_blank" rel="noopener">Source</a></div>
-        </div>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>None of the four carries a state column.</strong> <code>REGION</code> is a USFS region, not a state. Attributing acreage to a state requires a hex or clipped spatial join: a plain <code>ST_Intersects</code> sum credits a parcel's entire acreage to every state its geometry touches, overstating Montana by roughly 9M acres. The assistant uses the hex join for per-state figures.</p>
-    </div>
-
-    <div class="layer-group">
-        <h3>Comparison strata &middot; PAD-US 4.1</h3>
-        <div class="layer">
-            <div class="name">Designated wilderness</div>
-            <div class="source">USGS Gap Analysis Project, PAD-US 4.1 <em>combined</em> layer (released Mar 2025), <code>Des_Tp = 'WA'</code>. 994 features / 112.5M ac for all managers; the USFS-managed subset that can intersect roadless area is 475 features / 37.11M ac. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.5066/P96WBCHS" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Wilderness study areas</div>
-            <div class="source"><code>Des_Tp = 'WSA'</code>. 722 features / 24.16M ac all managers; 42 features / 3.40M ac USFS-managed. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.5066/P96WBCHS" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Wild &amp; Scenic Rivers, wild segments</div>
-            <div class="source"><code>Des_Tp = 'WSR'</code> <em>and</em> <code>Loc_Ds IN ('Wild', 'Designated - Wild')</code>. 163 features / 1.36M ac all managers; 91 features / 0.58M ac USFS-managed. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.5066/P96WBCHS" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-    </div>
-
-    <div class="callout">
-        <p><strong>These three strata are the deduction behind the fourth denominator.</strong> DEIS Vol I Table 12 nets wilderness, wilderness study areas and Wild &amp; Scenic wild segments out of the ~44.3M NFS acres to reach the 40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres. Each layer here is drawn for <em>all</em> managers, so no single layer is itself the deduction.</p>
-    </div>
-
-    <div class="callout warn">
-        <p><strong><code>Loc_Ds</code> defines the W&amp;SR layer.</strong> PAD-US files all Wild &amp; Scenic River records under <code>Des_Tp = 'WSR'</code> (910 features, 5.3M ac) regardless of classification; only <code>Loc_Ds</code> distinguishes wild from scenic and recreational, and designated from eligible and suitable. <code>Eligible - Wild</code> and <code>Suitable - Wild</code> are excluded as candidates, not designations; using all W&amp;SR records would be 4&times; the acreage.</p>
-        <p><strong>The combined layer contains overlapping polygons</strong> for the same ground, so <code>SUM(GIS_Acres)</code> over it is not meaningful at national scale: unfiltered it totals 8.68B acres for a country with ~2.3B acres of land. The three strata can also overlap each other (a wild river segment can run through wilderness), so do not add their acreages.</p>
-        <p><strong>Four antimeridian-wrapping units are excluded from the wilderness layer</strong> (Papah&#257;naumoku&#257;kea, Pacific Remote Islands, Alaska Maritime NWR, Aleutian Islands WA) because their unwrapped longitudes make MapLibre draw each as a stripe across the map. All four are FWS-managed, so none is a comparison stratum for NFS roadless area, but this is a workaround: it is tracked at <a href="https://github.com/boettiger-lab/data-workflows/issues/617" target="_blank" rel="noopener">data-workflows#617</a>, and until it lands the map understates Alaska and Pacific protected area. The parquet is unaffected.</p>
-        <p><strong>PAD-US carries its own <code>Des_Tp = 'IRA'</code> records</strong> (~58.2M ac, close to the USFS 58.4M). It is a different rendering of the same inventory, not an independent one, so never add it to the USFS roadless layer.</p>
-    </div>
-
-    <div class="layer-group">
-        <h3>Fuels &amp; fire</h3>
-        <div class="layer">
-            <div class="name">Wildfire hazard index &middot; WHP 2023 (CONUS) and (Alaska)</div>
-            <div class="source">USDA Forest Service, Dillon 2023 4th ed., v2023 at 270 m. Two separate layers because the classification is domain-relative. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json" target="_blank" rel="noopener">STAC: CONUS</a><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json" target="_blank" rel="noopener">STAC: Alaska</a><a href="https://doi.org/10.2737/RDS-2015-0047-4" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Completed treatments, FY2014+ &middot; USFS FACTS 2026</div>
-            <div class="source">USDA Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands. Filtered to <code>FISCAL_YEAR_COMPLETED &gt;= 2014</code> across <strong>all</strong> completed activity types, which is a broader set than hazardous fuels treatments alone. Fiscal years, not calendar. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Wildfire perimeters 1984&ndash;2024 &middot; MTBS</div>
-            <div class="source">Monitoring Trends in Burn Severity (USGS / USFS), national including Alaska. Covers <code>Incid_Type</code> of <code>Wildfire</code> (16,960) and <code>Wildland Fire Use</code> (211). Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://www.mtbs.gov" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Prescribed fire perimeters 1984&ndash;2024 &middot; MTBS</div>
-            <div class="source">Same collection, <code>Incid_Type = 'Prescribed Fire'</code> (8,870). Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://www.mtbs.gov" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Burn severity by year &middot; MTBS (CONUS) and (Alaska)</div>
-            <div class="source">Annual severity mosaics behind a year selector: 39 CONUS years (1984&ndash;2024) and 36 Alaska years (1984&ndash;2023). Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json" target="_blank" rel="noopener">STAC: CONUS</a><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json" target="_blank" rel="noopener">STAC: Alaska</a><a href="https://www.mtbs.gov" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Ignitions by cause 1992&ndash;2024 &middot; FPA-FOD</div>
-            <div class="source">USDA Forest Service, Short 7th ed.: 2,661,383 ignition points, national including AK, HI, PR, VI and Guam. Coloured by <code>NWCG_CAUSE_CLASSIFICATION</code>. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.2737/RDS-2013-0009.7" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Large-fire ignitions &ge;1,000 ac 1992&ndash;2024 &middot; FPA-FOD</div>
-            <div class="source">Same collection, filtered to <code>FIRE_SIZE_CLASS IN ('F','G')</code>. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.2737/RDS-2013-0009.7" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Fire perimeters 1835&ndash;2020 &middot; USGS 2021</div>
-            <div class="source">USGS Wildland Fire Combined Dataset, 2021 release: a national synthesis of perimeters from federal, state and tribal sources. Not an annual fire history. Completeness is uneven by era and region, and counts collapse before ~1980. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://www.sciencebase.gov/catalog/item/61aa537dd34eb622f699df81" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Wildland-urban interface &middot; SILVIS 2020</div>
-            <div class="source">SILVIS Lab, University of Wisconsin&ndash;Madison, v4 (decades 1990&ndash;2020), census blocks. <code>WUIFLAG2020</code>: <code>0</code> non-WUI, <code>1</code> intermix, <code>2</code> interface; the map is filtered to <code>&gt; 0</code>. CC-BY-4.0.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-wui/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://silvis.forest.wisc.edu/data/wui-change/" target="_blank" rel="noopener">Source</a></div>
-        </div>
-    </div>
-
-    <div class="callout stop">
-        <p><strong>WHP measures hazard, not risk.</strong> It indexes relative potential for high-intensity fire that would be difficult to control. The source metadata states that it is not a measure of risk to homes, communities or people and does not account for what is exposed.</p>
-        <p><strong>CONUS and Alaska are separate layers because the classification is domain-relative.</strong> The class breaks are percentiles computed within each domain, so &ldquo;Very High&rdquo; is index &gt; 1,985 in CONUS and &gt; 8,912 in Alaska, 4.5&times; apart. Do not pool the classified domains; use the continuous index for any CONUS-vs-Alaska comparison. National coverage means turning on both toggles; one toggle driving both halves needs a framework change (<a href="https://github.com/boettiger-lab/geo-agent/issues/349" target="_blank" rel="noopener">geo-agent#349</a>). Mosaicking is not a fix: a shared stretch would saturate over 10% of Alaska into the top colour.</p>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>Alaska's high/very-high WHP acreage is zero, not missing.</strong> USFS land in Alaska is Tongass and Chugach coastal temperate rainforest, which sits at the bottom of the Alaska hazard distribution. A national high/very-high share therefore changes substantially depending on whether Alaska is in the denominator.</p>
-        <p><strong>The mapped WHP layer is the continuous index; the classified 1&ndash;5 product is SQL-only.</strong> The classified rasters carry no colour table upstream, so any map legend for them would be invented.</p>
-        <p><strong>MTBS perimeters mix fire types, and the two map layers do not sum to the dataset.</strong> 4,689 <code>Unknown</code> records appear in neither layer.</p>
-        <p><strong>MTBS severity has two hex assets and they are not interchangeable.</strong> <code>&hellip;-hex</code> gives the dominant class per cell (winner-take-all); <code>&hellip;-hex-fractions</code> gives each class's fractional coverage. Area and share questions need the fractions asset. Classes 5 (Increased Greenness) and 6 (Non-Processing Area Mask) are not severity levels; exclude them, and class 0 (Background), from any severity denominator.</p>
-        <p><strong>Severity is not a complete annual record.</strong> Six source mosaics are permanently unavailable upstream (CONUS 2004 and 2017, Alaska 1987, 1995, 2001 and 2013), and Alaska has no 2024. A missing year means not mapped, never &ldquo;nothing burned&rdquo;. Perimeters cover all 41 years.</p>
-        <p><strong>Reburn makes &ldquo;acres burned&rdquo; ambiguous.</strong> 45,128,351 hex cells burned at least once, against 57,552,314 (fire, cell) pairs: cumulative fire-years exceed unique ground by 27.5%, and one cell burned 19 times. Any total must say which it means.</p>
-        <p><strong>The cause mix inside roadless areas differs from the national pattern.</strong> Nationally: 2,034,178 human ignitions (76.4%) against 356,409 natural (13.4%). Inside rule-affected roadless areas: <strong>18,166 natural (71.6%) against 6,697 human (26.4%)</strong>. State the base with either figure.</p>
-        <p><strong>FPA-FOD point precision has a ~1 km floor.</strong> Many records are geolocated from PLSS descriptions, so distance bands below about a kilometre are not defensible, including 0.5-mile (~800 m) buffers. This is also the <strong>7th edition</strong>, not the 6th plus four years: it backfills previously underrepresented states, so pre-2021 counts differ from figures quoted off the 1992&ndash;2020 edition.</p>
-        <p><strong>This is the SILVIS WUI, not the HFRA WUI</strong> used in the Draft EIS. The two definitions differ and are not interchangeable.</p>
-    </div>
-
-    <div class="layer-group">
-        <h3>Land cover &amp; modification</h3>
-        <div class="layer">
-            <div class="name">Land cover &middot; NLCD 2024 (CONUS only)</div>
-            <div class="source">MRLC / USGS EROS, Annual NLCD Collection 1.2. Classified raster: use <code>mode</code>, not <code>mean</code>; nodata <code>250</code>. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://www.mrlc.gov" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Human modification &middot; Theobald 2016</div>
-            <div class="source">Theobald et al., global, circa 2016 at ~1 km. A continuous 0&ndash;1 index (0 = unmodified, 1 = fully modified): average it, never sum it. CC-BY-4.0.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://doi.org/10.6084/m9.figshare.7283087" target="_blank" rel="noopener">DOI</a></div>
-        </div>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>NLCD has no Alaska</strong>, which holds 14,778,681 roadless acres, 25% of the all-IRA total and the largest single state. Any land-cover share computed from it silently drops Alaska.</p>
-    </div>
-
-    <div class="layer-group">
-        <h3>Roads &amp; access</h3>
-        <div class="layer">
-            <div class="name">NFS roads open to vehicles, 263,807 mi &middot; USFS 2025</div>
-            <div class="source">USDA Forest Service, Natural Resource Manager (NRM), 2025-05-11 snapshot. Maintenance levels 2&ndash;5 of <code>roadcore-fs</code>, which holds 367,666 segments and 368,103 official miles nationally. This layer is the part open to motor vehicles. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/datasets.php" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">NFS roads closed &amp; stored (ML1), 103,945 mi &middot; USFS 2025</div>
-            <div class="source">The same dataset, maintenance level 1: roads closed to motor vehicles and held in storage, often impassable and frequently revegetated. Drawn dashed and separate: they are 28.2% of the road system, so counting them as &ldquo;existing roads&rdquo; materially changes any proximity figure. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">All motor-vehicle roads, 16,470,232 segments &middot; TIGER 2025</div>
-            <div class="source">US Census Bureau, TIGER/Line 2025 roads, published 2025-09-22, 3,233 counties and county equivalents. Every road regardless of jurisdiction &mdash; federal, state, county and private &mdash; so this is the layer that supplies the &ldquo;other authorized public roads&rdquo; half of the Draft EIS buffer. Filtered in the map to the motor-vehicle classes: 20,667 walkway, stairway, bike-path and bridle-path features are drawn separately below rather than counted here. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html" target="_blank" rel="noopener">Source</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Highways &amp; secondary roads, 268,817 segments &middot; TIGER 2025</div>
-            <div class="source">The same dataset, MTFCC <code>S1100</code> primary road and <code>S1200</code> secondary road only. Drawn heavier because at national zoom the full 16.5M-segment network reads as a solid wash. This is a <strong>subset</strong> of the layer above, not an addition to it &mdash; never add the two counts. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
-        </div>
-        <div class="layer">
-            <div class="name">Walkways &amp; paths, 20,667 segments &mdash; NOT roads under 36 CFR 294.11 &middot; TIGER 2025</div>
-            <div class="source">The same dataset, MTFCC <code>S1710</code> walkway, <code>S1720</code> stairway, <code>S1820</code> bike path and <code>S1830</code> bridle path. None is a motor vehicle travelway, so all four are excluded from every road figure in this app. They are drawn dashed and kept visible so the exclusion is something you can see rather than something you have to take on trust. Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
-        </div>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>Both halves of the road picture are now mapped, and they are not interchangeable.</strong> RoadCore is Forest Service roads only &mdash; <code>SYSTEM</code> is <code>NFSR</code> and <code>JURISDICTION</code> is <code>FS</code> on every record, so state, county and private roads are absent by construction. The Draft EIS road-proximity analysis buffered &ldquo;National Forest System roads <em>and</em> other authorized public roads&rdquo; (Vol I fn. 10), so a reproduction needs the TIGER layers too; either source alone undercounts.</p>
-        <p><strong>The two sources overlap, and nobody has deduplicated them.</strong> Forest Service roads frequently also appear in TIGER, typically as <code>S1500</code> vehicular trail or <code>S1740</code> private service road. In a test area on the Bitterroot National Forest, 97 of 112 RoadCore segments (87%) fell within 25 m of a TIGER line. Adding the segment counts or the mileage of the two layers therefore double-counts. Combine them by taking distance to the <em>nearest</em> road across both sources, never by summing.</p>
-        <p><strong>Which TIGER classes count as &ldquo;authorized public roads&rdquo; is a judgment call, and the agency never published its choice.</strong> Four classes are excluded here outright as non-motorized. Two more are genuinely contestable and together carry 1,436,550 segments: <code>S1740</code> private service roads (logging, oil field, ranch) and <code>S1750</code> internal Census use. They are inside the mapped motor-vehicle layer; dropping them moves any proximity figure, so a result that does not state which way it went is incomplete.</p>
-        <p><strong>No dataset reproduces the regulatory definition of a road.</strong> 36 CFR 294.11 counts unclassified and temporary roads, and the Forest Service maintains no national database of temporary roads (DEIS Vol I fn. 20), so any road-proximity figure computed from these layers is a lower bound. A further 8,204 records holding 4,745 miles carry no geometry at all (an upstream referencing failure the agency flags), so they cannot be buffered.</p>
-    </div>
-
-    <div class="layer-group">
-        <h3>Vegetation condition &middot; LANDFIRE 2024 <span style="font-weight:400;opacity:.7">(in Fuels &amp; fire)</span></h3>
-        <div class="layer">
-            <div class="name">Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</div>
-            <div class="source">LANDFIRE (USGS EROS + USDA Forest Service), LF 2024 version 2.5.0, 30 m. How far current vegetation has departed from its estimated historical reference condition, on a six-step scale from Class I.A (0&ndash;16% departure) to Class III.B (84&ndash;100%). Public domain.</div>
-            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://landfire.gov" target="_blank" rel="noopener">Source</a></div>
-        </div>
-    </div>
-
-    <div class="callout warn">
-        <p><strong>Five condition-class codes are not rated for departure at all</strong>: water, snow/ice, developed, barren or sparsely vegetated, and agriculture. They are unrated, not low-departure, and belong out of the denominator of any &ldquo;share of land that is departed&rdquo; statistic. Inside rule-affected roadless area they are 4.1% of cells.</p>
-        <p><strong>Departure shares from this layer are shares of <em>cells</em>, not acres</strong>, because the per-class fractional-coverage table that acre accounting requires is not published for it. For reference, across rule-affected roadless area 14.6% of rated land is Class III (high departure, 67&ndash;100%) and 33.0% is Class II.B or worse.</p>
-        <p><strong>LANDFIRE 2024 is not the same vintage as WHP 2023.</strong> The wildfire hazard layers are built from LANDFIRE 2020 version 2.2.0 fuels, three updates older, so the two are not one snapshot. This layer is also CONUS only, the same Alaska gap as NLCD.</p>
-    </div>
-
-    <p style="margin-top: 1.6rem;">Browse the full catalog at <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-data/stac/catalog.json" target="_blank" rel="noopener">radiantearth.github.io / stac-browser</a> to explore datasets not yet enabled in the app.</p>
-</section>
-
-<section>
-    <h2>Datasets not yet in this app</h2>
-    <p>Ingest is tracked in <a href="https://github.com/boettiger-lab/data-workflows" target="_blank" rel="noopener">boettiger-lab/data-workflows</a> under the <a href="https://github.com/boettiger-lab/data-workflows/issues?q=is%3Aissue+label%3Aroadless" target="_blank" rel="noopener"><code>roadless</code></a> label, coordinated by <a href="https://github.com/boettiger-lab/data-workflows/issues/594" target="_blank" rel="noopener">#594</a>. Layers appear here as each one lands.</p>
-
-    <div class="table-wrap">
-    <table>
-        <thead>
-            <tr><th>Issue</th><th>Dataset</th><th>Why it matters</th></tr>
-        </thead>
-        <tbody>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/590" target="_blank" rel="noopener">#590</a></td><td>LANDFIRE 2024: <strong>EVC</strong> (canopy cover) and <strong>FBFM40</strong> (fuel models)</td><td>VCC, the departure layer, is already in the app</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/591" target="_blank" rel="noopener">#591</a></td><td>USFS Insect &amp; Disease Detection Survey</td><td>Forest health</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/592" target="_blank" rel="noopener">#592</a></td><td>Wildfire Risk to Communities v2</td><td>Exposure, the missing half of the hazard/risk distinction</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/603" target="_blank" rel="noopener">#603</a></td><td>TWIG interagency fuel treatments + intersections</td><td>Interagency treatment record</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/609" target="_blank" rel="noopener">#609</a></td><td>Mesic Analysis Platform: 30 m mesic persistence, valley bottoms</td><td>Water-resource condition</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/610" target="_blank" rel="noopener">#610</a></td><td>USGS INHABIT v4: fire-promoting invasive plants</td><td>Invasion-driven fire risk</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/611" target="_blank" rel="noopener">#611</a></td><td>Wildfire Risk to Communities v2, populated areas</td><td>Exposure, populated-area basis</td></tr>
-        </tbody>
-    </table>
-    </div>
-
-    <p>Already in the catalog and available to the assistant via SQL without a map layer: <code>census-2025/roads</code> (Census TIGER roads, the non-federal half of the roads picture), <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024-*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas).</p>
 </section>
 
 <div class="foot">
