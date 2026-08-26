@@ -32,6 +32,9 @@ in the map only; the underlying parquet is complete and the assistant can query 
 | **PAD-US** | Protected Areas Database of the United States (USGS Gap Analysis Project) |
 | **FACTS** | Forest Service Activity Tracking System |
 | **SILVIS** | SILVIS Lab, University of Wisconsin–Madison |
+| **LANDFIRE** | Landscape Fire and Resource Management Planning Tools (USGS EROS + USDA Forest Service) |
+| **NRM** | Natural Resource Manager — the Forest Service system of record for roads |
+| **TIGER** | Topologically Integrated Geographic Encoding and Referencing (US Census Bureau) |
 
 ## Layers
 
@@ -284,6 +287,92 @@ use `mode`, not `mean`; nodata `250`.
 Human modification is a continuous 0–1 index (0 = unmodified, 1 = fully modified) — average it, never
 sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.7283087).
 
+### Roads & access
+
+| Layer | Publisher | Coverage | Vintage | License | Collection |
+|---|---|---|---|---|---|
+| `NFS roads open to vehicles, 263,807 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
+| `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
+| *(no map layer)* TIGER/Line roads 2025 | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+
+Both mapped layers are one dataset (`roadcore-fs`, 367,666 segments, 368,103 official miles) filtered
+on `OPER_MAINT_LEVEL`. The split is not cosmetic — it is the point of the layer.
+
+| `OPER_MAINT_LEVEL` | Segments | Official miles | Share |
+|---|---:|---:|---:|
+| `2 - HIGH CLEARANCE VEHICLES` | 183,849 | 199,311 | 54.1% |
+| **`1 - BASIC CUSTODIAL CARE (CLOSED)`** | **148,694** | **103,945** | **28.2%** |
+| `3 - SUITABLE FOR PASSENGER CARS` | 24,631 | 49,919 | 13.6% |
+| `4 - MODERATE DEGREE OF USER COMFORT` | 6,825 | 11,351 | 3.1% |
+| `5 - HIGH DEGREE OF USER COMFORT` | 3,312 | 3,226 | 0.9% |
+| null / `NA` / `0 - NOT MAINTAINED` | 355 | 352 | 0.1% |
+
+⛔ **Level 1 roads are closed to motor vehicles and held in storage** — often impassable, frequently
+revegetated. They are 28.2% of the system. Any "this land is near an existing road" figure changes
+substantially depending on whether they count, which is why they are drawn as a separate, dashed
+layer rather than folded into one road line. These three totals reproduce the Forest Service's own
+published figures: ~368,000 mi system, ~65,000 mi (18%) passenger-car, ~200,000 mi (54%)
+high-clearance.
+
+⚠️ **RoadCore is Forest Service roads only.** `SYSTEM` is `NFSR` and `JURISDICTION` is `FS` on every
+record — state, county and private roads are absent by construction. The DEIS buffered "National
+Forest System roads *and* other authorized public roads" (Vol I fn. 10); TIGER supplies that second
+half and is queryable, but has no map layer. A proximity analysis on the mapped layers alone
+undercounts.
+
+⚠️ **TIGER needs an MTFCC filter before it is "roads" at all.** `S1710` walkway, `S1720` stairway,
+`S1820` bike path and `S1830` bridle path (20,667 features) are not motor vehicle travelways and are
+excluded by 36 CFR 294.11. `S1740` private service roads and `S1750` internal Census use —
+**1,436,550 features between them** — are genuinely contestable as "authorized public roads"; the
+agency never said which way it went, so any reproduction must publish its choice.
+
+⚠️ **8,204 RoadCore records carry no geometry**, holding 4,745 official miles — an upstream
+linear-referencing failure flagged by the source's own `LOC_ERROR` (7,430 are `ROUTE NOT FOUND`).
+They are in the parquet with attributes intact but cannot appear in the tiles or hex, and cannot be
+buffered by anyone, including the agency.
+
+⛔ **No layer can reproduce the regulatory definition.** 36 CFR 294.11 counts unclassified and
+temporary roads, and the Forest Service maintains no national temporary-roads database (DEIS Vol I
+fn. 20). Every road-proximity figure computed here is a floor, not a match.
+
+### Vegetation condition · LANDFIRE 2024
+
+| Layer | Publisher | Coverage | Vintage | License | Collection |
+|---|---|---|---|---|---|
+| `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
+| `Existing vegetation type · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-evt` |
+
+Vegetation Condition Class measures how far current vegetation has departed from its estimated
+historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
+Class III.B (84–100%). It is the LANDFIRE product that speaks to claims about stands being overgrown
+or out of their natural condition.
+
+⛔ **Five codes are not rated for departure and must leave the denominator:** `111` water, `112`
+snow/ice, `120` developed, `132` barren/sparse, `180` agriculture. They are not low-departure land —
+they are unrated. Inside rule-affected roadless area they are 4.1% of res-10 cells.
+
+Measured across rule-affected roadless area (res-10 cells, rated classes only):
+
+| Class | Departure | Share of rated cells |
+|---|---|---:|
+| I.A | 0–16% | 0.9% |
+| I.B | 17–33% | 28.9% |
+| II.A | 34–50% | 37.2% |
+| II.B | 51–66% | 18.4% |
+| III.A | 67–83% | 13.9% |
+| III.B | 84–100% | 0.7% |
+
+So **14.6% of rated rule-affected roadless area is Class III** (high departure) and 33.0% is Class
+II.B or worse. Report this as a share of *cells*, not acres — the per-class fractional-coverage table
+that acre accounting needs is not published for these layers, and the hex carries only the dominant
+class per cell.
+
+⛔ **LANDFIRE 2024 and WHP 2023 are not the same vintage.** WHP 2023 is built from **LANDFIRE 2020
+v2.2.0** fuels — three updates older. Never present them as one snapshot.
+
+⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres. EVT carries 832
+classes with the official LANDFIRE palette; VCC carries 14.
+
 ## Reproducing the agency's numbers
 
 The rulemaking under audit: **91 FR 53827** (published 2026-08-20), RIN **0596-AD66**, docket
@@ -339,7 +428,7 @@ contains none of them, and the Draft EIS supplies the methods.
 |---|---|---|
 | ">40% high or very high wildfire hazard potential" | 11,479,564 ac (DEIS Vol I Table 22) ÷ PAE — **41.8% excluding Alaska**, 28.7% including it. Non-burnable and water are **in** the denominator; total acres, not forested. | ✅ **WHP 2023 is now in the app.** Compute from the hex, not COG pixels; keep CONUS and Alaska classified domains separate. Alaska's high/very-high acreage is **0**, so Table 22 is internally consistent — the flaw is labelling that cell "Not Available" rather than "0", which hides that dropping Alaska is what lifts 28.7% to 41.8%. |
 | "only 5% received hazardous fuels treatments since 2014" | FACTS, *completed*, **fiscal** years 2014–2024, ÷ PAE (DEIS Vol I p. 94). **Activity codes never disclosed**, nor whether overlapping records were dissolved or summed. | ⚠️ partially — code choice is yours to publish |
-| "more than a quarter — 11.3M ac — already near existing roads" | Within **0.5 mi either side** of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives **13.3M / 30.8%** against the 44.7M base. | ❌ needs the roads layer (pending) |
+| "more than a quarter — 11.3M ac — already near existing roads" | Within **0.5 mi either side** of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives **13.3M / 30.8%** against the 44.7M base. | ⚠️ **Testable in SQL, not on the map.** Both road layers are in the catalog, but only the NFS half is mapped — TIGER is SQL-only. Break results out by maintenance level: ML1 roads are closed and stored, 28.2% of the system. No layer can reproduce 36 CFR 294.11, which counts temporary roads the agency does not inventory. |
 
 ⚠️ **Montana does not reconcile — and the NFS extent layers now show why.** The announcement calls
 Montana roadless area "nearly 60 percent of Forest Service land." Montana holds 6,395,401 IRA acres,
@@ -366,8 +455,7 @@ added here as each lands.
 
 | Issue | Dataset | Why it matters |
 |---|---|---|
-| [#588](https://github.com/boettiger-lab/data-workflows/issues/588) | USFS RoadCore + Census TIGER roads | Claim 3 |
-| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | Forest mask, condition class |
+| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | The other two products, VCC and EVT, are now in the app |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |
 | [#592](https://github.com/boettiger-lab/data-workflows/issues/592) | Wildfire Risk to Communities v2 | Exposure |
 | [#603](https://github.com/boettiger-lab/data-workflows/issues/603) | TWIG interagency fuel treatments + intersections | Interagency treatment record |
@@ -376,5 +464,11 @@ added here as each lands.
 | [#611](https://github.com/boettiger-lab/data-workflows/issues/611) | Wildfire Risk to Communities v2 — populated areas | Exposure, populated-area basis |
 
 Already in the catalog and available to the assistant via SQL even though not on the map:
-`copernicus-glo90` (slope), `usgs-wbd-hu12` (watersheds), `census-2024-*` (states, counties,
-congressional districts), `epa-sab-v3-cws` (drinking-water source areas).
+`census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
+(watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
+(drinking-water source areas).
+
+⚠️ **`census-2025/roads` is SQL-only for a reason worth recording.** Its STAC collection declares a
+PMTiles asset at `census-2025/roads.pmtiles`, but that file **does not exist** — the build published
+the GeoParquet and the H3 hex without it. A declared asset is not a live asset; the map layer was
+left out rather than pointing at a 404.

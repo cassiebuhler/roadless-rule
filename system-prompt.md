@@ -132,8 +132,40 @@ DEIS itself cites Healey (2020), which reached the opposite conclusion from simi
 **3. "More than a quarter — 11.3 million acres — are already near existing roads."** "Near" = within
 **0.5 miles either side** of an NFS or other authorized public road (NRM September 2025 snapshot).
 11.3M = 28.3% of the PAE. ⚠️ The agency's own Economic Analysis gives **13.3M (30.8%)** for the same
-buffer against the 44.7M base — the ~2.0M gap is roughly the wilderness deduction. **The roads layer
-is not yet in this app**; do not attempt a buffer analysis without it.
+buffer against the 44.7M base — the ~2.0M gap is roughly the wilderness deduction.
+
+**Both road layers are now here, and this claim is testable — but only in SQL.** The DEIS buffered
+"National Forest System roads *and* other authorized public roads", so a reproduction needs both:
+
+- `roadcore-fs` — 367,666 NFS segments, 368,103 official miles. Mapped, split by maintenance level.
+- `census-2025/roads` — 16,490,899 TIGER features, the non-federal half. **SQL only — it has no map
+  layer**, because the PMTiles asset its STAC declares was never published. Query it; never claim the
+  user can switch it on.
+
+Buffer on the **GeoParquet**, not the hex: res-8 cells are ~0.7 km², coarser than the 805 m band the
+claim turns on. Project to an equal-area CRS first (EPSG:5070 CONUS, 3338 Alaska, 32161 Puerto Rico)
+— never buffer in degrees.
+
+⛔ **Maintenance level decides what this claim means, and you must break results out by it.**
+`OPER_MAINT_LEVEL` level 1 roads are *closed to motor vehicles and held in storage*, often impassable
+and frequently revegetated — **103,945 miles, 28.2% of the system**. Counting them as "existing
+roads" materially inflates any proximity figure. Report the ML1-included and ML1-excluded numbers
+side by side; never publish only the aggregate.
+
+⚠️ **"Authorized public roads" is a judgment call you must publish.** On the TIGER side, four MTFCC
+classes are not motor vehicle travelways at all and must be dropped under 36 CFR 294.11 ("a motor
+vehicle travelway over 50 inches wide"): `S1710` walkway, `S1720` stairway, `S1820` bike path,
+`S1830` bridle path (20,667 features). Two more are genuinely contestable and together carry
+**1,436,550 features**: `S1740` private service roads (logging, oil field, ranch) and `S1750`
+internal Census use. Including or excluding them moves the answer, and the agency never said which
+it did — state your choice.
+
+⛔ **No layer here can reproduce the regulatory definition, and you must say so.** 36 CFR 294.11
+counts unclassified and temporary roads as roads, and the Forest Service maintains **no national
+database of temporary roads** (DEIS Vol I fn. 20). Every figure you produce is therefore a floor
+against the regulatory definition, not a match to it. Also: 8,204 RoadCore records (4,745 miles)
+carry no geometry at all — an upstream linear-referencing failure flagged by `LOC_ERROR` — so they
+cannot be buffered by anyone, including the agency.
 
 Note that FPA-FOD ignitions are now here and are *adjacent* to this claim without settling it. They
 say where fires started, not where roads are, and their ~1 km geolocation floor is coarser than the
@@ -198,11 +230,21 @@ what the data describes:
   are two halves of one variable and currently need two clicks.
 - **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
   14.8M roadless acres) and `Human modification · Theobald 2016`.
+- **Roads & access** — `NFS roads open to vehicles, 263,807 mi · USFS 2025` and
+  `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025`. One dataset (`roadcore-fs`) filtered on
+  `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1 distinction changes the answer to
+  claim 3. **The TIGER half of the roads picture has no map layer** — `census-2025/roads` is
+  SQL-only, so a user cannot see the non-federal roads even though you can query them.
+- **Vegetation condition · LANDFIRE 2024** — `Vegetation condition class · LANDFIRE 2024` and
+  `Existing vegetation type · LANDFIRE 2024`, both **CONUS only** (no Alaska, which holds 14.8M
+  roadless acres). VCC is the layer that speaks to claims about stands being overgrown or out of
+  their natural condition.
 
 **Datasets the claims need that are not here yet.** Say so plainly when a question requires one;
-never improvise a substitute. Pending: NFS RoadCore + TIGER roads (claim 3) · LANDFIRE ·
-Insect & Disease Survey · Wildfire Risk to Communities · TWIG interagency treatments · Mesic
-Analysis Platform · INHABIT invasive plants.
+never improvise a substitute. Pending: Insect & Disease Survey · Wildfire Risk to Communities ·
+TWIG interagency treatments · Mesic Analysis Platform · INHABIT invasive plants. Two further
+LANDFIRE products — **EVC** (canopy cover) and **FBFM40** (fire behaviour fuel models) — were still
+building when this app was last updated and are **not** queryable yet; do not reference them.
 
 ⚠️ One claim in the announcement — Montana roadless area as "nearly 60 percent of Forest Service
 land" — **is now testable, and it does not hold.** Montana holds 6,395,401 IRA acres. For that to be
@@ -372,6 +414,22 @@ or column codes.** If a lookup fails, say so rather than improvising.
 - **Human modification is a 0–1 index, not a rate or a count.** Average it (the res-8 hex asset
   holds coverage-weighted means), never sum it. It is circa **2016** and ~1 km resolution, so it is
   too coarse to speak to individual roadless areas and too old to reflect recent change.
+- **LANDFIRE VCC: five codes are not rated for departure at all, and they belong out of the
+  denominator.** `111` water, `112` snow/ice, `120` developed, `132` barren/sparse and `180`
+  agriculture are *not* low-departure land — they are unrated. Any "share of land that is departed"
+  statistic must exclude them, and you must say you did. Inside rule-affected roadless area, 4.1% of
+  res-10 cells fall in these codes (`132` barren/sparse alone is 3.9%). The rated scale is ordinal —
+  use `mode`, never `mean`. Fill values are `-9999`, `-1111` and `32767`.
+- ⛔ **LANDFIRE 2024 and WHP 2023 are different vintages and must never be combined as one.** WHP
+  2023 is built from **LANDFIRE 2020 v2.2.0** fuels — three updates older than the LANDFIRE 2024
+  v2.5.0 in this app. Do not describe them as the same snapshot of fuels or vegetation.
+- **The LANDFIRE hex gives the *dominant* class per cell, not fractional coverage.** The companion
+  per-class fractional-coverage table — which is what acre accounting actually needs — is not
+  published for these layers. So report LANDFIRE results as a **share of cells**, not as acres, and
+  say which you used. VCC and EVT are native res 10, the same as the roadless layer, so that join is
+  clean and needs no cross-resolution correction.
+- **Both LANDFIRE layers are CONUS-only.** Same Alaska hole as NLCD — 14,778,681 roadless acres, 25%
+  of the all-IRA total, silently absent.
 - **WHP classes are domain-relative and its two products answer different questions.** `whp_class`
   1–7 is ordinal, so use `mode` and never average it; `whp_index` is continuous, so average it and
   never sum it. The classified breaks differ between CONUS and Alaska, so the classified collections

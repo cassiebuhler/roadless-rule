@@ -768,6 +768,99 @@
                     "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
                 }
             ]
+        },
+        {
+            "collection_id": "roadcore-fs",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json",
+            "group": {
+                "name": "Roads & access",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "roadcore-fs-pmtiles",
+                    "alias": "nfs-roads-open",
+                    "display_name": "NFS roads open to vehicles, 263,807 mi · USFS 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "OPER_MAINT_LEVEL"], ["2 - HIGH CLEARANCE VEHICLES", "3 - SUITABLE FOR PASSENGER CARS", "4 - MODERATE DEGREE OF USER COMFORT", "5 - HIGH DEGREE OF USER COMFORT"], true, false],
+                    "default_style": {
+                        "line-color": "#2B2B2B",
+                        "line-width": 0.7,
+                        "line-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Open to motor vehicles (ML 2–5) · 263,807 mi",
+                            "color": "#2B2B2B"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "ID", "OPER_MAINT_LEVEL", "SURFACE_TYPE", "SEG_LENGTH", "OPENFORUSETO"]
+                },
+                {
+                    "id": "roadcore-fs-pmtiles",
+                    "alias": "nfs-roads-ml1-closed",
+                    "display_name": "NFS roads closed & stored (ML1), 103,945 mi · USFS 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "OPER_MAINT_LEVEL"], ["1 - BASIC CUSTODIAL CARE (CLOSED)"], true, false],
+                    "default_style": {
+                        "line-color": "#9A9A9A",
+                        "line-width": 0.6,
+                        "line-opacity": 0.8,
+                        "line-dasharray": [2, 2]
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Closed & in storage (ML1) · 103,945 mi — 28.2% of the system",
+                            "color": "#9A9A9A"
+                        }
+                    ],
+                    "tooltip_fields": ["NAME", "ID", "OPER_MAINT_LEVEL", "SURFACE_TYPE", "SEG_LENGTH", "OPENFORUSETO"]
+                }
+            ]
+        },
+        {
+            "collection_id": "landfire-2024-vcc",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
+            "group": {
+                "name": "Vegetation condition · LANDFIRE 2024",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "vcc-cog",
+                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    }
+                }
+            ]
+        },
+        {
+            "collection_id": "landfire-2024-evt",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-evt/stac-collection.json",
+            "group": {
+                "name": "Vegetation condition · LANDFIRE 2024",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "evt-cog",
+                    "display_name": "Existing vegetation type · LANDFIRE 2024 (CONUS only)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "LANDFIRE existing vegetation type — 832 classes, official LANDFIRE palette",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    }
+                }
+            ]
         }
     ]
 }

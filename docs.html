@@ -320,7 +320,7 @@ li { margin: 0.25rem 0; }
             <tr>
                 <td><strong>&ldquo;More than a quarter &mdash; 11.3M ac &mdash; is already near existing roads&rdquo;</strong></td>
                 <td>Within 0.5 mi either side of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives <strong>13.3M / 30.8%</strong> against the 44.7M base.</td>
-                <td><strong>Not yet testable.</strong> Needs the roads layer, pending ingest at <a href="https://github.com/boettiger-lab/data-workflows/issues/588" target="_blank" rel="noopener">data-workflows#588</a>.</td>
+                <td><strong>Testable &mdash; in the assistant, not on the map.</strong> Both road datasets are now here: the Forest Service half is mapped, the Census TIGER half is query-only. Ask the assistant to break the result out by <em>maintenance level</em> &mdash; 28.2% of the Forest Service road system is closed and in storage, and whether those count changes the answer.</td>
             </tr>
         </tbody>
     </table>
@@ -535,6 +535,45 @@ li { margin: 0.25rem 0; }
         </div>
     </div>
 
+    <div class="layer-group">
+        <h3>Roads &amp; access</h3>
+        <div class="layer">
+            <div class="name">NFS roads open to vehicles, 263,807 mi &middot; USFS 2025</div>
+            <div class="source">USDA Forest Service, Natural Resource Manager (NRM), 2025-05-11 snapshot. Maintenance levels 2&ndash;5 of <code>roadcore-fs</code> &mdash; 367,666 segments and 368,103 official miles nationally, of which this layer is the part open to motor vehicles. Public domain.</div>
+            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://data.fs.usda.gov/geodata/edw/datasets.php" target="_blank" rel="noopener">Source</a></div>
+        </div>
+        <div class="layer">
+            <div class="name">NFS roads closed &amp; stored (ML1), 103,945 mi &middot; USFS 2025</div>
+            <div class="source">The same dataset, maintenance level 1 &mdash; roads <em>closed to motor vehicles and held in storage</em>, often impassable and frequently revegetated. Drawn dashed and separate because they are 28.2% of the road system and counting them as &ldquo;existing roads&rdquo; materially inflates any proximity figure. Public domain.</div>
+            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json" target="_blank" rel="noopener">STAC</a></div>
+        </div>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>The mapped roads are Forest Service roads only &mdash; and that is half the picture.</strong> <code>SYSTEM</code> is <code>NFSR</code> and <code>JURISDICTION</code> is <code>FS</code> on every record, so state, county and private roads are absent by construction. The Draft EIS buffered &ldquo;National Forest System roads <em>and</em> other authorized public roads&rdquo; (Vol I fn. 10). That second half is Census TIGER roads, 16,490,899 features, which the assistant can query but which has <strong>no map layer</strong> &mdash; the PMTiles asset its catalog entry declares was never published.</p>
+        <p><strong>No dataset can reproduce the regulatory definition.</strong> 36 CFR 294.11 counts unclassified and temporary roads, and the Forest Service maintains no national database of temporary roads (DEIS Vol I fn. 20). Every road-proximity figure computed here is a floor, not a match. A further 8,204 records holding 4,745 miles carry no geometry at all &mdash; an upstream referencing failure the agency flags itself &mdash; so nobody can buffer them.</p>
+    </div>
+
+    <div class="layer-group">
+        <h3>Vegetation condition &middot; LANDFIRE 2024</h3>
+        <div class="layer">
+            <div class="name">Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</div>
+            <div class="source">LANDFIRE (USGS EROS + USDA Forest Service), LF 2024 version 2.5.0, 30 m. How far current vegetation has departed from its estimated historical reference condition, on a six-step scale from Class I.A (0&ndash;16% departure) to Class III.B (84&ndash;100%). This is the layer that speaks to claims about stands being overgrown or out of their natural condition. Public domain.</div>
+            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://landfire.gov" target="_blank" rel="noopener">Source</a></div>
+        </div>
+        <div class="layer">
+            <div class="name">Existing vegetation type &middot; LANDFIRE 2024 (CONUS only)</div>
+            <div class="source">The same release &mdash; 832 vegetation-type classes drawn in the official LANDFIRE palette. Descriptive context for what kind of forest a roadless area holds, rather than a test of any single claim. Public domain.</div>
+            <div class="links"><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-evt/stac-collection.json" target="_blank" rel="noopener">STAC</a><a href="https://landfire.gov" target="_blank" rel="noopener">Source</a></div>
+        </div>
+    </div>
+
+    <div class="callout warn">
+        <p><strong>Five condition-class codes are not rated for departure at all</strong> &mdash; water, snow/ice, developed, barren or sparsely vegetated, and agriculture. They are <em>unrated</em>, not low-departure, and they belong out of the denominator of any &ldquo;share of land that is departed&rdquo; statistic. Inside rule-affected roadless area they are 4.1% of cells.</p>
+        <p><strong>Measured across rule-affected roadless area, 14.6% of rated land is Class III</strong> (high departure, 67&ndash;100%) and 33.0% is Class II.B or worse. Ask the assistant for the breakdown &mdash; and note it reports a share of <em>cells</em>, not acres, because the per-class fractional-coverage table that acre accounting needs is not published for this layer.</p>
+        <p><strong>LANDFIRE 2024 is not the same vintage as WHP 2023.</strong> The wildfire hazard layers are built from LANDFIRE <em>2020</em> version 2.2.0 fuels &mdash; three updates older. They are not one snapshot, and combining them as though they were is an error. Both LANDFIRE layers are also <strong>CONUS only</strong>, the same Alaska hole as NLCD.</p>
+    </div>
+
     <div class="callout warn">
         <p><strong>NLCD has no Alaska</strong> &mdash; which holds 14,778,681 roadless acres, 25% of the all-IRA total and the largest single state. Any land-cover share computed from it silently drops Alaska.</p>
     </div>
@@ -552,8 +591,7 @@ li { margin: 0.25rem 0; }
             <tr><th>Issue</th><th>Dataset</th><th>Why it matters</th></tr>
         </thead>
         <tbody>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/588" target="_blank" rel="noopener">#588</a></td><td>USFS RoadCore + Census TIGER roads</td><td><strong>Claim 3</strong> &mdash; the &ldquo;11.3M acres near roads&rdquo; figure cannot be tested without it</td></tr>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/590" target="_blank" rel="noopener">#590</a></td><td>LANDFIRE 2023/2024 &mdash; VCC/FRCC, EVT, EVC, FBFM40</td><td>Forest mask, condition class</td></tr>
+            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/590" target="_blank" rel="noopener">#590</a></td><td>LANDFIRE 2024 &mdash; <strong>EVC</strong> (canopy cover) and <strong>FBFM40</strong> (fuel models) only</td><td>The other two LANDFIRE products, VCC and EVT, are now in the app</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/591" target="_blank" rel="noopener">#591</a></td><td>USFS Insect &amp; Disease Detection Survey</td><td>Forest health</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/592" target="_blank" rel="noopener">#592</a></td><td>Wildfire Risk to Communities v2</td><td>Exposure &mdash; the missing half of the hazard/risk distinction</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/603" target="_blank" rel="noopener">#603</a></td><td>TWIG interagency fuel treatments + intersections</td><td>Interagency treatment record</td></tr>
@@ -564,7 +602,7 @@ li { margin: 0.25rem 0; }
     </table>
     </div>
 
-    <p>Already in the catalog and available to the assistant via SQL even though they carry no map layer: <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024-*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas).</p>
+    <p>Already in the catalog and available to the assistant via SQL even though they carry no map layer: <code>census-2025/roads</code> (Census TIGER roads &mdash; the non-federal half of the roads picture), <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024-*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas).</p>
 </section>
 
 <div class="foot">
