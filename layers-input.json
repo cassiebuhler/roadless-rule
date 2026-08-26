@@ -809,26 +809,6 @@
             ]
         },
         {
-            "collection_id": "landfire-2024-evt",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-evt/stac-collection.json",
-            "group": {
-                "name": "Vegetation condition · LANDFIRE 2024",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "evt-cog",
-                    "display_name": "Existing vegetation type · LANDFIRE 2024 (CONUS only)",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "LANDFIRE existing vegetation type — 832 classes, official LANDFIRE palette",
-                    "default_style": {
-                        "raster-opacity": 0.8
-                    }
-                }
-            ]
-        },
-        {
             "collection_id": "nlcd",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json",
             "group": {
