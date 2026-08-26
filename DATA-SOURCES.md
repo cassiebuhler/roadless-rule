@@ -293,10 +293,12 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 |---|---|---|---|---|---|
 | `NFS roads open to vehicles, 263,807 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
 | `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
-| *(no map layer)* TIGER/Line roads 2025 | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+| `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+| `Highways & secondary roads, 268,817 segments · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+| `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
 
-Both mapped layers are one dataset (`roadcore-fs`, 367,666 segments, 368,103 official miles) filtered
-on `OPER_MAINT_LEVEL`. The split is not cosmetic — it is the point of the layer.
+The first two layers are one dataset (`roadcore-fs`, 367,666 segments, 368,103 official miles)
+filtered on `OPER_MAINT_LEVEL`. The split is not cosmetic — it is the point of the layer.
 
 | `OPER_MAINT_LEVEL` | Segments | Official miles | Share |
 |---|---:|---:|---:|
@@ -314,17 +316,55 @@ layer rather than folded into one road line. These three totals reproduce the Fo
 published figures: ~368,000 mi system, ~65,000 mi (18%) passenger-car, ~200,000 mi (54%)
 high-clearance.
 
+The last three are one dataset (`census-2025/roads`, 16,490,899 features across 3,233 counties and
+county equivalents) filtered on `MTFCC`. TIGER carries no length column, so these layers are counted
+in segments, not miles — a TIGER segment and a RoadCore segment are not the same unit and the two
+counts are not comparable.
+
+| `MTFCC` | Meaning | Features | In which layer |
+|---|---|---:|---|
+| `S1400` | Local neighborhood road, rural road, city street | 14,009,547 | motor-vehicle |
+| `S1740` | Private road for service vehicles (logging, oil field, ranch) | 1,240,392 | motor-vehicle ⚠️ contestable |
+| `S1500` | Vehicular trail (4WD) | 307,839 | motor-vehicle |
+| `S1200` | Secondary road | 251,196 | motor-vehicle **and** highways |
+| `S1630` | Ramp | 199,684 | motor-vehicle |
+| `S1750` | Internal US Census Bureau use | 196,158 | motor-vehicle ⚠️ contestable |
+| `S1640` | Service drive along a limited-access highway | 137,698 | motor-vehicle |
+| `S1730` | Alley | 70,210 | motor-vehicle |
+| `S1780` | Parking lot road | 39,481 | motor-vehicle |
+| `S1100` | Primary road | 17,621 | motor-vehicle **and** highways |
+| `S1710` | Walkway / pedestrian trail | 16,087 | **excluded** — paths layer |
+| `S1820` | Bike path or trail | 4,323 | **excluded** — paths layer |
+| `S1810` | Winter trail | 406 | motor-vehicle ⚠️ marginal |
+| `S1720` | Stairway | 234 | **excluded** — paths layer |
+| `S1830` | Bridle path | 23 | **excluded** — paths layer |
+
 ⚠️ **RoadCore is Forest Service roads only.** `SYSTEM` is `NFSR` and `JURISDICTION` is `FS` on every
 record — state, county and private roads are absent by construction. The DEIS buffered "National
 Forest System roads *and* other authorized public roads" (Vol I fn. 10); TIGER supplies that second
-half and is queryable, but has no map layer. A proximity analysis on the mapped layers alone
-undercounts.
+half. A proximity analysis on either source alone undercounts.
 
-⚠️ **TIGER needs an MTFCC filter before it is "roads" at all.** `S1710` walkway, `S1720` stairway,
-`S1820` bike path and `S1830` bridle path (20,667 features) are not motor vehicle travelways and are
-excluded by 36 CFR 294.11. `S1740` private service roads and `S1750` internal Census use —
-**1,436,550 features between them** — are genuinely contestable as "authorized public roads"; the
-agency never said which way it went, so any reproduction must publish its choice.
+⛔ **The two sources overlap and have not been deduplicated by anyone.** Forest Service roads
+routinely reappear in TIGER as `S1500` vehicular trail or `S1740` private service road. Spot-checked
+on the Bitterroot National Forest (a 0.3° × 0.3° window holding 112 RoadCore and 1,607 TIGER
+segments), **97 of the 112 RoadCore segments — 87% — lie within 25 m of a TIGER line.** Never add
+the two segment counts, and never sum their mileage. Combine them only as *distance to the nearest
+road across both sources*.
+
+⚠️ **The four excluded classes are excluded by regulation, not by taste.** 36 CFR 294.11 defines a
+road as "a motor vehicle travelway over 50 inches wide"; `S1710` walkway, `S1720` stairway, `S1820`
+bike path and `S1830` bridle path (20,667 features) are none of those. They are drawn as their own
+dashed layer so the exclusion is visible rather than silent.
+
+⚠️ **Two classes inside the mapped motor-vehicle layer are genuinely contestable, and the agency
+never published its choice.** `S1740` private service roads and `S1750` internal Census use carry
+**1,436,550 features between them** — 8.7% of the layer. `S1810` winter trail (406 features) is a
+third, smaller judgment call. Including or excluding them moves any proximity figure, so a
+reproduction that does not state which way it went is incomplete.
+
+⚠️ **41.8% of TIGER road segments are unnamed** — 6,890,655 of 16,490,899 carry no `FULLNAME`. This
+is normal for TIGER (unnamed rural roads and driveways) and does not affect geometry or proximity
+work, but it means `FULLNAME` cannot be used to identify or deduplicate a road.
 
 ⚠️ **8,204 RoadCore records carry no geometry**, holding 4,745 official miles — an upstream
 linear-referencing failure flagged by the source's own `LOC_ERROR` (7,430 are `ROUTE NOT FOUND`).
