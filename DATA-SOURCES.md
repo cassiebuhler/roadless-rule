@@ -340,7 +340,6 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
 | `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
-| *(no map layer)* Existing vegetation type | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-evt` |
 
 Vegetation Condition Class measures how far current vegetation has departed from its estimated
 historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
@@ -364,20 +363,13 @@ Measured across rule-affected roadless area (res-10 cells, rated classes only):
 
 So **14.6% of rated rule-affected roadless area is Class III** (high departure) and 33.0% is Class
 II.B or worse. Report this as a share of *cells*, not acres — the per-class fractional-coverage table
-that acre accounting needs is not published for these layers, and the hex carries only the dominant
+that acre accounting needs is not published for this layer, and the hex carries only the dominant
 class per cell.
 
 ⛔ **LANDFIRE 2024 and WHP 2023 are not the same vintage.** WHP 2023 is built from **LANDFIRE 2020
 v2.2.0** fuels — three updates older. Never present them as one snapshot.
 
 ⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres.
-
-⛔ **EVT is SQL-only, and the reason is a hard renderer limit.** For a categorical raster the app
-inlines every `classification:classes` entry into the TiTiler tile URL as a colormap parameter. VCC's
-14 classes make a 945-byte URL that serves fine. EVT's **832 classes make a 47,381-byte URL**, which
-the server refuses outright — the connection is dropped, so no tile ever loads. There is no
-client-side fix: a named continuous colormap over arbitrary EVT type codes would be meaningless. The
-data is fully queryable; only the map layer is absent.
 
 ## Reproducing the agency's numbers
 
@@ -461,7 +453,7 @@ added here as each lands.
 
 | Issue | Dataset | Why it matters |
 |---|---|---|
-| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | The other two products, VCC and EVT, are now in the app |
+| [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | VCC, the departure layer, is now in the app |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |
 | [#592](https://github.com/boettiger-lab/data-workflows/issues/592) | Wildfire Risk to Communities v2 | Exposure |
 | [#603](https://github.com/boettiger-lab/data-workflows/issues/603) | TWIG interagency fuel treatments + intersections | Interagency treatment record |
@@ -472,7 +464,7 @@ added here as each lands.
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
 (watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
-(drinking-water source areas), `landfire-2024-evt` (existing vegetation type — see below).
+(drinking-water source areas).
 
 Two datasets here are SQL-only, for different reasons — both worth recording.
 

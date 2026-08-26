@@ -526,7 +526,6 @@ li { margin: 0.25rem 0; }
         <p><strong>Five condition-class codes are not rated for departure at all</strong>: water, snow/ice, developed, barren or sparsely vegetated, and agriculture. They are unrated, not low-departure, and belong out of the denominator of any &ldquo;share of land that is departed&rdquo; statistic. Inside rule-affected roadless area they are 4.1% of cells.</p>
         <p><strong>Departure shares from this layer are shares of <em>cells</em>, not acres</strong>, because the per-class fractional-coverage table that acre accounting requires is not published for it. For reference, across rule-affected roadless area 14.6% of rated land is Class III (high departure, 67&ndash;100%) and 33.0% is Class II.B or worse.</p>
         <p><strong>LANDFIRE 2024 is not the same vintage as WHP 2023.</strong> The wildfire hazard layers are built from LANDFIRE 2020 version 2.2.0 fuels, three updates older, so the two are not one snapshot. This layer is also CONUS only, the same Alaska gap as NLCD.</p>
-        <p><strong>The companion product, existing vegetation type, has no map layer.</strong> It carries 832 vegetation-type classes. A categorical raster is drawn by sending its entire colour table to the tile server inside the request URL: 945 bytes for these 14 condition classes, but <strong>47,381 bytes</strong> for EVT's 832, which the server refuses outright. The data is fully available to the assistant; only the map layer is missing.</p>
     </div>
 
     <p style="margin-top: 1.6rem;">Browse the full catalog at <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-data/stac/catalog.json" target="_blank" rel="noopener">radiantearth.github.io / stac-browser</a> to explore datasets not yet enabled in the app.</p>
@@ -542,7 +541,7 @@ li { margin: 0.25rem 0; }
             <tr><th>Issue</th><th>Dataset</th><th>Why it matters</th></tr>
         </thead>
         <tbody>
-            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/590" target="_blank" rel="noopener">#590</a></td><td>LANDFIRE 2024: <strong>EVC</strong> (canopy cover) and <strong>FBFM40</strong> (fuel models)</td><td>The other two LANDFIRE products, VCC and EVT, are already in the app</td></tr>
+            <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/590" target="_blank" rel="noopener">#590</a></td><td>LANDFIRE 2024: <strong>EVC</strong> (canopy cover) and <strong>FBFM40</strong> (fuel models)</td><td>VCC, the departure layer, is already in the app</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/591" target="_blank" rel="noopener">#591</a></td><td>USFS Insect &amp; Disease Detection Survey</td><td>Forest health</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/592" target="_blank" rel="noopener">#592</a></td><td>Wildfire Risk to Communities v2</td><td>Exposure, the missing half of the hazard/risk distinction</td></tr>
             <tr><td><a href="https://github.com/boettiger-lab/data-workflows/issues/603" target="_blank" rel="noopener">#603</a></td><td>TWIG interagency fuel treatments + intersections</td><td>Interagency treatment record</td></tr>
@@ -553,7 +552,7 @@ li { margin: 0.25rem 0; }
     </table>
     </div>
 
-    <p>Already in the catalog and available to the assistant via SQL without a map layer: <code>census-2025/roads</code> (Census TIGER roads, the non-federal half of the roads picture), <code>landfire-2024-evt</code> (existing vegetation type), <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024-*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas).</p>
+    <p>Already in the catalog and available to the assistant via SQL without a map layer: <code>census-2025/roads</code> (Census TIGER roads, the non-federal half of the roads picture), <code>copernicus-glo90</code> (slope), <code>usgs-wbd-hu12</code> (watersheds), <code>census-2024-*</code> (states, counties, congressional districts) and <code>epa-sab-v3-cws</code> (drinking-water source areas).</p>
 </section>
 
 <div class="foot">

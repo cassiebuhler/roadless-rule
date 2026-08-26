@@ -247,9 +247,7 @@ describes:
   SQL-only, so a user cannot see the non-federal roads even though you can query them.
 - **Vegetation condition · LANDFIRE 2024** — `Vegetation condition class · LANDFIRE 2024`,
   **CONUS only** (no Alaska, which holds 14.8M roadless acres). This is the layer that speaks to
-  claims about stands being overgrown or out of their natural condition. **Existing vegetation type
-  (EVT) is SQL-only and has no map layer** — its 832 classes cannot be rendered (see below), so never
-  tell a user to switch it on.
+  claims about stands being overgrown or out of their natural condition.
 
 ### Building an ignition-density layer
 
@@ -466,13 +464,10 @@ or column codes.** If a lookup fails, say so rather than improvising.
 - **The LANDFIRE hex gives the *dominant* class per cell, not fractional coverage.** The companion
   per-class fractional-coverage table — which is what acre accounting actually needs — is not
   published for these layers. So report LANDFIRE results as a **share of cells**, not as acres, and
-  say which you used. VCC and EVT are native res 10, the same as the roadless layer, so that join is
-  clean and needs no cross-resolution correction.
+  say which you used. VCC is native res 10, the same as the roadless layer, so that join is clean and
+  needs no cross-resolution correction.
 - **LANDFIRE is CONUS-only.** Same Alaska hole as NLCD — 14,778,681 roadless acres, 25% of the
   all-IRA total, silently absent.
-- **EVT (`landfire-2024-evt`) is queryable but not mappable.** Its 832 classes exceed what the raster
-  renderer can carry — the colormap is inlined into the tile URL, which for EVT is ~47 KB and is
-  refused by the server. Query it freely; never offer it as a layer to switch on.
 - **WHP classes are domain-relative and its two products answer different questions.** `whp_class`
   1–7 is ordinal, so use `mode` and never average it; `whp_index` is continuous, so average it and
   never sum it. The classified breaks differ between CONUS and Alaska, so the classified collections
