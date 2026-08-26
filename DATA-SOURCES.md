@@ -340,7 +340,7 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
 | `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
-| `Existing vegetation type · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-evt` |
+| *(no map layer)* Existing vegetation type | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-evt` |
 
 Vegetation Condition Class measures how far current vegetation has departed from its estimated
 historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
@@ -370,8 +370,14 @@ class per cell.
 ⛔ **LANDFIRE 2024 and WHP 2023 are not the same vintage.** WHP 2023 is built from **LANDFIRE 2020
 v2.2.0** fuels — three updates older. Never present them as one snapshot.
 
-⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres. EVT carries 832
-classes with the official LANDFIRE palette; VCC carries 14.
+⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres.
+
+⛔ **EVT is SQL-only, and the reason is a hard renderer limit.** For a categorical raster the app
+inlines every `classification:classes` entry into the TiTiler tile URL as a colormap parameter. VCC's
+14 classes make a 945-byte URL that serves fine. EVT's **832 classes make a 47,381-byte URL**, which
+the server refuses outright — the connection is dropped, so no tile ever loads. There is no
+client-side fix: a named continuous colormap over arbitrary EVT type codes would be meaningless. The
+data is fully queryable; only the map layer is absent.
 
 ## Reproducing the agency's numbers
 
@@ -466,9 +472,11 @@ added here as each lands.
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
 (watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
-(drinking-water source areas).
+(drinking-water source areas), `landfire-2024-evt` (existing vegetation type — see below).
 
-⚠️ **`census-2025/roads` is SQL-only for a reason worth recording.** Its STAC collection declares a
+Two datasets here are SQL-only, for different reasons — both worth recording.
+
+⚠️ **`census-2025/roads`.** Its STAC collection declares a
 PMTiles asset at `census-2025/roads.pmtiles`, but that file **does not exist** — the build published
 the GeoParquet and the H3 hex without it. A declared asset is not a live asset; the map layer was
 left out rather than pointing at a 404.
