@@ -171,6 +171,80 @@
             ]
         },
         {
+            "collection_id": "census-2025/roads",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json",
+            "group": {
+                "name": "Roads & access",
+                "collapsed": false
+            },
+            "assets": [
+                {
+                    "id": "roads-pmtiles",
+                    "alias": "tiger-roads-motor",
+                    "display_name": "All motor-vehicle roads, 16,470,232 segments · TIGER 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "MTFCC"], ["S1710", "S1720", "S1820", "S1830"], false, true],
+                    "default_style": {
+                        "line-color": "#9B7FA8",
+                        "line-width": 0.4,
+                        "line-opacity": 0.65
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Road of any jurisdiction · 16,470,232 segments — federal, state, county and private",
+                            "color": "#9B7FA8"
+                        }
+                    ],
+                    "tooltip_fields": ["FULLNAME", "MTFCC", "RTTYP", "GEOID_COUNTY", "LINEARID"]
+                },
+                {
+                    "id": "roads-pmtiles",
+                    "alias": "tiger-roads-major",
+                    "display_name": "Highways & secondary roads, 268,817 segments · TIGER 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "MTFCC"], ["S1100", "S1200"], true, false],
+                    "default_style": {
+                        "line-color": "#6A3D7A",
+                        "line-width": 1.1,
+                        "line-opacity": 0.9
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Primary & secondary road (S1100, S1200) · 268,817 segments — a subset of the layer above, never an addition to it",
+                            "color": "#6A3D7A"
+                        }
+                    ],
+                    "tooltip_fields": ["FULLNAME", "MTFCC", "RTTYP", "GEOID_COUNTY", "LINEARID"]
+                },
+                {
+                    "id": "roads-pmtiles",
+                    "alias": "tiger-paths-nonmotor",
+                    "display_name": "Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025",
+                    "visible": false,
+                    "layer_type": "line",
+                    "default_filter": ["match", ["get", "MTFCC"], ["S1710", "S1720", "S1820", "S1830"], true, false],
+                    "default_style": {
+                        "line-color": "#C9A227",
+                        "line-width": 0.8,
+                        "line-opacity": 0.9,
+                        "line-dasharray": [2, 2]
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Walkway, stairway, bike or bridle path · 20,667 segments — excluded from every road figure",
+                            "color": "#C9A227"
+                        }
+                    ],
+                    "tooltip_fields": ["FULLNAME", "MTFCC", "RTTYP", "GEOID_COUNTY", "LINEARID"]
+                }
+            ]
+        },
+        {
             "collection_id": "fpa-fod-1992-2024",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
             "group": {

@@ -432,34 +432,47 @@ geometry touches, overstating Montana by roughly 9M acres.
 
 Tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows) under the
 `roadless` label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594).
-Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row. Claim 3 (roads) is still
-untestable until #588 lands — `system-prompt.md` says so explicitly, and that wording must be updated
-in the same PR that adds the layer.
+Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row.
 
 **Already added:** #585 (USFS extent — `nfs-surface-ownership` filtered to `OWNERCLASS = 'USDA
 FOREST SERVICE'`, plus proclaimed / administrative / ranger-district as outline-only envelopes; the
 Montana "nearly 60% of Forest Service land" claim is now testable and reconciles to ~37%), #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
 classified pair is SQL-only because its COGs carry no `classification:classes`, so geo-agent would
 paint Non-burnable and Water as top hazard), #593 (MTBS — perimeters split into wildfire and
-prescribed-fire aliases, plus per-domain annual severity behind a `versions` year selector) and
-#587 (FPA-FOD — 2.66M ignition points as two `circle` layers coloured by cause). Claim 1 is now
-testable. Note the builds published to S3 while PRs #605, #612 and #614 were still open — **STAC
-liveness, not merge status, is what determines whether a layer can be added.**
+prescribed-fire aliases, plus per-domain annual severity behind a `versions` year selector),
+#587 (FPA-FOD — 2.66M ignition points as two `circle` layers coloured by cause) and #588 (roads —
+`roadcore-fs` split on `OPER_MAINT_LEVEL`, plus `census-2025/roads` split on `MTFCC` into
+motor-vehicle / highways / excluded-paths). Claims 1 and 3 are now testable. Note the builds
+published to S3 while PRs #605, #612, #614 and #621 were still open — **STAC liveness, not merge
+status, is what determines whether a layer can be added.**
+
+⛔ **`roadcore-fs` and `census-2025/roads` overlap and must never be unioned by addition.** Measured
+on a 0.3° window over the Bitterroot NF, 97 of 112 RoadCore segments (87%) lie within 25 m of a TIGER
+line — Forest Service roads reappear in TIGER as `S1500` or `S1740`. Combine the two only as distance
+to the *nearest* road across both. TIGER also carries no length column, so its layers are labelled in
+segments while RoadCore's are labelled in miles; the two units are not comparable.
 
 ⚠️ **FPA-FOD was built as the 7th edition (1992–2024), not the 6th (1992–2020) that #587 was filed
 against.** The 7th backfills previously underrepresented states, so pre-2021 counts differ — the
 dataset id is `fpa-fod-1992-2024`.
 
+Checked against live STAC on 2026-08-26 — none of the following has a `stac-collection.json` yet, so
+none can be added. `public-landfire/landfire-2024-evc/` and `.../landfire-2024-fbfm40/` hold COGs but
+**no collection JSON** (#623); `public-fire` holds WRC v2 only under `raw/` (#592, #627). A bucket
+prefix is not an ingest — probe for `stac-collection.json` before believing a dataset is available.
+
 | Issue | Dataset | Expected bucket |
 |---|---|---|
-| #588 | USFS RoadCore + Census TIGER roads | `public-usfs`, `public-census` |
-| #590 | LANDFIRE 2023/2024 — VCC/FRCC, EVT, EVC, FBFM40 | `public-land-cover` |
+| #590 | LANDFIRE 2023/2024 — FRCC, EVC, FBFM40 (VCC done, EVT unusable) | `public-landfire` |
 | #591 | USFS Insect & Disease Detection Survey | `public-usfs` |
 | #592 | Wildfire Risk to Communities v2 | `public-fire` |
 | #603 | TWIG interagency fuel treatments + intersections | `public-fire` |
+| #606 | TNC Resilient & Connected Network — national | TBD |
 | #609 | Mesic Analysis Platform — mesic persistence, valley bottoms | TBD |
 | #610 | USGS INHABIT v4 — fire-promoting invasive plants | TBD |
 | #611 | Wildfire Risk to Communities v2 — populated areas | `public-fire` |
+| #623 | LANDFIRE 2024 — FBFM40 hex + the decoded-EVC question | `public-landfire` |
+| #627 | WRC v2 — BP, CFL, Exposure (raw staged, no COG) | `public-fire` |
 
 ⚠️ **`facts-common-attributes-2026-06` and TWIG (#603) must never be unioned** — TWIG's 737,013
 FACTS-CA rows overlap ours, so a union double-counts USFS treatments.

@@ -134,13 +134,20 @@ DEIS itself cites Healey (2020), which reached the opposite conclusion from simi
 11.3M = 28.3% of the PAE. ⚠️ The agency's own Economic Analysis gives **13.3M (30.8%)** for the same
 buffer against the 44.7M base — the ~2.0M gap is roughly the wilderness deduction.
 
-**Both road layers are now here, and this claim is testable — but only in SQL.** The DEIS buffered
+**Both road layers are now here and both are mapped, so this claim is testable.** The DEIS buffered
 "National Forest System roads *and* other authorized public roads", so a reproduction needs both:
 
 - `roadcore-fs` — 367,666 NFS segments, 368,103 official miles. Mapped, split by maintenance level.
-- `census-2025/roads` — 16,490,899 TIGER features, the non-federal half. **SQL only — it has no map
-  layer**, because the PMTiles asset its STAC declares was never published. Query it; never claim the
-  user can switch it on.
+- `census-2025/roads` — 16,490,899 TIGER features, every jurisdiction. Mapped as three layers:
+  all motor-vehicle roads, a highways-only subset, and the non-motorized paths that are excluded.
+
+⛔ **The two sources overlap and nobody has deduplicated them — never add them together.** Forest
+Service roads routinely reappear in TIGER as `S1500` vehicular trail or `S1740` private service road.
+Spot-checked on the Bitterroot NF, **87% of RoadCore segments (97 of 112) fell within 25 m of a TIGER
+line.** Summing the two segment counts, or their mileage, double-counts badly. The only sound
+combination is *distance to the nearest road across both sources* — union the geometries, or take a
+per-cell minimum distance; never a sum. TIGER also has no length column at all, so any mileage figure
+must come from geometry you compute yourself, not from a column.
 
 Buffer on the **GeoParquet**, not the hex: res-8 cells are ~0.7 km², coarser than the 805 m band the
 claim turns on. Project to an equal-area CRS first (EPSG:5070 CONUS, 3338 Alaska, 32161 Puerto Rico)
@@ -155,10 +162,12 @@ side by side; never publish only the aggregate.
 ⚠️ **"Authorized public roads" is a judgment call you must publish.** On the TIGER side, four MTFCC
 classes are not motor vehicle travelways at all and must be dropped under 36 CFR 294.11 ("a motor
 vehicle travelway over 50 inches wide"): `S1710` walkway, `S1720` stairway, `S1820` bike path,
-`S1830` bridle path (20,667 features). Two more are genuinely contestable and together carry
-**1,436,550 features**: `S1740` private service roads (logging, oil field, ranch) and `S1750`
-internal Census use. Including or excluding them moves the answer, and the agency never said which
-it did — state your choice.
+`S1830` bridle path (20,667 features). The map already drops them — they are their own dashed layer —
+so a SQL result that keeps them will not match what the user sees. Two more are genuinely contestable
+and together carry **1,436,550 features**: `S1740` private service roads (logging, oil field, ranch)
+and `S1750` internal Census use. Both are *inside* the mapped motor-vehicle layer. `S1810` winter
+trail (406 features) is a third, smaller call. Including or excluding them moves the answer, and the
+agency never said which it did — state your choice.
 
 ⛔ **No layer here can reproduce the regulatory definition, and you must say so.** 36 CFR 294.11
 counts unclassified and temporary roads as roads, and the Forest Service maintains **no national
@@ -242,11 +251,18 @@ describes:
   `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`. These are **points, not a density surface**.
   For an actual ignition-density map, aggregate the res-10 hex to a coarser resolution and render it
   with `add_hex_tile_layer` — see *Building an ignition-density layer* below.
-- **Roads & access** — `NFS roads open to vehicles, 263,807 mi · USFS 2025` and
-  `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025`. One dataset (`roadcore-fs`) filtered on
-  `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1 distinction changes the answer to
-  claim 3. **The TIGER half of the roads picture has no map layer** — `census-2025/roads` is
-  SQL-only, so a user cannot see the non-federal roads even though you can query them.
+- **Roads & access** — five layers from two datasets. `NFS roads open to vehicles, 263,807 mi ·
+  USFS 2025` and `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` are one dataset
+  (`roadcore-fs`) filtered on `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1
+  distinction changes the answer to claim 3.
+  `All motor-vehicle roads, 16,470,232 segments · TIGER 2025`,
+  `Highways & secondary roads, 268,817 segments · TIGER 2025` and
+  `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025`
+  are one dataset (`census-2025/roads`) filtered on `MTFCC`. The highways layer is a **subset** of
+  the motor-vehicle layer, not an addition to it. All five start switched off. Counted in
+  **segments**, not miles — TIGER has no length column, and a TIGER segment is not the same unit as a
+  RoadCore segment, so never compare or add the two counts. When a user asks to "see the roads", say which jurisdiction they mean: RoadCore is Forest
+  Service only, TIGER is everything.
 
 ### Building an ignition-density layer
 
