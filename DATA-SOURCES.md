@@ -335,7 +335,7 @@ buffered by anyone, including the agency.
 temporary roads, and the Forest Service maintains no national temporary-roads database (DEIS Vol I
 fn. 20). Every road-proximity figure computed here is a floor, not a match.
 
-### Vegetation condition · LANDFIRE 2024
+### Vegetation condition · LANDFIRE 2024 (in *Fuels & fire*)
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
@@ -370,6 +370,13 @@ class per cell.
 v2.2.0** fuels — three updates older. Never present them as one snapshot.
 
 ⚠️ **CONUS only** — the same Alaska hole as NLCD, hiding 14,778,681 roadless acres.
+
+⚠️ **Three fill codes still appear in the legend, and two of them paint.** `-9999` matches the band
+nodata and renders transparent, but `-1111` (Fill-Not Mapped) paints grey and `32767` (band sentinel)
+paints white. This cannot be fixed from `layers-input.json`: for a raster asset the app takes both the
+legend and the TiTiler colormap from the STAC `classification:classes`, and — unlike the vector path —
+ignores any `legend_classes` override. Tracked upstream at
+[data-workflows#628](https://github.com/boettiger-lab/data-workflows/issues/628).
 
 ## Reproducing the agency's numbers
 

@@ -407,6 +407,19 @@ duplicate the collection entry.
 Filters use the modern `match` form (`["match", ["get","STATE"], ["ID","CO"], false, true]`). `STATE`
 is a clean two-letter code and **is** present in the tiles — verified, not assumed.
 
+## ⚠️ Raster legends cannot be overridden in config
+
+For a **raster** asset the app derives both the legend and the TiTiler colormap from the STAC
+`classification:classes` (`dataset-catalog.js:456`), and ignores `legend_classes` — the vector paths
+honour it, the raster path does not. Two consequences:
+
+- A junk or fill class in the STAC will show in the legend, and will **paint** unless its value equals
+  the band `nodata`. `landfire-2024-vcc` has two such codes; see
+  [data-workflows#628](https://github.com/boettiger-lab/data-workflows/issues/628).
+- The colormap is inlined into the tile URL with no cap, so class count drives URL size. Roughly 945 B
+  at 14 classes, **47 KB at 832** — which the tile server refuses outright. That is why LANDFIRE EVT
+  has no map layer. Check the class count before adding any categorical raster.
+
 ## ⚠️ The NFS extent layers carry no state column
 
 None of `nfs-surface-ownership`, `proclaimed-forest`, `administrative-forest`, `ranger-district` has a
