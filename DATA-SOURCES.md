@@ -335,7 +335,7 @@ buffered by anyone, including the agency.
 temporary roads, and the Forest Service maintains no national temporary-roads database (DEIS Vol I
 fn. 20). Every road-proximity figure computed here is a floor, not a match.
 
-### Vegetation condition · LANDFIRE 2024
+### Vegetation condition · LANDFIRE 2024 (in *Fuels & fire*)
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|

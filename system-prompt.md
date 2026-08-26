@@ -229,7 +229,9 @@ describes:
   `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
   `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
   `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
-  selector rather than one entry per year.
+  selector rather than one entry per year — and `Vegetation condition class · LANDFIRE 2024`
+  (**CONUS only**), the layer that speaks to claims about stands being overgrown or out of their
+  natural condition.
   The two WHP entries are separate rasters on separate scales (the published Very High break is
   1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
   compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
@@ -245,9 +247,6 @@ describes:
   `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1 distinction changes the answer to
   claim 3. **The TIGER half of the roads picture has no map layer** — `census-2025/roads` is
   SQL-only, so a user cannot see the non-federal roads even though you can query them.
-- **Vegetation condition · LANDFIRE 2024** — `Vegetation condition class · LANDFIRE 2024`,
-  **CONUS only** (no Alaska, which holds 14.8M roadless acres). This is the layer that speaks to
-  claims about stands being overgrown or out of their natural condition.
 
 ### Building an ignition-density layer
 

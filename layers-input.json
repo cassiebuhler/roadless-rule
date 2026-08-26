@@ -417,6 +417,26 @@
             ]
         },
         {
+            "collection_id": "landfire-2024-vcc",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
+            "group": {
+                "name": "Fuels & fire",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "vcc-cog",
+                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    }
+                }
+            ]
+        },
+        {
             "collection_id": "mtbs-severity-1984-2024-conus",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json",
             "group": {
@@ -785,26 +805,6 @@
                         }
                     ],
                     "tooltip_fields": ["Unit_Nm", "Des_Tp", "Loc_Ds", "Mang_Name", "GAP_Sts", "GIS_Acres"]
-                }
-            ]
-        },
-        {
-            "collection_id": "landfire-2024-vcc",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
-            "group": {
-                "name": "Vegetation condition · LANDFIRE 2024",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "vcc-cog",
-                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
-                    "default_style": {
-                        "raster-opacity": 0.8
-                    }
                 }
             ]
         },
