@@ -452,6 +452,26 @@ line — Forest Service roads reappear in TIGER as `S1500` or `S1740`. Combine t
 to the *nearest* road across both. TIGER also carries no length column, so its layers are labelled in
 segments while RoadCore's are labelled in miles; the two units are not comparable.
 
+**Added from outside the `roadless` issue set:** `federal-trails-2026` (USFS NFST + NPS + BLM GTLF,
+127,619 segments) and `american-rivers-nri-2024` (4,496 NPS-inventoried river segments), both in a
+*Trails & recreation access* group. They answer the "roadless means inaccessible" inference that a
+roads-only map invites. Neither came from a `roadless`-labelled issue — trails landed under the
+unlabelled [#167](https://github.com/boettiger-lab/data-workflows/issues/167), closed long before
+this app existed. **The `roadless` label is a work queue, not an inventory of what is relevant** —
+browse the catalog itself before concluding nothing new is addable.
+
+⛔ **`federal-trails-2026`'s NTS layer is a subset of its two agency layers**, and a trail is never a
+road under 36 CFR 294.11 — no trail mileage may enter a road-proximity figure. ⚠️ Only
+`admin_agency` and `nts_designation` are harmonized; `trail_type` (41 raw values, 31 case-folded),
+`trail_class` (20) and `trail_surface` (62) carry each agency's raw vocabulary despite the
+collection description claiming a harmonized schema.
+
+⛔ **NRI is an inventory, not a protection, and is not the PAD-US W&SR stratum.** `nri-2024` records
+segments *potentially eligible* for Wild & Scenic designation; the Table 12 deduction stratum comes
+from PAD-US `Des_Tp`. Two datasets, two questions — never combined. `american-rivers-wild-scenic-designated`
+(1,052 segments) was deliberately **not** added for exactly this reason: it is a second rendering of
+the designated inventory PAD-US already supplies, the same trap as PAD-US `Des_Tp = 'IRA'`.
+
 ⚠️ **FPA-FOD was built as the 7th edition (1992–2024), not the 6th (1992–2020) that #587 was filed
 against.** The 7th backfills previously underrepresented states, so pre-2021 counts differ — the
 dataset id is `fpa-fod-1992-2024`.
