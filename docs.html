@@ -211,7 +211,7 @@ li { margin: 0.25rem 0; }
     </table>
     </div>
 
-    <h3>Roads &amp; access</h3>
+    <h3>Roads</h3>
     <div class="table-wrap">
     <table>
         <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
@@ -221,34 +221,6 @@ li { margin: 0.25rem 0; }
             <tr><td>All motor-vehicle roads, 16,470,232 segments &middot; TIGER 2025</td><td>Census TIGER/Line 2025 roads, 3,233 counties: every road regardless of jurisdiction. Supplies the &ldquo;other authorized public roads&rdquo; half of the Draft EIS analysis.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
             <tr><td>Highways &amp; secondary roads, 268,817 segments &middot; TIGER 2025</td><td>A <em>subset</em> of the layer above (primary and secondary classes only), drawn heavier so the network reads at national zoom.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
             <tr><td>Walkways &amp; paths, 20,667 segments &middot; TIGER 2025</td><td>Walkways, stairways, bike and bridle paths: not motor vehicle travelways, so excluded from every road figure here. Drawn so the exclusion is visible.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-        </tbody>
-    </table>
-    </div>
-
-    <h3>Fuels &amp; fire</h3>
-    <div class="table-wrap">
-    <table>
-        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
-        <tbody>
-            <tr><td>Wildfire hazard index &middot; WHP 2023 (CONUS) and (Alaska)</td><td>USFS Wildfire Hazard Potential, Dillon 4th ed., v2023 at 270 m. Two layers because the classification is computed within each domain.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
-            <tr><td>Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</td><td>LANDFIRE LF 2024 v2.5.0 at 30 m: departure of current vegetation from its estimated historical reference condition, six classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Wildfire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Monitoring Trends in Burn Severity (USGS / USFS), national: 17,171 wildfire and wildland-fire-use perimeters.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Prescribed fire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Same dataset, the 8,870 prescribed-fire records.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Burn severity by year &middot; MTBS (CONUS) and (Alaska)</td><td>Annual severity mosaics behind a year selector: 39 CONUS years and 36 Alaska years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
-            <tr><td>Fire perimeters 1835&ndash;2020 &middot; USGS 2021</td><td>USGS Wildland Fire Combined Dataset: a synthesis of federal, state and tribal perimeters. Not an annual fire history.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Completed treatments, FY2014+ &middot; USFS FACTS 2026</td><td>Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands: all completed activity types, a broader set than fuels treatments alone. Fiscal years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Wildland-urban interface &middot; SILVIS 2020</td><td>SILVIS Lab, University of Wisconsin&ndash;Madison, v4, census blocks. Intermix and interface blocks. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-wui/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-        </tbody>
-    </table>
-    </div>
-
-    <h3>Ignitions &middot; FPA-FOD 1992&ndash;2024</h3>
-    <div class="table-wrap">
-    <table>
-        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
-        <tbody>
-            <tr><td>Ignitions by cause 1992&ndash;2024 &middot; FPA-FOD</td><td>USFS Fire Program Analysis fire-occurrence database, Short 7th ed.: 2,661,383 ignition points, national. Coloured by cause class.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Large-fire ignitions &ge;1,000 ac &middot; FPA-FOD</td><td>Same dataset, the two largest size classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
         </tbody>
     </table>
     </div>
@@ -270,7 +242,37 @@ li { margin: 0.25rem 0; }
         <p><strong>These layers are here because &ldquo;roadless&rdquo; is not &ldquo;inaccessible.&rdquo;</strong> The 2001 rule prohibits road construction and reconstruction; it does not close land to the public. Roughly 135,000 miles of Forest Service trail run across the National Forest System, and the rivers layer marks reaches the Park Service inventoried for their recreational and scenic value. A map showing only roads invites the inference that a roadless area is unreachable, which the trail network contradicts.</p>
         <p><strong>Do not read a trail as a road, in either direction.</strong> Trails are excluded from every road-proximity figure in this app, matching 36 CFR 294.11 (&ldquo;a motor vehicle travelway over 50 inches wide&rdquo;). The National Trails System layer is a subset of the two agency layers, so adding the three mileages triple-counts the designated routes.</p>
         <p><strong>The trail schema is only partly harmonized.</strong> <code>admin_agency</code> and <code>nts_designation</code> are clean and safe to filter on. <code>trail_type</code>, <code>trail_class</code> and <code>trail_surface</code> are not: they carry each source agency&rsquo;s raw vocabulary, so <code>trail_type</code> has 41 distinct values that collapse to 31 once case is folded (<code>4WD Low</code>, <code>4WD LOW</code>, <code>4wd Low</code>), and <code>trail_surface</code> has 62. Any count grouped on those columns will split the same category across several rows.</p>
-        <p><strong>The rivers inventory is not a protection layer.</strong> NRI listing records that a segment was assessed and found to have outstanding values; it confers no designation. The app&rsquo;s Wild &amp; Scenic <em>designated</em> stratum lives under Comparison strata and comes from PAD-US &mdash; a different dataset answering a different question. Do not combine the two. <code>Management</code> on the NRI layer is free text (1,827 segments leave it blank, the rest name individual forests and monuments), so it cannot be filtered as an agency column.</p>
+        <p><strong>The rivers inventory is not a protection layer.</strong> NRI listing records that a segment was assessed and found to have outstanding values; it confers no designation. The app&rsquo;s Wild &amp; Scenic <em>designated</em> stratum lives under Existing protections and comes from PAD-US &mdash; a different dataset answering a different question. Do not combine the two. <code>Management</code> on the NRI layer is free text (1,827 segments leave it blank, the rest name individual forests and monuments), so it cannot be filtered as an agency column.</p>
+    </div>
+
+    <h3>Fire history</h3>
+    <p>What has already burned, and where fires start. The two ignition layers are points, not a density surface; the large-fire layer is a <em>subset</em> of the all-ignitions layer, never an addition to it.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Ignitions by cause 1992&ndash;2024 &middot; FPA-FOD</td><td>USFS Fire Program Analysis fire-occurrence database, Short 7th ed.: 2,661,383 ignition points, national. Coloured by cause class.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Large-fire ignitions &ge;1,000 ac &middot; FPA-FOD</td><td>Same dataset, the two largest size classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wildfire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Monitoring Trends in Burn Severity (USGS / USFS), national: 17,171 wildfire and wildland-fire-use perimeters.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Prescribed fire perimeters 1984&ndash;2024 &middot; MTBS</td><td>Same dataset, the 8,870 prescribed-fire records.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Burn severity by year &middot; MTBS (CONUS) and (Alaska)</td><td>Annual severity mosaics behind a year selector: 39 CONUS years and 36 Alaska years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
+            <tr><td>Fire perimeters 1835&ndash;2020 &middot; USGS 2021</td><td>USGS Wildland Fire Combined Dataset: a synthesis of federal, state and tribal perimeters. Not an annual fire history.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
+    <h3>Fire risk &amp; fuels</h3>
+    <p>Forward-looking hazard, stand condition, and the treatment response &mdash; the evidence behind the proposal&rsquo;s wildfire rationale.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Wildfire hazard index &middot; WHP 2023 (CONUS) and (Alaska)</td><td>USFS Wildfire Hazard Potential, Dillon 4th ed., v2023 at 270 m. Two layers because the classification is computed within each domain.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json" target="_blank" rel="noopener">CONUS</a> &middot; <a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json" target="_blank" rel="noopener">AK</a></td></tr>
+            <tr><td>Vegetation condition class &middot; LANDFIRE 2024 (CONUS only)</td><td>LANDFIRE LF 2024 v2.5.0 at 30 m: departure of current vegetation from its estimated historical reference condition, six classes.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Completed treatments, FY2014+ &middot; USFS FACTS 2026</td><td>Forest Service Activity Tracking System, 2026-06 snapshot, NFS lands: all completed activity types, a broader set than fuels treatments alone. Fiscal years.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Wildland-urban interface &middot; SILVIS 2020</td><td>SILVIS Lab, University of Wisconsin&ndash;Madison, v4, census blocks. Intermix and interface blocks. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-wui/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
     </div>
 
     <h3>National Forest System extent</h3>
@@ -286,7 +288,7 @@ li { margin: 0.25rem 0; }
     </table>
     </div>
 
-    <h3>Comparison strata</h3>
+    <h3>Existing protections &middot; PAD-US 4.1</h3>
     <div class="table-wrap">
     <table>
         <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>

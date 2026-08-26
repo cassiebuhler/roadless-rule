@@ -396,6 +396,46 @@ WHERE STATE NOT IN ('ID','CO');   -- 44,701,002
 reads as though road construction were allowed; it was not. Never style, filter, or label as though
 this column carried protection level.
 
+## Sidebar group order is meaningful — and is set by array order
+
+The framework has **no group-ordering field.** `map-manager.js` groups layers into an
+insertion-ordered `Map`, so a group's position in the panel is the position of the **first
+collection in `layers-input.json` that names it**, and a layer's position within a group is its
+global insertion order. Reordering the panel means reordering the `collections` array — nothing
+else. Likewise `groupCollapsed` is read off the group's **first** member only, so when a group spans
+several collections, only the first one's `collapsed` flag has any effect (keep them consistent
+anyway).
+
+The eight groups are ordered by how directly each bears on the proposal, and the order carries
+argument, so preserve it when adding a layer:
+
+| # | Group | Why here |
+|---:|---|---|
+| 1 | Roadless areas · USFS 2001 | the subject — **open** |
+| 2 | Roads | what 36 CFR 294 actually regulates — **open** |
+| 3 | Trails & recreation access | "roadless" ≠ inaccessible |
+| 4 | Fire history | measured record: ignitions, perimeters, severity |
+| 5 | Fire risk & fuels | modelled hazard, stand condition, treatment |
+| 6 | National Forest System extent | the land base (5th denominator) |
+| 7 | Existing protections · PAD-US 4.1 | the Table 12 deduction → 40.0M base |
+| 8 | Land cover & modification | background |
+
+⛔ **Do not merge Roads into Trails or vice versa**, and do not restore a shared "access" label for
+the two. 36 CFR 294.11 defines a road as a motor vehicle travelway over 50 inches wide; a shared
+group name is what invites trail mileage into a road figure. Likewise keep *Fire history* apart from
+*Fire risk & fuels* — one is a measured record, the other a model projection, and the proposal's
+rationale turns on not conflating them.
+
+⚠️ Within a group, a layer that is a **subset** of another must follow it (large-fire ignitions after
+all ignitions; TIGER highways after all motor-vehicle roads; NTS routes after the agency trail
+layers). The subset relationships are stated in the layer labels; the ordering is what makes them
+readable at a glance.
+
+⚠️ Four surfaces carry the group names and must be updated together, or they drift:
+`layers-input.json`, `system-prompt.md` (the *What this app has* inventory), `docs.html` (the
+*Datasets in this app* `<h3>`s) and `README.md` (*Layer organization*), with `DATA-SOURCES.md`
+mirroring the same section order. They had already drifted into four different orderings once.
+
 ## The two roadless layers are one STAC asset
 
 `roadless-areas-2001-pmtiles` appears **twice** in `layers-input.json`, distinguished by `alias`
