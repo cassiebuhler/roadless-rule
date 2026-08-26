@@ -195,8 +195,10 @@ of category. Never read rule status, protection level, or permission off this co
 
 ## What this app has — and what it does not
 
-The layer panel is the complete inventory; there is no data behind the scenes. Layers are grouped by
-what the data describes:
+The layer panel is the complete inventory; there is no data behind the scenes. The first three
+groups — **roadless areas, roads, ignitions** — are the app's priority questions and open by default;
+everything below them is context and starts collapsed. Layers are grouped by what the data
+describes:
 
 - **Roadless areas · USFS 2001** — the 2001 inventory, split into `Rule-affected · 44.7M ac` and
   `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
@@ -222,14 +224,17 @@ what the data describes:
   `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
   `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
   `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
-  selector rather than one entry per year — and `Ignitions by cause 1992–2024 · FPA-FOD` plus
-  `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`.
+  selector rather than one entry per year.
   The two WHP entries are separate rasters on separate scales (the published Very High break is
   1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
   compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
   are two halves of one variable and currently need two clicks.
 - **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
   14.8M roadless acres) and `Human modification · Theobald 2016`.
+- **Ignitions · FPA-FOD 1992–2024** — `Ignitions by cause 1992–2024 · FPA-FOD` and
+  `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`. These are **points, not a density surface**.
+  For an actual ignition-density map, aggregate the res-10 hex to a coarser resolution and render it
+  with `add_hex_tile_layer` — see *Building an ignition-density layer* below.
 - **Roads & access** — `NFS roads open to vehicles, 263,807 mi · USFS 2025` and
   `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025`. One dataset (`roadcore-fs`) filtered on
   `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1 distinction changes the answer to
@@ -239,6 +244,25 @@ what the data describes:
   `Existing vegetation type · LANDFIRE 2024`, both **CONUS only** (no Alaska, which holds 14.8M
   roadless acres). VCC is the layer that speaks to claims about stands being overgrown or out of
   their natural condition.
+
+### Building an ignition-density layer
+
+The FPA-FOD map layers are individual points; at national zoom they overplot into something that
+*looks* like density but is not one. When a user asks for ignition density, build it:
+
+1. Aggregate the FPA-FOD hex (`fpa-fod-1992-2024/hex/…`, native **res 10**) up to res 7 or 8 —
+   res 10 cells are ~0.015 km² and far too fine to read as a density surface at national zoom.
+   Count **distinct fire records**, not hex rows.
+2. Register the result with `register_hex_tiles`, then render it with `add_hex_tile_layer`.
+
+⚠️ State the normalisation you chose. Ignition **counts per cell** and ignitions **per unit area**
+are different maps, and counts alone track population and reporting effort as much as fire. If the
+question is about the roadless rule, say whether you counted all ignitions or only those inside
+rule-affected roadless area.
+
+⚠️ **Do not build a density surface finer than about 1 km.** FPA-FOD coordinates are accurate only to
+a PLSS section (~1.6 km) for an unflagged subset of records, so a res-9-or-finer density map implies
+precision the data does not have.
 
 **Datasets the claims need that are not here yet.** Say so plainly when a question requires one;
 never improvise a substitute. Pending: Insect & Disease Survey · Wildfire Risk to Communities ·
