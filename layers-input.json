@@ -483,6 +483,77 @@
             ]
         },
         {
+            "collection_id": "fired-events-2001-2021",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fired-events-2001-2021/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "fired-events-2001-2021-pmtiles",
+                    "alias": "fired-events-all",
+                    "display_name": "Fire events by spread rate 2000–2021 · FIRED",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": ["step", ["get", "fsr_km2_dy"], "#FEE08B", 1, "#FDAE61", 5, "#F46D43", 20, "#D73027", 50, "#7F0000"],
+                        "fill-opacity": 0.55
+                    },
+                    "outline_style": {
+                        "line-color": "#7F0000",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "< 1 km²/day",
+                            "color": "#FEE08B"
+                        },
+                        {
+                            "label": "1–5 km²/day",
+                            "color": "#FDAE61"
+                        },
+                        {
+                            "label": "5–20 km²/day",
+                            "color": "#F46D43"
+                        },
+                        {
+                            "label": "20–50 km²/day",
+                            "color": "#D73027"
+                        },
+                        {
+                            "label": "≥ 50 km²/day",
+                            "color": "#7F0000"
+                        }
+                    ],
+                    "tooltip_fields": ["id", "ig_date", "last_date", "event_dur", "tot_ar_km2", "fsr_km2_dy", "mx_grw_km2", "lc_name", "eco_name"]
+                },
+                {
+                    "id": "fired-events-2001-2021-pmtiles",
+                    "alias": "fired-events-fast",
+                    "display_name": "Fast-spreading events ≥20 km²/day · FIRED",
+                    "visible": false,
+                    "default_filter": [">=", ["get", "fsr_km2_dy"], 20],
+                    "default_style": {
+                        "fill-color": "#7F0000",
+                        "fill-opacity": 0.7
+                    },
+                    "outline_style": {
+                        "line-color": "#3B0000",
+                        "line-width": 0.5
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Event spread ≥ 20 km²/day",
+                            "color": "#7F0000"
+                        }
+                    ],
+                    "tooltip_fields": ["id", "ig_date", "last_date", "event_dur", "tot_ar_km2", "fsr_km2_dy", "mx_grw_km2", "lc_name", "eco_name"]
+                }
+            ]
+        },
+        {
             "collection_id": "mtbs-severity-1984-2024-conus",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json",
             "group": {
