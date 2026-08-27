@@ -72,7 +72,7 @@ follows it.
 | 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |
 | 5 | **Fire risk & fuels** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Vegetation condition class · LANDFIRE 2024 (CONUS only)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
 | 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
-| 7 | **Existing protections · PAD-US 4.1** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
+| 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
 | 8 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
@@ -83,7 +83,7 @@ modelled projection.
 
 Only `Forest Service ownership` in the NFS extent group is ownership; the other three are
 administrative envelopes, drawn as outlines with no fill so the distinction is visible rather than
-merely documented. The NFS extent and PAD-US groups sit together because they are the denominator
+merely documented. The NFS extent and protections groups sit together because they are the denominator
 machinery: the land base, and the Table 12 deduction taken out of it.
 
 The two roadless layers are one dataset filtered two ways, via the `alias` mechanism. Only

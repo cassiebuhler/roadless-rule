@@ -285,7 +285,7 @@ always follows the layer it is a subset of.
   attributing acreage to a state needs a spatial or hex join (e.g. `census-2024/state`, native h8);
   a plain `ST_Intersects` sum double-counts, because it credits a parcel's whole acreage to every
   state it touches.
-- **Existing protections · PAD-US 4.1** — `Designated wilderness · PAD-US 4.1`,
+- **Existing protections** — `Designated wilderness · PAD-US 4.1`,
   `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
   These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
   40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres — which is why

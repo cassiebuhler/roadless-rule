@@ -209,7 +209,7 @@ on hex overcounts — the same defect as `SEG_LENGTH` on RoadCore.
 free-flowing segment and found at least one outstanding natural, cultural or recreational value,
 making it *potentially eligible* for Wild & Scenic designation. It confers nothing. The app's
 designated Wild & Scenic stratum is a **different dataset** — PAD-US `Des_Tp`, under *Existing
-protections · PAD-US 4.1*, where it serves as a DEIS Table 12 deduction. Never combine or compare the two as though
+protections*, where it serves as a DEIS Table 12 deduction. Never combine or compare the two as though
 one updated the other.
 
 ⚠️ **`Management` on the NRI layer is free text and cannot be filtered as an agency column.** 1,827
@@ -419,7 +419,7 @@ with h9/h8/h0 parents, so they join cell-for-cell against `roadless-areas-2001` 
 `ST_Intersects` sum is wrong: it credits a parcel's entire acreage to every state its geometry
 touches, which overstates Montana by roughly 9M acres.
 
-### Existing protections · PAD-US 4.1
+### Existing protections
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|

@@ -417,7 +417,7 @@ argument, so preserve it when adding a layer:
 | 4 | Fire history | measured record: ignitions, perimeters, severity |
 | 5 | Fire risk & fuels | modelled hazard, stand condition, treatment |
 | 6 | National Forest System extent | the land base (5th denominator) |
-| 7 | Existing protections · PAD-US 4.1 | the Table 12 deduction → 40.0M base |
+| 7 | Existing protections | the Table 12 deduction → 40.0M base |
 | 8 | Land cover & modification | background |
 
 ⛔ **Do not merge Roads into Trails or vice versa**, and do not restore a shared "access" label for

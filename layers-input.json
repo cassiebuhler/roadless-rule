@@ -899,7 +899,7 @@
             "collection_id": "pad-us-4.1-combined",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json",
             "group": {
-                "name": "Existing protections · PAD-US 4.1",
+                "name": "Existing protections",
                 "collapsed": true
             },
             "assets": [
