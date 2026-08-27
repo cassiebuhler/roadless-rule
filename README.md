@@ -74,7 +74,7 @@ Within a group, a layer that is a **subset** of another always follows it.
 | 1 | **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
 | 2 | **Roads** | `NFS roads open to vehicles, 263,807 mi · USFS 2025` · `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` · `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` · `Highways & secondary roads, 268,817 segments · TIGER 2025` · `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` |
 | 3 | **Trails & recreation access** | `USFS trails, 134,983 mi · Federal Trails 2026` · `NPS & BLM trails, 25,916 mi · Federal Trails 2026` · `National Trails System routes, 12,488 mi · Federal Trails 2026` · `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` |
-| 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |
+| 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Incident suppression strategy 1999–2020 · ICS-209-PLUS` · `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Fire events by peak daily growth 2000–2021 · FIRED` · `Fast fires, >1,620 ha in a day · FIRED` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |
 | 5 | **Fire risk & fuels** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Risk to potential structures · WRC v2 (CONUS)` · `(Alaska)` · `Vegetation condition class · LANDFIRE 2024 (CONUS only)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
 | 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
 | 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
@@ -83,9 +83,10 @@ Within a group, a layer that is a **subset** of another always follows it.
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
 defines a road as a motor vehicle travelway over 50 inches wide, so no trail mileage may enter a
-road figure. Splitting **fire** into *history* (what burned, where ignitions start) and *risk &
-fuels* (forward-looking hazard, stand condition, treatment) keeps a measured record apart from a
-modelled projection.
+road figure. Splitting **fire** into *history* (what burned, where ignitions start, and how incidents were
+fought) and *risk & fuels* (forward-looking hazard, stand condition, treatment) keeps a measured
+record apart from a modelled projection. Within *history*, ignition counts (FPA-FOD) and incident
+reports (ICS-209-PLUS) measure different things and are never comparable as totals.
 
 Only `Forest Service ownership` in the NFS extent group is ownership; the other three are
 administrative envelopes, drawn as outlines with no fill so the distinction is visible rather than

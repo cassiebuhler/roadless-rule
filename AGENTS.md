@@ -488,6 +488,34 @@ motor-vehicle / highways / excluded-paths). Claims 1 and 3 are now testable. Not
 published to S3 while PRs #605, #612, #614 and #621 were still open — **STAC liveness, not merge
 status, is what determines whether a layer can be added.**
 
+✅ **#636 landed (data-workflows PR #637) and is in the app.** ICS-209-PLUS wildfire incidents
+1999–2020 — `ics-209-plus-1999-2020-wf-incidents`, two `circle` layers coloured by
+`SUPPRESSION_METHOD` in *Fire history*, placed immediately after FPA-FOD because both are
+point-of-origin layers and the reported-incident set is the small subset of the ignition record. This
+is the first layer carrying **how a fire was fought** (strategy, cost, personnel, spread rate,
+structure losses), so the "roadless areas cannot be defended" inference is now testable on the
+response side, not just the modelled-hazard side.
+
+⛔ **ICS-209-PLUS is not an ignition census and must never be counted against FPA-FOD.** 34,622
+incidents vs 2,661,383 ignitions — a 209 report is filed for incidents that escalate, so it is a
+selected subset, not a sample. And **every join is LEFT**: coverage stops at 2020 while FPA-FOD's join
+id runs to 2024, *and* only 33,247 of the 35,208 distinct pre-2021 FPA-FOD join ids match a row here
+(94.4%) because FPA-FOD's 7th edition was linked against an ICS-209-PLUS vintage that was never
+published. Two shortfalls, both must be stated.
+
+⚠️ **443 incidents carry defective upstream coordinates** — 439 (1999–2002) have
+`POO_LONGITUDE = -POO_LATITUDE`, putting the fire in the Atlantic, and 4 (2015) are otherwise off-US.
+Published as upstream supplies them, so **both map layers filter them out** with a bbox predicate
+(`POO_LONGITUDE` −180..−64, `POO_LATITUDE` 17..72 — verified to drop exactly 443 and no valid record);
+SQL must do the same. A further 422 incidents have no coordinate at all, so they are in the GeoParquet
+but not in the hex or the tiles — hex `COUNT(DISTINCT _cng_fid)` is 34,200, not 34,622.
+
+⚠️ Both layers filter to `INCTYP_ABBREVIATION` in `WF`,`WFU` (the MTBS split precedent), excluding 144
+prescribed-fire records and **65 `CX` complex umbrella records whose member fires also have their own
+rows**. `SUPPRESSION_METHOD` starts in 2007 (11,954 of 33,561 mapped incidents null — "not collected",
+never "no strategy"), and its `MMS` code (874) is **undefined in the SIT-209 lookup**, so it gets its
+own legend class rather than being folded into full or non-full suppression.
+
 ⛔ **`roadcore-fs` and `census-2025/roads` overlap and must never be unioned by addition.** Measured
 on a 0.3° window over the Bitterroot NF, 97 of 112 RoadCore segments (87%) lie within 25 m of a TIGER
 line — Forest Service roads reappear in TIGER as `S1500` or `S1740`. Combine the two only as distance

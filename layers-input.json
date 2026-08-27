@@ -427,6 +427,102 @@
             ]
         },
         {
+            "collection_id": "ics-209-plus-1999-2020-wf-incidents",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/ics-209-plus-1999-2020/wf-incidents/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "wf-incidents-pmtiles",
+                    "alias": "ics209-suppression-strategy",
+                    "display_name": "Incident suppression strategy 1999–2020 · ICS-209-PLUS",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_filter": ["all", ["match", ["get", "INCTYP_ABBREVIATION"], ["WF", "WFU"], true, false], [">=", ["get", "POO_LONGITUDE"], -180], ["<=", ["get", "POO_LONGITUDE"], -64], [">=", ["get", "POO_LATITUDE"], 17], ["<=", ["get", "POO_LATITUDE"], 72]],
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "SUPPRESSION_METHOD"],
+                            "FS", "#C0392B",
+                            "MMS", "#E67E22",
+                            "C", "#E8B92E",
+                            "PZP", "#16A085",
+                            "M", "#2E86AB",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": ["interpolate", ["linear"], ["get", "FINAL_ACRES"], 0, 2.5, 1000, 4, 20000, 7, 200000, 11, 1305592, 16],
+                        "circle-opacity": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Full suppression (FS)",
+                            "color": "#C0392B"
+                        },
+                        {
+                            "label": "MMS — code undefined in the SIT-209 lookup",
+                            "color": "#E67E22"
+                        },
+                        {
+                            "label": "Confine (C)",
+                            "color": "#E8B92E"
+                        },
+                        {
+                            "label": "Point zone protection (PZP)",
+                            "color": "#16A085"
+                        },
+                        {
+                            "label": "Monitor (M)",
+                            "color": "#2E86AB"
+                        },
+                        {
+                            "label": "Strategy not reported — collected from 2007 only",
+                            "color": "#9E9E9E"
+                        }
+                    ],
+                    "tooltip_fields": ["INCIDENT_NAME", "START_YEAR", "POO_STATE", "CAUSE", "FINAL_ACRES", "SUPPRESSION_METHOD", "PROJECTED_FINAL_IM_COST", "WF_PEAK_PERSONNEL", "STR_DESTROYED_TOTAL"]
+                },
+                {
+                    "id": "wf-incidents-pmtiles",
+                    "alias": "ics209-less-than-full-suppression",
+                    "display_name": "Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_filter": ["all", ["match", ["get", "INCTYP_ABBREVIATION"], ["WF", "WFU"], true, false], ["match", ["get", "SUPPRESSION_METHOD"], ["C", "M", "PZP"], true, false], [">=", ["get", "POO_LONGITUDE"], -180], ["<=", ["get", "POO_LONGITUDE"], -64], [">=", ["get", "POO_LATITUDE"], 17], ["<=", ["get", "POO_LATITUDE"], 72]],
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "SUPPRESSION_METHOD"],
+                            "C", "#E8B92E",
+                            "PZP", "#16A085",
+                            "M", "#2E86AB",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": ["interpolate", ["linear"], ["get", "FINAL_ACRES"], 0, 4, 1000, 6, 20000, 9, 200000, 13, 1305592, 18],
+                        "circle-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Confine (C)",
+                            "color": "#E8B92E"
+                        },
+                        {
+                            "label": "Point zone protection (PZP)",
+                            "color": "#16A085"
+                        },
+                        {
+                            "label": "Monitor (M)",
+                            "color": "#2E86AB"
+                        }
+                    ],
+                    "tooltip_fields": ["INCIDENT_NAME", "START_YEAR", "POO_STATE", "CAUSE", "FINAL_ACRES", "SUPPRESSION_METHOD", "PROJECTED_FINAL_IM_COST", "WF_PEAK_PERSONNEL", "STR_DESTROYED_TOTAL"]
+                }
+            ]
+        },
+        {
             "collection_id": "mtbs-perimeters-1984-2024",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json",
             "group": {

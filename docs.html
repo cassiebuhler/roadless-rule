@@ -246,7 +246,7 @@ li { margin: 0.25rem 0; }
     </div>
 
     <h3>Fire history</h3>
-    <p>What has already burned, and where fires start. The two ignition layers are points, not a density surface; the large-fire layer is a <em>subset</em> of the all-ignitions layer, never an addition to it.</p>
+    <p>What has already burned, where fires start, and how they were fought. The ignition and incident layers are points, not a density surface; in each pair the narrower layer is a <em>subset</em> of the broader one, never an addition to it. Ignitions (FPA-FOD, 2.66M) and incident reports (ICS-209-PLUS, 33,561) count different things and must not be compared as totals.</p>
     <div class="table-wrap">
     <table>
         <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
@@ -259,6 +259,8 @@ li { margin: 0.25rem 0; }
             <tr><td>Fire perimeters 1835&ndash;2020 &middot; USGS 2021</td><td>USGS Wildland Fire Combined Dataset: a synthesis of federal, state and tribal perimeters. Not an annual fire history.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
             <tr><td>Fire events by peak daily growth 2000&ndash;2021 &middot; FIRED</td><td>Earth Lab (CU Boulder) fire events delineated from MODIS MCD64A1 with <code>firedpy</code>: 278,569 events, CONUS and Alaska. The only layer here carrying how fast a fire grew.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fired-events-2001-2021/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
             <tr><td>Fast fires, &gt;1,620 ha in a day &middot; FIRED</td><td>Same dataset, filtered to the Balch et al. 2024 fast-fire threshold: peak single-day growth above 1,620 ha. 1,968 events.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/fired-events-2001-2021/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Incident suppression strategy 1999&ndash;2020 &middot; ICS-209-PLUS</td><td>ICS-209-PLUS (St.&nbsp;Denis et al. 2023): 33,561 wildfire and wildland-fire-use incidents that generated an ICS-209 situation report, coloured by suppression strategy. The only layer carrying how a fire was fought &mdash; strategy, cost, personnel and losses. A response record, not an ignition census, and coverage stops at 2020.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/ics-209-plus-1999-2020/wf-incidents/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Confine / monitor / point-protection incidents 2007&ndash;2020 &middot; ICS-209-PLUS</td><td>Same dataset, the 3,533 incidents managed with something other than full suppression. <code>SUPPRESSION_METHOD</code> is only collected from 2007.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-fire/ics-209-plus-1999-2020/wf-incidents/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
         </tbody>
     </table>
     </div>
