@@ -1132,6 +1132,145 @@
                     "legend_label": "Human modification index (0 = none, 1 = fully modified)"
                 }
             ]
+        },
+        {
+            "collection_id": "epa-ecoregions-l3",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-ecoregion/epa-ecoregions-l3/stac-collection.json",
+            "group": {
+                "name": "Ecological classification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "epa-ecoregions-l3-pmtiles",
+                    "alias": "ecoregion-level-1",
+                    "display_name": "Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": ["match", ["get", "NA_L1NAME"],
+                            "TUNDRA", "#C9D8DE",
+                            "TAIGA", "#8FA98C",
+                            "NORTHERN FORESTS", "#5E8C61",
+                            "NORTHWESTERN FORESTED MOUNTAINS", "#6FA3A0",
+                            "MARINE WEST COAST FOREST", "#4E7F8C",
+                            "EASTERN TEMPERATE FORESTS", "#9CBF7A",
+                            "GREAT PLAINS", "#E3D08A",
+                            "NORTH AMERICAN DESERTS", "#DDA96B",
+                            "MEDITERRANEAN CALIFORNIA", "#C98E7B",
+                            "SOUTHERN SEMI-ARID HIGHLANDS", "#B98A5E",
+                            "TEMPERATE SIERRAS", "#A88FBF",
+                            "TROPICAL WET FORESTS", "#7FBFA8",
+                            "#CCCCCC"
+                        ],
+                        "fill-opacity": 0.4
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Tundra",
+                            "color": "#C9D8DE"
+                        },
+                        {
+                            "label": "Taiga",
+                            "color": "#8FA98C"
+                        },
+                        {
+                            "label": "Northern Forests",
+                            "color": "#5E8C61"
+                        },
+                        {
+                            "label": "Northwestern Forested Mountains",
+                            "color": "#6FA3A0"
+                        },
+                        {
+                            "label": "Marine West Coast Forest",
+                            "color": "#4E7F8C"
+                        },
+                        {
+                            "label": "Eastern Temperate Forests",
+                            "color": "#9CBF7A"
+                        },
+                        {
+                            "label": "Great Plains",
+                            "color": "#E3D08A"
+                        },
+                        {
+                            "label": "North American Deserts",
+                            "color": "#DDA96B"
+                        },
+                        {
+                            "label": "Mediterranean California",
+                            "color": "#C98E7B"
+                        },
+                        {
+                            "label": "Southern Semi-Arid Highlands",
+                            "color": "#B98A5E"
+                        },
+                        {
+                            "label": "Temperate Sierras",
+                            "color": "#A88FBF"
+                        },
+                        {
+                            "label": "Tropical Wet Forests",
+                            "color": "#7FBFA8"
+                        }
+                    ],
+                    "tooltip_fields": ["NA_L1NAME", "NA_L2NAME", "US_L3NAME", "region"]
+                },
+                {
+                    "id": "epa-ecoregions-l3-pmtiles",
+                    "alias": "ecoregion-level-3",
+                    "display_name": "Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#3F6B7A",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#2F5563",
+                        "line-width": 0.9
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Level III boundary",
+                            "color": "#2F5563"
+                        }
+                    ],
+                    "tooltip_fields": ["US_L3NAME", "NA_L2NAME", "NA_L1NAME", "region"]
+                }
+            ]
+        },
+        {
+            "collection_id": "epa-ecoregions-l4",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-ecoregion/epa-ecoregions-l4/stac-collection.json",
+            "group": {
+                "name": "Ecological classification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "epa-ecoregions-l4-pmtiles",
+                    "display_name": "Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#8A6FA0",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#7A5F90",
+                        "line-width": 0.5
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Level IV boundary",
+                            "color": "#7A5F90"
+                        }
+                    ],
+                    "tooltip_fields": ["US_L4NAME", "US_L3NAME", "NA_L1NAME"]
+                }
+            ]
         }
     ]
 }

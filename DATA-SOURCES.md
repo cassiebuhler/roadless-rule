@@ -558,6 +558,59 @@ use `mode`, not `mean`; nodata `250`.
 Human modification is a continuous 0–1 index (0 = unmodified, 1 = fully modified) — average it, never
 sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.7283087).
 
+### Ecological classification
+
+| Layer | Publisher | Coverage | Vintage | License | Collection |
+|---|---|---|---|---|---|
+| `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
+| `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` | as above | **CONUS + Alaska** | as above | Public domain | `epa-ecoregions-l3` |
+| `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
+
+The Level I and Level III layers are one collection drawn two ways via `alias` — a fill coloured on
+`NA_L1NAME`, and boundaries with no fill. Every polygon carries the full hierarchy as columns
+(`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, plus `US_L4*` at Level IV), so Levels I and II need no
+separate dataset. 1,616 Level III polygons make up 105 ecoregions; 5,896 Level IV polygons make up
+967. Both are EPSG:4326 with an H3 hex at native resolution 8, which is the catalog join key.
+
+⭐ **This is the only ecological classification here that covers Alaska**, and Alaska is
+**33.1%** of the rule-affected base (14,778,681 of 44,701,002 ac). NLCD and LANDFIRE VCC are
+CONUS-only and WHP's Alaska domain cannot be pooled with its CONUS one, so an ecological share of
+roadless computed from any of those drops a third of the base without saying so. An ecoregion is a
+region of broadly similar ecological character and contains many ecosystems, so results from these
+layers are "by ecoregion", not "by ecosystem". Level IV shares
+that CONUS-only limit — EPA publishes no Alaska Level IV, so Alaska's finest available tier is
+Level III.
+
+⛔ **Do not total `h3_cell_area()` over the roadless hex for acres.** Summing resolution-8 cell areas
+over `roadless-areas-2001/hex/` gives 74,561,734 ac against the authoritative 58,419,694 — **28%
+high**, because a cell that merely touches a roadless area is counted whole (57,339,269 vs 44,701,002
+on the rule-affected subset). Assign each roadless polygon to its dominant ecoregion through the
+`h8` join and then sum the `ACRES` column; that reconciles to 44,701,002 exactly. The query is in
+`system-prompt.md`.
+
+Measured on the rule-affected base by that method: Northwestern Forested Mountains 19,437,325 ac
+(43.5%), Marine West Coast Forest 14,830,060 ac (33.2%), North American Deserts 4,758,127 ac (10.6%).
+At Level III the two largest are both Alaskan — Pacific Coastal Mountains 8,124,350 ac (18.2%) and
+Coastal Western Hemlock-Sitka Spruce Forests 6,563,396 ac (14.7%); Middle Rockies, at 6,683,503 ac
+(15.0%), is the largest in the lower 48.
+
+⚠️ 114,895 ac (0.26%) match no ecoregion: 90,934 ac over 484 very small Alaskan island polygons whose
+cells miss an ecoregion cell at resolution 8, 23,734 ac in **Puerto Rico**, which the Omernik
+framework does not cover, and 226 ac in Michigan. Report the null group rather than dropping it.
+
+⚠️ **Group by an identifier, not a name.** `NA_L2CODE` 13.1 ships as both `UPPER GILA MOUNTAINS` and
+`UPPER GILA MOUNTAINS (?)`, and `NA_L3CODE` 10.2.4 as both `Chihuahuan Desert` and `Chihuahuan
+Deserts`; grouping on the name splits either unit in two. Level I/II names are ALL-CAPS while Level
+III/IV are Title Case, so a `WHERE` clause that guesses the casing returns nothing. Alaska's Level III
+codes (101–120) are disjoint from CONUS's (1–85), so `US_L3CODE` is unique across the merged layer.
+`Shape_Area` and `Shape_Leng` are EPA's own values in the source Albers projections and are per-polygon
+totals — on the hex they repeat on every cell, so deduplicate on `_cng_fid` before summing.
+
+Framework: Omernik, J.M. (1987), *Ecoregions of the conterminous United States*, Annals of the AAG
+77(1):118–125, and Omernik & Griffith (2014), *Ecoregions of the conterminous United States: evolution
+of a hierarchical spatial framework*, Environmental Management 54(6):1249–1266. EPA data are public
+domain by default under 17 U.S.C. § 105 ([terms](https://edg.epa.gov/EPA_Data_License.htm)).
+
 ## Reproducing the agency's numbers
 
 The rulemaking under audit: **91 FR 53827** (published 2026-08-20), RIN **0596-AD66**, docket

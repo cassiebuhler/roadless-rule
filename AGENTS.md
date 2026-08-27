@@ -406,7 +406,7 @@ else. Likewise `groupCollapsed` is read off the group's **first** member only, s
 several collections, only the first one's `collapsed` flag has any effect (keep them consistent
 anyway).
 
-The eight groups are ordered by how directly each bears on the proposal, and the order carries
+The nine groups are ordered by how directly each bears on the proposal, and the order carries
 argument, so preserve it when adding a layer:
 
 | # | Group | Why here |
@@ -419,6 +419,7 @@ argument, so preserve it when adding a layer:
 | 6 | National Forest System extent | the land base (5th denominator) |
 | 7 | Existing protections | the Table 12 deduction → 40.0M base |
 | 8 | Land cover & modification | background |
+| 9 | Ecological classification | the framework the other eight can be stratified by — and the only one covering Alaska |
 
 ⛔ **Do not merge Roads into Trails or vice versa**, and do not restore a shared "access" label for
 the two. 36 CFR 294.11 defines a road as a motor vehicle travelway over 50 inches wide; a shared
@@ -521,6 +522,23 @@ Checked against live STAC on 2026-08-27 — none of the following has a `stac-co
 none can be added. `public-landfire/landfire-2024-evc/` and `.../landfire-2024-fbfm40/` hold COGs but
 **no collection JSON** (#623). A bucket prefix is not an ingest — probe for `stac-collection.json`
 before believing a dataset is available.
+
+✅ **#633 landed and is now in the app** — `epa-ecoregions-l3` (CONUS+AK, 1,616 polygons) and
+`epa-ecoregions-l4` (CONUS, 5,896), in a new 9th group *Ecological classification*. Both are
+children of a **parent** collection at `public-ecoregion/stac-collection.json` (the bucket root was
+converted from the WWF collection into a parent when these landed), so they need `collection_url`
+pointing at the child JSON — the framework does not recurse into parent collections. This is also
+the first layer here to put a **`match` expression in `default_style`** rather than a flat colour;
+`default_style` is passed straight through as MapLibre paint, and `legend-helpers.js` documents
+categorical paint expressions explicitly, so it is supported — the explicit `legend_classes` is what
+supplies the legend, since only `interpolate`/`step` are derived from paint.
+
+⛔ **Never total `h3_cell_area()` over the roadless hex for an acreage.** It returns 74.6M acres
+against the authoritative 58.4M — **28% high**, since a resolution-8 cell that merely touches an IRA
+is counted whole. For any ecoregion breakdown, assign each roadless polygon to its dominant ecoregion
+via the `h8` join and sum `ACRES`; that reconciles to 44,701,002 exactly. Query in `system-prompt.md`.
+⚠️ 114,895 ac (0.26%) match no ecoregion — 484 tiny Alaskan islands, Puerto Rico (outside Omernik),
+and 3 Michigan polygons. Report the null group; do not drop it.
 
 ✅ **#592 landed and is now in the app.** `wrc-2-rps-conus` and `wrc-2-rps-ak` published
 2026-08-27 (521.0 M and 120.3 M res-10 cells), verified by `verify-stac.py` with data checks. Note
