@@ -283,6 +283,12 @@ is a subset of.
   Also here: `Fire events by peak daily growth 2000–2021 · FIRED` and
   `Fast fires, >1,620 ha in a day · FIRED` — the only layers carrying **how fast** a fire grew. The
   fast layer is a **subset** of the all-events layer, not an addition.
+  Also here: `Incident suppression strategy 1999–2020 · ICS-209-PLUS` and
+  `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` — the only layers
+  carrying **how a fire was fought**. The second is a **subset** of the first. This is the
+  response record, not an ignition census: 33,561 wildfire/WFU incidents that generated an
+  ICS-209 report, against FPA-FOD's 2.66M ignitions. Both layers hide the 443 incidents whose
+  upstream coordinates are defective (see *ICS-209-PLUS caveats* below).
   ⛔ **A "fast fire" has a published definition and it is not the average spread rate.** Balch et al.
   2024 define it as peak single-day growth above 1,620 ha — `mx_grw_km2 > 16.2` — which is what both
   layers use (1,968 of 278,569 events here). `fsr_km2_dy` is `tot_ar_km2 / event_dur`, an average
@@ -495,6 +501,67 @@ FPA-FOD is the national **ignition census** — 2,661,383 reported wildfire igni
 - A companion non-spatial lookup, `fpa-fod-1992-2024-nwcg-units`, resolves reporting units to
   agencies — join on `NWCG_REPORTING_UNIT_ID` = `UnitId` and filter `Agency = 'FS'` for the Forest
   Service stratum, which is more reliable than matching unit names.
+
+## Working with the ICS-209-PLUS incident layers
+
+ICS-209-PLUS is the **response record** — 34,622 incidents that generated an ICS-209 situation report
+between 1999 and 2020 (St. Denis et al. 2023, DOI `10.6084/m9.figshare.19858927.v3`, CC BY 4.0).
+Collection `ics-209-plus-1999-2020-wf-incidents`. It is the only dataset in this app that says **how a
+fire was fought**: suppression strategy, projected cost, peak personnel and aerial resources, maximum
+spread rate, and structures threatened / damaged / destroyed.
+
+- ⛔ **It is not an ignition census and must never be counted against one.** 34,622 incidents against
+  FPA-FOD's 2,661,383 ignitions — a 209 report is filed for incidents that escalate, so this is a
+  selected subset, not a sample. Use FPA-FOD for "how many fires started", this for "what the
+  response was".
+- ⛔ **Every join to FPA-FOD is a LEFT join, and two shortfalls compound.** The key is
+  `INCIDENT_ID` = FPA-FOD `ICS_209_PLUS_INCIDENT_JOIN_ID`. (1) Coverage stops at **2020** while
+  FPA-FOD runs to 2024, so an inner join silently drops the four most recent fire years. (2) Of the
+  35,208 distinct pre-2021 FPA-FOD join ids, only **33,247 (94.4%)** match a row here — FPA-FOD's 7th
+  edition was linked against an ICS-209-PLUS vintage that was never published, so 1,961 ids point at
+  nothing and are not recoverable. Any "share of fires with an incident report" must state both.
+- ⚠️ **443 incidents carry defective upstream coordinates and both map layers filter them out.** 439
+  records (1999–2002) have `POO_LONGITUDE = -POO_LATITUDE` — the longitude field holds the negated
+  latitude, putting the fire in the Atlantic — and 4 more (2015) are otherwise off-US. Values are
+  published exactly as upstream supplies them, so **you must exclude them yourself in SQL**:
+
+  ```sql
+  WHERE POO_LONGITUDE BETWEEN -180 AND -64 AND POO_LATITUDE BETWEEN 17 AND 72
+  ```
+
+  That one predicate removes all 443 and no valid record. Never use this layer for a distance band
+  without it.
+- ⚠️ **422 incidents have no coordinate at all**, so they are in the GeoParquet but absent from the hex
+  and the PMTiles. Hex `COUNT(DISTINCT _cng_fid)` is 34,200, not 34,622 — **count incidents from the
+  GeoParquet**, and expect the map to show fewer.
+- ⚠️ **`SUPPRESSION_METHOD` begins in 2007. A null means not collected, never "no strategy."** 11,954
+  of the 33,561 mapped incidents are null on it. `FS`=Full Suppression, `C`=Confine, `M`=Monitor,
+  `PZP`=Point Zone Protection — and **`MMS` (874 records) is not defined in the SIT-209 lookup at
+  all**, so do not guess what it means or fold it into either group. `PEAK_EVACUATIONS`,
+  `FATALITIES_PUBLIC` and `FATALITIES_RESPONDER` start in 2013 and `POO_CITY` in 2014; use
+  `FATALITIES` for the full series.
+- ⚠️ **`INCTYP_ABBREVIATION` mixes fire types and one of them double-counts.** `WF` 33,641,
+  `WFU` (wildland fire use) 772, `RX` (prescribed) 144, and `CX` 65 — a **complex umbrella record
+  whose member fires also have their own rows**. Both map layers filter to `WF`,`WFU`, matching the
+  MTBS wildfire split; do the same in SQL or you will count complexes twice.
+- ⚠️ **The sitreps table repeats `INCIDENT_ID`** — 182,826 reports over 34,622 incidents, 5.28 each.
+  Dedup by `INCIDENT_ID` before aggregating any incident-level attribute, or you multiply it by the
+  report count. `SOURCE_ROW` is the only row-unique key on that table; it is upstream row order, not
+  an identifier, and must not be joined across tables.
+- ⚠️ **`FOD_FIRE_LIST`, `MTBS_FIRE_LIST`, `FOD_CAUSE`, `FOD_COORD_LIST` and `SUP_SERIES` are Python
+  list literals stored as text**, not arrays — one incident maps to many fires. Never SUM across them;
+  use the scalar companions (`FOD_FIRE_NUM`, `MTBS_FIRE_NUM`, `FOD_FINAL_ACRES`, `LRGST_FOD_ID`).
+- ⚠️ **On the by-tract / by-county / by-cbg tables, `SPATIAL_DATA_ORIGIN = 'POO'` does not mean the
+  fire burned there.** It is the most common value (18,286 rows) and means the linkage came from the
+  point of origin alone because no mapped perimeter was available. Only `MTBS`, `FIRED` and
+  `MTBS_and_FIRED` rows reflect actual burned extent. A "fires per county" figure that includes `POO`
+  rows is a count of origins, not of burned area — say which.
+- **Relevance to the proposal:** this is what makes "roadless areas cannot be treated or defended"
+  testable on the response side rather than the hazard side. Join incidents to the roadless layer and
+  compare `SUPPRESSION_METHOD`, `PROJECTED_FINAL_IM_COST` per acre, `WF_PEAK_PERSONNEL` and
+  `WF_MAX_FSR` across the IRA / roaded-NFS / wilderness strata — restricting to 2007+ so strategy is
+  populated, and reporting the stratum sizes alongside. Confine and monitor strategies are chosen for
+  many reasons other than access; a difference in strategy is not by itself evidence about roads.
 
 ## Working with the MTBS layers
 

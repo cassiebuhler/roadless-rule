@@ -220,12 +220,14 @@ blank on 1,667 segments, so it is not a clean stratum either.
 
 ### Fire history
 
-What has already burned, and where fires start.
+What has already burned, where fires start, and how incidents were fought.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
 | `Ignitions by cause 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National incl. AK, HI, PR, VI, Guam | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
 | `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
+| `Incident suppression strategy 1999–2020 · ICS-209-PLUS` | St. Denis et al. / Earth Lab, CU Boulder (mined from USFS SIT-209) | National | 1999–2020 | CC-BY-4.0 | `ics-209-plus-1999-2020-wf-incidents` |
+| `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` | St. Denis et al. / Earth Lab, CU Boulder | National | 2007–2020 (strategy field starts 2007) | CC-BY-4.0 | `ics-209-plus-1999-2020-wf-incidents` |
 | `Wildfire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Prescribed fire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
 | `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
@@ -233,6 +235,22 @@ What has already burned, and where fires start.
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
 | `Fire events by peak daily growth 2000–2021 · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
 | `Fast fires, >1,620 ha in a day · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
+
+**ICS-209-PLUS is a response record, not an ignition census.** 34,622 incidents that generated an
+ICS-209 situation report, against FPA-FOD's 2,661,383 ignitions — the two count different things and
+must never be compared as totals. Coverage **stops at 2020** while FPA-FOD runs to 2024, and of the
+35,208 distinct pre-2021 FPA-FOD join ids only 33,247 (94.4%) match a row here, so every join on
+`INCIDENT_ID` = `ICS_209_PLUS_INCIDENT_JOIN_ID` must be a LEFT join.
+
+Both map layers filter to `INCTYP_ABBREVIATION` in `WF`,`WFU` — excluding 144 prescribed-fire records
+and 65 complex umbrella records whose member fires also appear individually — and drop the **443
+incidents with defective upstream coordinates** (439 records from 1999–2002 carry
+`POO_LONGITUDE = -POO_LATITUDE`, placing them in the Atlantic; 4 more from 2015 are otherwise off-US).
+Those values are published as upstream supplies them, so SQL must exclude them explicitly. A further
+422 incidents have no coordinate at all and so appear in the GeoParquet but not on the map.
+`SUPPRESSION_METHOD` is collected only from 2007 (11,954 of the 33,561 mapped incidents are null), and
+its `MMS` code is undefined in the SIT-209 lookup, so it is shown as its own legend class rather than
+folded into either group.
 
 The two MTBS severity layers carry a **year selector** rather than one panel entry per
 year.
