@@ -122,7 +122,7 @@
             "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json",
             "group": {
                 "name": "Roads",
-                "collapsed": false
+                "collapsed": true
             },
             "assets": [
                 {
@@ -175,7 +175,7 @@
             "collection_url": "https://s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json",
             "group": {
                 "name": "Roads",
-                "collapsed": false
+                "collapsed": true
             },
             "assets": [
                 {

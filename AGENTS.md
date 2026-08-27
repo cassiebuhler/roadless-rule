@@ -411,8 +411,8 @@ argument, so preserve it when adding a layer:
 
 | # | Group | Why here |
 |---:|---|---|
-| 1 | Roadless areas · USFS 2001 | the subject — **open** |
-| 2 | Roads | what 36 CFR 294 actually regulates — **open** |
+| 1 | Roadless areas · USFS 2001 | the subject — **the only group expanded at open** |
+| 2 | Roads | what 36 CFR 294 actually regulates |
 | 3 | Trails & recreation access | "roadless" ≠ inaccessible |
 | 4 | Fire history | measured record: ignitions, perimeters, severity |
 | 5 | Fire risk & fuels | modelled hazard, stand condition, treatment |
