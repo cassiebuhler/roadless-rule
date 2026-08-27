@@ -493,10 +493,10 @@
                 {
                     "id": "fired-events-2001-2021-pmtiles",
                     "alias": "fired-events-all",
-                    "display_name": "Fire events by spread rate 2000–2021 · FIRED",
+                    "display_name": "Fire events by peak daily growth 2000–2021 · FIRED",
                     "visible": false,
                     "default_style": {
-                        "fill-color": ["step", ["get", "fsr_km2_dy"], "#FEE08B", 1, "#FDAE61", 5, "#F46D43", 20, "#D73027", 50, "#7F0000"],
+                        "fill-color": ["step", ["get", "mx_grw_km2"], "#FEE08B", 1, "#FDAE61", 4.05, "#F46D43", 16.2, "#D73027", 100, "#7F0000"],
                         "fill-opacity": 0.55
                     },
                     "outline_style": {
@@ -506,23 +506,23 @@
                     "legend_type": "categorical",
                     "legend_classes": [
                         {
-                            "label": "< 1 km²/day",
+                            "label": "< 100 ha in a day",
                             "color": "#FEE08B"
                         },
                         {
-                            "label": "1–5 km²/day",
+                            "label": "100–405 ha in a day",
                             "color": "#FDAE61"
                         },
                         {
-                            "label": "5–20 km²/day",
+                            "label": "405–1,620 ha in a day",
                             "color": "#F46D43"
                         },
                         {
-                            "label": "20–50 km²/day",
+                            "label": "1,620–10,000 ha · fast fire",
                             "color": "#D73027"
                         },
                         {
-                            "label": "≥ 50 km²/day",
+                            "label": "≥ 10,000 ha in a day",
                             "color": "#7F0000"
                         }
                     ],
@@ -531,9 +531,9 @@
                 {
                     "id": "fired-events-2001-2021-pmtiles",
                     "alias": "fired-events-fast",
-                    "display_name": "Fast-spreading events ≥20 km²/day · FIRED",
+                    "display_name": "Fast fires, >1,620 ha in a day · FIRED",
                     "visible": false,
-                    "default_filter": [">=", ["get", "fsr_km2_dy"], 20],
+                    "default_filter": [">", ["get", "mx_grw_km2"], 16.2],
                     "default_style": {
                         "fill-color": "#7F0000",
                         "fill-opacity": 0.7
@@ -545,7 +545,7 @@
                     "legend_type": "categorical",
                     "legend_classes": [
                         {
-                            "label": "Event spread ≥ 20 km²/day",
+                            "label": "Fast fire · grew >1,620 ha in a single day",
                             "color": "#7F0000"
                         }
                     ],
