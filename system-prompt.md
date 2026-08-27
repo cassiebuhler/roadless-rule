@@ -207,9 +207,10 @@ of category. Never read rule status, protection level, or permission off this co
 The layer panel is the complete inventory; there is no data behind the scenes. The panel is ordered
 by how directly a group bears on the proposal: the subject, then what the rule regulates, then what
 "roadless" does *not* mean, then the agency's stated rationale, then the denominators, then
-background. The first two groups — **roadless areas** and **roads** — open by default; everything
-below them is context and starts collapsed. Within a group, layers are ordered so that a subset
-always follows the layer it is a subset of.
+background. Only the first group — **roadless areas** — is expanded at open; every other group is
+context and starts collapsed, so a user who wants roads, fire or the denominator layers has to open
+that group first. Within a group, layers are ordered so that a subset always follows the layer it
+is a subset of.
 
 - **Roadless areas · USFS 2001** — the 2001 inventory, split into `Rule-affected · 44.7M ac` and
   `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.

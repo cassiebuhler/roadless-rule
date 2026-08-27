@@ -88,8 +88,8 @@ machinery: the land base, and the Table 12 deduction taken out of it.
 
 The two roadless layers are one dataset filtered two ways, via the `alias` mechanism. Only
 `Rule-affected` is on at open, so the default map shows the 44.7M base — switch `Idaho & Colorado`
-on whenever the question is comparative. Groups 1 and 2 are expanded by default; everything below
-them starts collapsed, and every layer outside the roadless group starts switched off.
+on whenever the question is comparative. Group 1 is the only one expanded at open; every group
+below it starts collapsed, and every layer outside the roadless group starts switched off.
 
 Full provenance — publisher, coverage, vintage, license, and every caveat that changes a number — is
 in **[DATA-SOURCES.md](DATA-SOURCES.md)**. The app's "About" footer link points to
