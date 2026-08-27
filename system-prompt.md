@@ -280,6 +280,14 @@ is a subset of.
   aggregate the res-10 hex to a coarser resolution and render it with `add_hex_tile_layer` — see
   *Building an ignition-density layer* below. Ignitions are grouped with fire rather than with roads,
   but the roads × ignitions intersection is the core of claim 3 — turn on layers from both groups.
+  Also here: `Fire events by spread rate 2000–2021 · FIRED` and
+  `Fast-spreading events ≥20 km²/day · FIRED` — the only layers carrying **how fast** a fire spread
+  (`fsr_km2_dy`, and single-day growth in `m[xnu]_grw_km2`). The fast layer is a **subset** of the
+  all-events layer. FIRED is algorithmic and thresholdless where MTBS is human-QAd above
+  500/1,000 acres, so **event counts between the two are not comparable and neither is a superset of
+  the other**. Spread rate is an average over the whole event duration, never an instantaneous rate,
+  and the 11-day grouping window can merge two nearby fires or split one long one — say so when a
+  spread-rate figure is doing real work in an answer.
 - **Fire risk & fuels** — forward-looking hazard, stand condition and the treatment response:
   `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
   `Risk to potential structures · WRC v2 (CONUS)` / `(Alaska)`,

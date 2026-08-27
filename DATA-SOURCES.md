@@ -231,6 +231,8 @@ What has already burned, and where fires start.
 | `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
 | `Burn severity by year · MTBS (Alaska)` | MTBS (USGS / USFS) | **Alaska only** | 36 annual years, 1984–2023 | Public domain | `mtbs-severity-1984-2024-ak` |
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
+| `Fire events by spread rate 2000–2021 · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
+| `Fast-spreading events ≥20 km²/day · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
 
 The two MTBS severity layers carry a **year selector** rather than one panel entry per
 year.
@@ -259,6 +261,30 @@ burned 19 times. Any total must say which it means.
 1835–2020 with very uneven completeness by era and region; counts collapse before ~1980.
 `Overlap_Within_1_or_2_Flag` and `Exclude_From_Summary_Rasters` mark records USGS itself says not to
 use in area summaries.
+
+FIRED is the only layer here that carries **how fast** a fire spread. `firedpy` groups MODIS
+MCD64A1 burned pixels falling within one space-time window (5 pixels, 11 days) into a single event,
+then divides area by duration: `fsr_km2_dy`, plus maximum, minimum and mean single-day growth
+(`m[xnu]_grw_km2`). 278,569 events, 666,046 km² burned. Both map layers colour by `fsr_km2_dy`; the
+fast-spreading layer is a **subset** of the all-events layer, filtered to ≥20 km²/day, not an
+addition to it. DOI [10.3390/rs12213498](https://doi.org/10.3390/rs12213498).
+
+⛔ **FIRED events are not MTBS perimeters and the counts are not comparable.** FIRED is algorithmic
+with no size threshold (median event 0.43 km²); MTBS is human-QAd above 500/1,000 acres. FIRED also
+inherits MCD64A1's blind spots — fires smaller than a 463 m pixel, dense canopy, cloud, and fires
+that burned between monthly composites. Neither is a superset of the other.
+
+⚠️ **Event boundaries and spread rates are both artefacts of the 11-day window.** Two nearby fires
+burning within 11 days can merge into one event; one long fire with a quiet spell longer than 11 days
+can split into two. `fsr_km2_dy` is an average over the whole event duration, never an instantaneous
+rate — a fire that ran hard for one day and smouldered for a month reads slow.
+
+⚠️ **Do not SUM per-event totals on the FIRED hex.** `tot_ar_km2`, `tot_pix`, `tot_perim`,
+`event_dur` and every `fsr_*` / `m[xnu]_grw_*` column repeat on each of the 6,266,383 (event, cell)
+rows. Deduplicate by `id` first. Also: `ig_utm_x` / `ig_utm_y` are neither UTM nor lon/lat — they are
+MODIS sinusoidal metres, and only the geometry was reprojected. `eco_mode` and `eco_name` are
+computed independently and do not pair 1:1 (105 codes, 105 names, 294 observed combinations);
+filter on one, not both.
 
 FPA-FOD source DOI [10.2737/RDS-2013-0009.7](https://doi.org/10.2737/RDS-2013-0009.7) —
 2,661,383 ignition points. Both layers colour by `NWCG_CAUSE_CLASSIFICATION`; the large-fire layer is
