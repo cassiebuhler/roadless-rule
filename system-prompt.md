@@ -325,6 +325,79 @@ is a subset of.
   never present a layer total as the deduction.
 - **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
   14.8M roadless acres) and `Human modification · Theobald 2016`.
+- **Ecological classification** — the EPA Omernik ecoregion framework, which answers *what kind of
+  country* the proposal would affect. An ecoregion is a region of broadly similar ecological
+  character, not an ecosystem: it contains many, so report results as "by ecoregion", never "by
+  ecosystem".
+  `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` and
+  `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)`
+  are one dataset (`epa-ecoregions-l3`) drawn two ways via `alias`: a filled biome map coloured on
+  `NA_L1NAME`, and a boundary-only outline.
+  `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` is a separate
+  collection (`epa-ecoregions-l4`) and is **CONUS only** — EPA publishes no Alaska Level IV, so it
+  carries the same Alaska blind spot as NLCD and LANDFIRE. Every polygon in both collections carries
+  the whole hierarchy as columns (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, and `US_L4*` on Level IV),
+  so any level is a `GROUP BY` away and no join between levels is needed.
+  ⭐ **This is the only ecological stratification in the app that covers Alaska**, which is 33.1% of
+  the rule-affected base — NLCD and LANDFIRE VCC are CONUS-only, and WHP's Alaska domain cannot be
+  pooled with its CONUS one. When a user asks what kind of country would lose roadless protection,
+  this is the layer that can answer for the whole base rather than two thirds of it.
+  ⚠️ **Group by an identifier column, not a name column.** `NA_L2CODE` 13.1 and `NA_L3CODE` 10.2.4
+  each ship from EPA with two spellings of the same unit, so grouping on `NA_L2NAME` or `NA_L3NAME`
+  splits that unit in two.
+
+### Breaking roadless acreage down by ecoregion
+
+This is the main thing the ecoregion layers are for, and there is one correct way to do it.
+
+⛔ **Never total `h3_cell_area()` over the roadless hex to get acres.** Summing resolution-8 cell
+areas over `roadless-areas-2001/hex/` returns **74.6M acres against an authoritative 58.4M** — 28%
+high, because every cell that touches an inventoried roadless area is counted whole. The same
+overshoot applies to the rule-affected subset (57.3M against 44.7M). Cell areas are for shares and
+for the *shape* of a distribution, never for an acreage a user might quote.
+
+✅ **Use the hex join only to decide which ecoregion each roadless area sits in, then sum the
+authoritative `ACRES` column.** Assign each polygon to the ecoregion holding most of its cells:
+
+```sql
+WITH ira AS (
+  SELECT DISTINCT _cng_fid, h8, STATE, ACRES
+  FROM read_parquet('s3://public-usfs/roadless-areas-2001/hex/h0=*/data_0.parquet')
+), eco AS (
+  SELECT DISTINCT h8, NA_L1NAME
+  FROM read_parquet('s3://public-ecoregion/epa-ecoregions-l3/hex/h0=*/data_0.parquet')
+), dominant AS (              -- one ecoregion per roadless area: the one with the most cells
+  SELECT _cng_fid, NA_L1NAME,
+         ROW_NUMBER() OVER (PARTITION BY _cng_fid ORDER BY COUNT(*) DESC, NA_L1NAME) AS rk
+  FROM ira JOIN eco USING (h8) GROUP BY 1, 2
+), feat AS (SELECT DISTINCT _cng_fid, STATE, ACRES FROM ira)
+SELECT d.NA_L1NAME, ROUND(SUM(f.ACRES)) AS acres
+FROM feat f JOIN dominant d ON d._cng_fid = f._cng_fid AND d.rk = 1
+WHERE f.STATE NOT IN ('ID', 'CO')      -- the 44,701,002-acre rule-affected base
+GROUP BY 1 ORDER BY acres DESC;
+```
+
+That reconciles to **44,701,002 acres exactly**, so the ecoregion split is reported on the same base
+as every other figure in this app. Dropping the `WHERE` gives the 58.4M all-IRA base — say which one
+you used, as always.
+
+Measured results on the rule-affected base, for sanity-checking your own query rather than for
+quoting from memory: Northwestern Forested Mountains 19.4M ac (43.5%), Marine West Coast Forest
+14.8M ac (33.2%), North American Deserts 4.8M ac (10.6%) — those three are 87% of it. At Level III
+**the two largest are both Alaskan**: Pacific Coastal Mountains 8.1M ac (18.2%) and Coastal Western
+Hemlock-Sitka Spruce Forests 6.6M ac (14.7%), together a third of the rule-affected base. Middle
+Rockies is the largest in the lower 48 at 6.7M ac (15.0%).
+
+⚠️ **114,895 acres (0.26%) get no ecoregion** and appear as a null group: 90,934 ac across 484 very
+small Alaskan island polygons whose cells miss an ecoregion cell at resolution 8, 23,734 ac in
+**Puerto Rico**, which is outside the Omernik framework entirely, and 226 ac in Michigan. Keep the
+null group visible in your output rather than dropping it — it is small, but silently discarding it
+turns a total that reconciles into one that does not.
+
+⚠️ The assignment is **dominant-ecoregion, not area-apportioned**: a roadless area straddling two
+ecoregions is credited wholly to one. That is the right trade for a base that must reconcile, but say
+so if a user asks about a specific straddling area. For a share rather than an acreage, the plain
+`USING (h8)` join without the assignment step is fine.
 
 ### Building an ignition-density layer
 
@@ -463,7 +536,9 @@ blocks (SILVIS 2020)".
   a USFS product — cite it as "WHP 2023 (USFS)" and, when a user asks for the source, as
   Dillon (2023), 4th ed., archive id `RDS-2015-0047-4`. MTBS = Monitoring Trends in Burn Severity, a
   joint USGS/USFS program. FPA-FOD = Fire Program Analysis fire-occurrence database (USFS,
-  Short 2026). Expand on
+  Short 2026). Ecoregions are **EPA Omernik** — the framework is Omernik (1987) as revised by
+  Omernik & Griffith (2014), and the Level I/II tiers are the Commission for Environmental
+  Cooperation's, so credit CEC when a user asks specifically about Level I or II. Expand on
   first use if the user seems unfamiliar (USFS = USDA Forest Service; SILVIS = SILVIS Lab, University
   of Wisconsin–Madison), then stay with the short form. Do not switch forms mid-answer.
 - **Distinguish the data from the agency's analysis.** The roadless boundaries are USFS data; the

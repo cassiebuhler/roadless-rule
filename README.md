@@ -66,8 +66,8 @@ follows one form — **`what it is · PUBLISHER vintage`** — and legal status 
 
 Groups run in order of how directly they bear on the proposal: the subject, then what the rule
 regulates, then what "roadless" does *not* mean, then the agency's stated rationale, then the
-denominators, then background. Within a group, a layer that is a **subset** of another always
-follows it.
+denominators, then background, and last the ecological framework the rest can be stratified by.
+Within a group, a layer that is a **subset** of another always follows it.
 
 | # | Group | Layers |
 |---:|---|---|
@@ -79,6 +79,7 @@ follows it.
 | 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
 | 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
 | 8 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
+| 9 | **Ecological classification** | `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` |
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
 defines a road as a motor vehicle travelway over 50 inches wide, so no trail mileage may enter a
@@ -90,6 +91,19 @@ Only `Forest Service ownership` in the NFS extent group is ownership; the other 
 administrative envelopes, drawn as outlines with no fill so the distinction is visible rather than
 merely documented. The NFS extent and protections groups sit together because they are the denominator
 machinery: the land base, and the Table 12 deduction taken out of it.
+
+The **ecological classification** group is the one place the app can characterise the *whole*
+rule-affected base by ecoregion. An ecoregion is a region of broadly similar ecological character
+and contains many ecosystems, so a breakdown from these layers is by ecoregion, not by ecosystem.
+Level III covers CONUS **and Alaska**, which holds 33.1% of the 44.7M acres the proposal would
+affect; the land-cover and vegetation-condition layers above it are CONUS-only, so any ecological
+share computed from those silently drops a third of the base.
+
+Level I and Level III are one dataset drawn two ways (a filled 12-biome map, and boundaries only);
+Level IV is a separate collection and is CONUS-only, because EPA publishes no Alaska Level IV. All
+three start switched off, and the filled biome layer is deliberately semi-transparent: ecoregions
+tile the map wall to wall, so it is a backdrop for the roadless layer rather than a competitor to
+it.
 
 The two roadless layers are one dataset filtered two ways, via the `alias` mechanism. Only
 `Rule-affected` is on at open, so the default map shows the 44.7M base — switch `Idaho & Colorado`
