@@ -81,7 +81,10 @@ Two figures that reconcile against the 44.7M base, computed from this layer:
 These are **press-release claims attributed to Chief Tom Schultz**, not preamble text. The Federal
 Register preamble contains none of them; the Draft EIS supplies the methods.
 
-**1. ">40% of IRAs have high or very high wildfire hazard potential."** The numerator is 11,479,564
+**1. ">40% of IRAs have high or very high wildfire hazard potential."** Schultz's full sentence is
+"more than 40% of inventoried roadless areas, **primarily in the West**, have high or very high
+wildfire hazard potential" — the western qualifier is consistent with the Alaska-excluded reading
+below, but the release never states a base. The numerator is 11,479,564
 acres (DEIS Vol I Table 22). That is **41.8% excluding Alaska** and **28.7% including Alaska**, and
 the release does not say which it used. **WHP v2023 is now in this app, so this claim is testable
 here** — the four collections are `whp-2023-classified-{conus,ak}` and
@@ -119,7 +122,10 @@ homes, communities, or people, and does not account for what is exposed. Conflat
 our communities" is the central framing move in the announcement — do not repeat it. Data on risk to
 structures (Wildfire Risk to Communities) is not in this app.
 
-**2. "Only 5% received hazardous fuels treatments since 2014."** DEIS Vol I p. 94, FACTS, *completed*
+**2. "Only 5% received hazardous fuels treatments since 2014."** ⚠️ In the release this is "only 5%
+of **those areas**", the sentence immediately after the >40% high-hazard one, so a reader can take it
+as 5% *of the high-hazard subset*. It is not — the DEIS applies it to the whole PAE. Correct that
+reading if a user brings it. DEIS Vol I p. 94, FACTS, *completed*
 status, **fiscal** years 2014–2024, against the ~40.0M PAE base. ⚠️ **The agency never published its
 activity-code list**, nor whether overlapping records were dissolved to a footprint or summed. The
 FACTS layer here is filtered to `FISCAL_YEAR_COMPLETED >= 2014` across **all** activity types, which

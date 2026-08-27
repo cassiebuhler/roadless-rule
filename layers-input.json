@@ -50,11 +50,11 @@
     "welcome": {
         "message": "The USDA has proposed rescinding the 2001 Roadless Area Conservation Rule and quoted figures in support of it; this map holds the data behind them. Ask in plain language — the assistant queries the datasets, shows the SQL it ran, and can add layers to the map; the layers already loaded toggle in the list above. Percentages depend on which acreage you divide by (58.4M inventoried, 44.7M excluding Idaho and Colorado, 40.0M in the agency's own analysis), so it always says which. Sources are in “About” below. Try asking:",
         "examples": [
-            "How much roadless area is already within half a mile of a road?",
+            "How much roadless area is already within half a mile of an existing road?",
             "How many miles of Forest Service trail run through roadless areas?",
             "Map ignition density inside rule-affected roadless areas.",
-            "Do more than 40% of roadless acres have high wildfire hazard?",
-            "Has only 5% of roadless area been treated for fuels since 2014?",
+            "Do more than 40% of roadless areas have high or very high wildfire hazard potential?",
+            "Has only 5% of roadless area received hazardous fuels treatment since 2014?",
             "Does the Roadless Rule limit management on nearly 60% of Forest Service land in Montana?"
         ]
     },
