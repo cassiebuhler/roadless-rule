@@ -231,8 +231,8 @@ What has already burned, and where fires start.
 | `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
 | `Burn severity by year · MTBS (Alaska)` | MTBS (USGS / USFS) | **Alaska only** | 36 annual years, 1984–2023 | Public domain | `mtbs-severity-1984-2024-ak` |
 | `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
-| `Fire events by spread rate 2000–2021 · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
-| `Fast-spreading events ≥20 km²/day · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
+| `Fire events by peak daily growth 2000–2021 · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
+| `Fast fires, >1,620 ha in a day · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
 
 The two MTBS severity layers carry a **year selector** rather than one panel entry per
 year.
@@ -264,20 +264,36 @@ use in area summaries.
 
 FIRED is the only layer here that carries **how fast** a fire spread. `firedpy` groups MODIS
 MCD64A1 burned pixels falling within one space-time window (5 pixels, 11 days) into a single event,
-then divides area by duration: `fsr_km2_dy`, plus maximum, minimum and mean single-day growth
-(`m[xnu]_grw_km2`). 278,569 events, 666,046 km² burned. Both map layers colour by `fsr_km2_dy`; the
-fast-spreading layer is a **subset** of the all-events layer, filtered to ≥20 km²/day, not an
-addition to it. DOI [10.3390/rs12213498](https://doi.org/10.3390/rs12213498).
+then reports each event's maximum, minimum and mean single-day growth (`m[xnu]_grw_km2`) alongside
+an event-average spread rate (`fsr_km2_dy`). 278,569 events, 666,046 km² burned.
+DOI [10.3390/rs12213498](https://doi.org/10.3390/rs12213498).
+
+⛔ **A "fast fire" is defined by peak daily growth, not by average spread rate — the two are
+different columns and give different answers.** Balch et al. 2024
+([10.1126/science.adk5737](https://doi.org/10.1126/science.adk5737)) define a fast fire as one that
+grew **more than 1,620 ha (16.2 km²) in a single day** — `mx_grw_km2 > 16.2`. That is the threshold
+both map layers use: the all-events layer colours by `mx_grw_km2` with a break at 1,620 ha, and the
+fast-fire layer is a **subset** filtered to it, not an addition. On this release the threshold
+selects **1,968 of 278,569 events (0.71%)**. `fsr_km2_dy` is `tot_ar_km2 / event_dur` — an average
+over the whole event — and filtering it at the same number selects a different, much smaller set
+(314 events). The distinction matters because it is peak growth, not average spread, that Balch et
+al. tie to 78% of structures destroyed and 61% of suppression costs.
+
+⚠️ **Our fast-fire count is not the paper's.** Balch et al. cover CONUS 2001–2020 and report fast
+fires as 2.7% of the events they analysed; this collection is CONUS **plus Alaska**, 2000–2021, and
+its denominator is all 278,569 events including very small ones. Same threshold, different base —
+quote the base with the percentage.
 
 ⛔ **FIRED events are not MTBS perimeters and the counts are not comparable.** FIRED is algorithmic
 with no size threshold (median event 0.43 km²); MTBS is human-QAd above 500/1,000 acres. FIRED also
 inherits MCD64A1's blind spots — fires smaller than a 463 m pixel, dense canopy, cloud, and fires
 that burned between monthly composites. Neither is a superset of the other.
 
-⚠️ **Event boundaries and spread rates are both artefacts of the 11-day window.** Two nearby fires
+⚠️ **Event boundaries and growth rates are both artefacts of the 11-day window.** Two nearby fires
 burning within 11 days can merge into one event; one long fire with a quiet spell longer than 11 days
-can split into two. `fsr_km2_dy` is an average over the whole event duration, never an instantaneous
-rate — a fire that ran hard for one day and smouldered for a month reads slow.
+can split into two. And "single-day" means a MODIS daily composite, so `mx_grw_km2` is a
+24-hour bound, not a run-hour spread rate. `fsr_km2_dy` is weaker still — an average over the whole
+event duration, so a fire that ran hard for one day and smouldered for a month reads slow.
 
 ⚠️ **Do not SUM per-event totals on the FIRED hex.** `tot_ar_km2`, `tot_pix`, `tot_perim`,
 `event_dur` and every `fsr_*` / `m[xnu]_grw_*` column repeat on each of the 6,266,383 (event, cell)
