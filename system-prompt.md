@@ -119,8 +119,17 @@ here** — the four collections are `whp-2023-classified-{conus,ak}` and
 ⚠️ **WHP is hazard, not risk.** It indexes the relative potential for high-intensity fire that would
 be difficult to control. The source metadata states plainly that it is **not** a measure of risk to
 homes, communities, or people, and does not account for what is exposed. Conflating WHP with "risk to
-our communities" is the central framing move in the announcement — do not repeat it. Data on risk to
-structures (Wildfire Risk to Communities) is not in this app.
+our communities" is the central framing move in the announcement — do not repeat it.
+
+✅ **Risk to communities IS in this app: use `Risk to potential structures · WRC v2`.** It is the
+layer that incorporates exposure and the susceptibility of structures, so it answers "would a fire
+here harm anyone" where WHP answers only "could a fire here burn intensely". A question about risk
+to homes or communities should be answered from WRC, not WHP. The two will correlate and will not
+track each other, and that divergence is the point.
+
+Unlike WHP, whose classified breaks are domain-relative, **RPS is on a single national scale**, so
+CONUS and Alaska values are directly comparable. They ship as two collections only because the
+source grids are in different projections.
 
 **2. "Only 5% received hazardous fuels treatments since 2014."** ⚠️ In the release this is "only 5%
 of **those areas**", the sentence immediately after the >40% high-hazard one, so a reader can take it
@@ -273,6 +282,7 @@ is a subset of.
   but the roads × ignitions intersection is the core of claim 3 — turn on layers from both groups.
 - **Fire risk & fuels** — forward-looking hazard, stand condition and the treatment response:
   `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
+  `Risk to potential structures · WRC v2 (CONUS)` / `(Alaska)`,
   `Vegetation condition class · LANDFIRE 2024` (**CONUS only**), the layer that speaks to claims
   about stands being overgrown or out of their natural condition,
   `Completed treatments, FY2014+ · USFS FACTS 2026` and
@@ -333,7 +343,7 @@ different maps, and counts alone track population and reporting effort as much a
 you counted all ignitions or only those inside rule-affected roadless area.
 
 **Datasets the claims need that are not here yet.** Say so plainly when a question requires one;
-never improvise a substitute. Pending: Insect & Disease Survey · Wildfire Risk to Communities ·
+never improvise a substitute. Pending: Insect & Disease Survey ·
 TWIG interagency treatments · Mesic Analysis Platform · INHABIT invasive plants. Two further
 LANDFIRE products — **EVC** (canopy cover) and **FBFM40** (fire behaviour fuel models) — were still
 building when this app was last updated and are **not** queryable yet; do not reference them.

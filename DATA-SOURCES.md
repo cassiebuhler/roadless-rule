@@ -293,10 +293,34 @@ Forward-looking hazard, stand condition, and the treatment response.
 |---|---|---|---|---|---|
 | `Wildfire hazard index · WHP 2023 (CONUS)` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
 | `Wildfire hazard index · WHP 2023 (Alaska)` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
+| `Risk to potential structures · WRC v2 (CONUS)` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **CONUS only** | v2, 30 m | Public domain | `wrc-2-rps-conus` |
+| `Risk to potential structures · WRC v2 (Alaska)` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **Alaska only** | v2, 30 m | Public domain | `wrc-2-rps-ak` |
 | `Completed treatments, FY2014+ · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
 | `Wildland-urban interface · SILVIS 2020` | SILVIS Lab, UW–Madison | National (census blocks) | 2020 (v4, decades 1990–2020) | CC-BY-4.0 | `silvis-wui-2020` |
 
 WHP source DOI [10.2737/RDS-2015-0047-4](https://doi.org/10.2737/RDS-2015-0047-4).
+
+WRC source DOI [10.2737/RDS-2020-0016-2](https://doi.org/10.2737/RDS-2020-0016-2).
+
+✅ **WRC is the risk layer WHP is not.** Risk to Potential Structures is the expected annual loss to
+a home, were one to stand on each pixel — it incorporates exposure and the susceptibility of
+structures, which WHP explicitly does not. A question about risk to homes or communities should be
+answered from WRC, not WHP.
+
+⚠️ **RPS is a mean, not a total.** Each hex cell carries the area-weighted mean of its source
+pixels, so there is no meaningful "total RPS" for an area: combine cells by averaging, and roll up
+with an area-weighted average rather than a sum.
+
+⚠️ **CONUS and Alaska are two collections because the source grids are in two projections
+(EPSG:5070 and EPSG:3338), not because the values are incomparable.** Unlike WHP, whose classified
+breaks are domain-relative and must never be pooled, **RPS is on a single national scale** and the
+two domains can be compared directly. Note Alaska's 90th and 95th percentiles (0.442, 0.791) run
+*higher* than CONUS's (0.408, 0.722) even though its maximum is a third of CONUS's.
+
+⚠️ **The data reflect landscape conditions as of the end of 2014** (LANDFIRE 2020 v2.2.0), not the
+2024 publication date. The burn-probability and fire-intensity inputs were modelled at 270 m and
+upsampled to the 30 m LANDFIRE grid, so the 30 m grid is finer than the independent information
+content of those inputs.
 
 ⚠️ **WHP is hazard, not risk.** It indexes relative potential for high-intensity fire that would be
 difficult to control. The source metadata states plainly that it is **not** a measure of risk to
@@ -582,11 +606,11 @@ added here as each lands.
 |---|---|---|
 | [#590](https://github.com/boettiger-lab/data-workflows/issues/590) | LANDFIRE 2024 — **EVC** (canopy cover) and **FBFM40** (fuel models) only | VCC, the departure layer, is now in the app |
 | [#591](https://github.com/boettiger-lab/data-workflows/issues/591) | USFS Insect & Disease Detection Survey | Forest health |
-| [#592](https://github.com/boettiger-lab/data-workflows/issues/592) | Wildfire Risk to Communities v2 | Exposure |
 | [#603](https://github.com/boettiger-lab/data-workflows/issues/603) | TWIG interagency fuel treatments + intersections | Interagency treatment record |
 | [#609](https://github.com/boettiger-lab/data-workflows/issues/609) | Mesic Analysis Platform — 30 m mesic persistence, valley bottoms | Water-resource condition |
 | [#610](https://github.com/boettiger-lab/data-workflows/issues/610) | USGS INHABIT v4 — fire-promoting invasive plants | Invasion-driven fire risk |
-| [#611](https://github.com/boettiger-lab/data-workflows/issues/611) | Wildfire Risk to Communities v2 — populated areas | Exposure, populated-area basis |
+| [#611](https://github.com/boettiger-lab/data-workflows/issues/611) | Wildfire Risk to Communities v2 — populated areas | Exposure on a populated-area basis; the landscape-wide RPS layer is now in the app |
+| [#627](https://github.com/boettiger-lab/data-workflows/issues/627) | Wildfire Risk to Communities v2 — burn probability, flame length, exposure type | The remaining WRC v2 components |
 
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
