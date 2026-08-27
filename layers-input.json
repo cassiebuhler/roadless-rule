@@ -48,14 +48,14 @@
         ]
     },
     "welcome": {
-        "message": "The USDA has proposed rescinding the 2001 Roadless Area Conservation Rule, and quoted several figures in support of it. This map holds the underlying data so you can check them yourself. Every percentage depends on which acreage base it is computed against — ask, and the assistant will say which one it used. See \"About\" below for sources and the four competing denominators. Try asking:",
+        "message": "The USDA has proposed rescinding the 2001 Roadless Area Conservation Rule and quoted figures in support of it; this map holds the data behind them. Ask in plain language — the assistant queries the datasets, shows the SQL it ran, and can add layers to the map; the layers already loaded toggle in the list above. Percentages depend on which acreage you divide by (58.4M inventoried, 44.7M excluding Idaho and Colorado, 40.0M in the agency's own analysis), so it always says which. Sources are in “About” below. Try asking:",
         "examples": [
-            "How many roadless acres would the proposal affect, and how does that differ from all inventoried roadless acres?",
-            "How much rule-affected roadless area is within half a mile of an existing road? Show the answer with and without the closed maintenance-level-1 roads.",
-            "Map ignition density inside rule-affected roadless areas, and say whether you counted all ignitions or normalised by area.",
-            "Which states hold the most rule-affected roadless acreage, and what share is in the ten Western states?",
-            "What share of rule-affected roadless area has high or very high wildfire hazard potential, and does that match the agency's >40% claim?",
-            "Is Montana's roadless area really \"nearly 60 percent of Forest Service land\"? Say which Forest Service extent layer you used."
+            "How much roadless area is already within half a mile of an existing road?",
+            "How many miles of Forest Service trail run through roadless areas?",
+            "Map ignition density inside rule-affected roadless areas.",
+            "Do more than 40% of roadless areas have high or very high wildfire hazard potential?",
+            "Has only 5% of roadless area received hazardous fuels treatment since 2014?",
+            "Does the Roadless Rule limit management on nearly 60% of Forest Service land in Montana?"
         ]
     },
     "links": {

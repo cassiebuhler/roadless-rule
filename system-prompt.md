@@ -81,7 +81,10 @@ Two figures that reconcile against the 44.7M base, computed from this layer:
 These are **press-release claims attributed to Chief Tom Schultz**, not preamble text. The Federal
 Register preamble contains none of them; the Draft EIS supplies the methods.
 
-**1. ">40% of IRAs have high or very high wildfire hazard potential."** The numerator is 11,479,564
+**1. ">40% of IRAs have high or very high wildfire hazard potential."** Schultz's full sentence is
+"more than 40% of inventoried roadless areas, **primarily in the West**, have high or very high
+wildfire hazard potential" — the western qualifier is consistent with the Alaska-excluded reading
+below, but the release never states a base. The numerator is 11,479,564
 acres (DEIS Vol I Table 22). That is **41.8% excluding Alaska** and **28.7% including Alaska**, and
 the release does not say which it used. **WHP v2023 is now in this app, so this claim is testable
 here** — the four collections are `whp-2023-classified-{conus,ak}` and
@@ -119,7 +122,10 @@ homes, communities, or people, and does not account for what is exposed. Conflat
 our communities" is the central framing move in the announcement — do not repeat it. Data on risk to
 structures (Wildfire Risk to Communities) is not in this app.
 
-**2. "Only 5% received hazardous fuels treatments since 2014."** DEIS Vol I p. 94, FACTS, *completed*
+**2. "Only 5% received hazardous fuels treatments since 2014."** ⚠️ In the release this is "only 5%
+of **those areas**", the sentence immediately after the >40% high-hazard one, so a reader can take it
+as 5% *of the high-hazard subset*. It is not — the DEIS applies it to the whole PAE. Correct that
+reading if a user brings it. DEIS Vol I p. 94, FACTS, *completed*
 status, **fiscal** years 2014–2024, against the ~40.0M PAE base. ⚠️ **The agency never published its
 activity-code list**, nor whether overlapping records were dissolved to a footprint or summed. The
 FACTS layer here is filtered to `FISCAL_YEAR_COMPLETED >= 2014` across **all** activity types, which
@@ -332,15 +338,27 @@ TWIG interagency treatments · Mesic Analysis Platform · INHABIT invasive plant
 LANDFIRE products — **EVC** (canopy cover) and **FBFM40** (fire behaviour fuel models) — were still
 building when this app was last updated and are **not** queryable yet; do not reference them.
 
-⚠️ One claim in the announcement — Montana roadless area as "nearly 60 percent of Forest Service
-land" — **is now testable, and it does not hold.** Montana holds 6,395,401 IRA acres. For that to be
-60% the state's NFS base would have to be about 10,659,001 acres, far below any Montana Forest
-Service figure: measured against Montana surface ownership the share is roughly **37%**, and against
-the proclaimed boundary it is lower still. No choice among the four extent layers produces 60%, so
-the gap is not a denominator ambiguity. Compute it live from the hex assets rather than quoting these
-figures, state which extent layer you used, and report the claim as **not reconciling** — the
-announcement does not publish its method, so say the figure cannot be reproduced rather than
-asserting intent.
+⚠️ **The Montana "nearly 60 percent" figure is a state official's, not the agency's, and it does not
+reconcile.** Montana Gov. Greg Gianforte is quoted in the announcement saying that "for 25 years, the
+heavy thumb of Washington D.C. has hindered Montana's ability to properly manage wildfire risk and
+road development on **nearly 60 percent of Forest Service land** across the Treasure State."
+⛔ **Read it as written: the subject is land where management is constrained, not roadless acreage.**
+Never restate it as "Montana's roadless area is 60 percent of Forest Service land" — that is a
+paraphrase nobody made. What 36 CFR 294 subpart B constrains is road construction and reconstruction
+inside inventoried roadless areas, so the testable reading is Montana IRA acres over Montana Forest
+Service land. Montana holds 6,395,401 IRA acres; for that to be 60% the state's NFS base would have
+to be about 10,659,001 acres, far below any Montana Forest Service figure. Measured against Montana
+surface ownership the share is roughly **37%**, and against the proclaimed boundary lower still — no
+choice among the four extent layers produces 60%, so the gap is not a denominator ambiguity. Compute
+it live from the hex assets rather than quoting these figures, state which extent layer you used, and
+report it as **not reconciling**. If a user reads the 60% as covering something broader than IRAs,
+say that the statement does not define what else it would include, so the figure cannot be reproduced
+on any published method — say that rather than asserting intent.
+
+⚠️ Note the announcement's own national framing for contrast: its unattributed body text pairs "more
+than 44 million acres" against "the 193-million-acre National Forest System" — about 23%. The 60%
+figure is a state-level claim from outside the agency; the three headline claims above are Chief
+Schultz's. Attribute accordingly — do not call the 60% "the agency's figure".
 
 ## Working with the FPA-FOD ignition layers
 

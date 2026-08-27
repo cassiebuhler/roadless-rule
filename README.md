@@ -41,10 +41,15 @@ affected environment**, not total roadless acreage:
 | **Potentially affected environment** | **40,049,537** | less designated wilderness, WSAs and Wild & Scenic wild segments — DEIS Vol I Table 12 |
 | **All NFS land** *(a different question)* | **193,174,461** | Forest Service **surface ownership** — the base for "share of Forest Service land" claims, never for "share of roadless area" |
 
-"More than 44 million acres" ✅ and "more than 95% in 10 Western states" ✅ (95.61% of the
-rule-affected base; 73.16% of the all-IRA base) both reconcile against this layer. The Montana
-"nearly 60 percent of Forest Service land" claim does **not**: against Montana surface ownership the
-share is roughly 37%, and no Forest Service extent layer is small enough to yield 60% — see
+"More than 44 million acres" ✅ reconciles at 44,701,002. "More than 95% … in 10 Western states" ✅
+holds at 95.61% — but of the *rule-affected* base; the release's wording is "95% of inventoried
+roadless areas", and against the all-IRA base those same states are 73.16%. The claim depends on
+reading it as rule-affected, which the release's own exclusion of Colorado and Idaho supports. Montana Gov. Greg
+Gianforte's statement that the rule has hindered management on "nearly 60 percent of Forest Service
+land" in Montana does **not** — read as Montana IRA acres over Montana Forest Service land, the only
+reading the rule's text supports, the share is roughly 37% against surface ownership, and no Forest
+Service extent layer is small enough to yield 60%. It is a state official's figure, not the agency's;
+the release's own body text pairs 44M acres against the 193M-acre system, about 23% — see
 [DATA-SOURCES.md](DATA-SOURCES.md).
 
 ⚠️ The fifth base is **surface ownership**, not one of the three administrative envelopes the Forest

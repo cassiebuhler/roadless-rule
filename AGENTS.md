@@ -475,8 +475,9 @@ Tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-
 Adding each one is a `layers-input.json` entry plus a `DATA-SOURCES.md` row.
 
 **Already added:** #585 (USFS extent — `nfs-surface-ownership` filtered to `OWNERCLASS = 'USDA
-FOREST SERVICE'`, plus proclaimed / administrative / ranger-district as outline-only envelopes; the
-Montana "nearly 60% of Forest Service land" claim is now testable and reconciles to ~37%), #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
+FOREST SERVICE'`, plus proclaimed / administrative / ranger-district as outline-only envelopes; Gov.
+Gianforte's "nearly 60% of Forest Service land" statement is now testable — it does **not** reconcile,
+the measured share being ~37%, and it is about constrained management, not roadless acreage), #586 (WHP v2023 — four collections; the *continuous* pair is mapped, the
 classified pair is SQL-only because its COGs carry no `classification:classes`, so geo-agent would
 paint Non-burnable and Water as top hazard), #593 (MTBS — perimeters split into wildfire and
 prescribed-fire aliases, plus per-domain annual severity behind a `versions` year selector),

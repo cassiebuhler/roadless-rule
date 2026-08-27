@@ -546,16 +546,22 @@ contains none of them, and the Draft EIS supplies the methods.
 | Claim | Agency method | Testable here? |
 |---|---|---|
 | ">40% high or very high wildfire hazard potential" | 11,479,564 ac (DEIS Vol I Table 22) ÷ PAE — **41.8% excluding Alaska**, 28.7% including it. Non-burnable and water are **in** the denominator; total acres, not forested. | ✅ **WHP 2023 is now in the app.** Compute from the hex, not COG pixels; keep CONUS and Alaska classified domains separate. Alaska's high/very-high acreage is **0**, so Table 22 is internally consistent — the flaw is labelling that cell "Not Available" rather than "0", which hides that dropping Alaska is what lifts 28.7% to 41.8%. |
-| "only 5% received hazardous fuels treatments since 2014" | FACTS, *completed*, **fiscal** years 2014–2024, ÷ PAE (DEIS Vol I p. 94). **Activity codes never disclosed**, nor whether overlapping records were dissolved or summed. | ⚠️ partially — code choice is yours to publish |
+| "only 5% received hazardous fuels treatments since 2014" | FACTS, *completed*, **fiscal** years 2014–2024, ÷ PAE (DEIS Vol I p. 94). **Activity codes never disclosed**, nor whether overlapping records were dissolved or summed. ⚠️ In the release the sentence reads "only 5% of **those areas**", directly after the >40% high-hazard sentence; the DEIS applies it to the whole PAE, **not** to the high-hazard subset. Do not let it be read as 5% of the >40%. | ⚠️ partially — code choice is yours to publish |
 | "more than a quarter — 11.3M ac — already near existing roads" | Within **0.5 mi either side** of NFS or other authorized public roads (NRM Sept 2025) = 28.3% of PAE. The agency's own Economic Analysis gives **13.3M / 30.8%** against the 44.7M base. | ⚠️ **Testable in SQL, not on the map.** Both road layers are in the catalog, but only the NFS half is mapped — TIGER is SQL-only. Break results out by maintenance level: ML1 roads are closed and stored, 28.2% of the system. No layer can reproduce 36 CFR 294.11, which counts temporary roads the agency does not inventory. |
 
-⚠️ **Montana does not reconcile — and the NFS extent layers now show why.** The announcement calls
-Montana roadless area "nearly 60 percent of Forest Service land." Montana holds 6,395,401 IRA acres,
-so 60% would require an NFS base of about 10,659,001 acres. No Forest Service extent layer is that
-small: against Montana surface ownership the share is roughly **37%**, and against the proclaimed
-boundary it is lower still. The claim is therefore not a denominator ambiguity — **no available base
-produces 60%**. The announcement publishes no method, so the accurate statement is that the figure
-cannot be reproduced, not that it is false.
+⚠️ **Montana does not reconcile — and the NFS extent layers now show why.** The 60% figure is
+**Montana Gov. Greg Gianforte's, not the agency's.** He is quoted in the release saying that "for 25
+years, the heavy thumb of Washington D.C. has hindered Montana's ability to properly manage wildfire
+risk and road development on nearly 60 percent of Forest Service land across the Treasure State."
+⛔ Its subject is *land where management is constrained*, not roadless acreage — never restate it as
+"Montana's roadless area is 60 percent of Forest Service land." Because the only thing 36 CFR 294
+subpart B constrains is road construction inside inventoried roadless areas, the testable reading is
+Montana IRA acres over Montana Forest Service land. Montana holds 6,395,401 IRA acres, so 60% would
+require an NFS base of about 10,659,001 acres. No Forest Service extent layer is that small: against
+Montana surface ownership the share is roughly **37%**, and against the proclaimed boundary it is
+lower still. So this is not a denominator ambiguity — **no available base produces 60%**. No method
+is published, so the accurate statement is that the figure cannot be reproduced, not that it is
+false.
 
 ⚠️ **The rule does not prohibit fuels work.** § 294.13(b)(1)(ii) of the 2001 rule already permits
 cutting small-diameter timber "to maintain or restore the characteristics of ecosystem composition and
