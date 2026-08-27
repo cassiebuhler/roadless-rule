@@ -59,21 +59,37 @@ Layers are grouped by **what the data describes**, not by which agency publishes
 follows one form — **`what it is · PUBLISHER vintage`** — and legal status is its own field, so
 "PROPOSED for rescission" reads as a status rather than an accomplished fact.
 
-| Group | Layers |
-|---|---|
-| **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
-| **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
-| **Comparison strata** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
-| **Fuels & fire** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Fire perimeters 1835–2020 · USGS 2021` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Wildland-urban interface · SILVIS 2020` · `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` |
-| **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
+Groups run in order of how directly they bear on the proposal: the subject, then what the rule
+regulates, then what "roadless" does *not* mean, then the agency's stated rationale, then the
+denominators, then background. Within a group, a layer that is a **subset** of another always
+follows it.
+
+| # | Group | Layers |
+|---:|---|---|
+| 1 | **Roadless areas · USFS 2001** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` |
+| 2 | **Roads** | `NFS roads open to vehicles, 263,807 mi · USFS 2025` · `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` · `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` · `Highways & secondary roads, 268,817 segments · TIGER 2025` · `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` |
+| 3 | **Trails & recreation access** | `USFS trails, 134,983 mi · Federal Trails 2026` · `NPS & BLM trails, 25,916 mi · Federal Trails 2026` · `National Trails System routes, 12,488 mi · Federal Trails 2026` · `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` |
+| 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |
+| 5 | **Fire risk & fuels** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Vegetation condition class · LANDFIRE 2024 (CONUS only)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
+| 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
+| 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
+| 8 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
+
+**Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
+defines a road as a motor vehicle travelway over 50 inches wide, so no trail mileage may enter a
+road figure. Splitting **fire** into *history* (what burned, where ignitions start) and *risk &
+fuels* (forward-looking hazard, stand condition, treatment) keeps a measured record apart from a
+modelled projection.
 
 Only `Forest Service ownership` in the NFS extent group is ownership; the other three are
 administrative envelopes, drawn as outlines with no fill so the distinction is visible rather than
-merely documented.
+merely documented. The NFS extent and protections groups sit together because they are the denominator
+machinery: the land base, and the Table 12 deduction taken out of it.
 
-The two roadless layers are one dataset filtered two ways, via the `alias` mechanism — the map opens
-with both on, so the affected area and the untouched Idaho/Colorado comparison group read as a
-single picture. Every other group starts collapsed and off.
+The two roadless layers are one dataset filtered two ways, via the `alias` mechanism. Only
+`Rule-affected` is on at open, so the default map shows the 44.7M base — switch `Idaho & Colorado`
+on whenever the question is comparative. Groups 1 and 2 are expanded by default; everything below
+them starts collapsed, and every layer outside the roadless group starts switched off.
 
 Full provenance — publisher, coverage, vintage, license, and every caveat that changes a number — is
 in **[DATA-SOURCES.md](DATA-SOURCES.md)**. The app's "About" footer link points to
@@ -84,12 +100,11 @@ derived from DATA-SOURCES.md, so the two must be updated together.
 
 Ingest is tracked in [boettiger-lab/data-workflows](https://github.com/boettiger-lab/data-workflows)
 under the [`roadless`](https://github.com/boettiger-lab/data-workflows/issues?q=is%3Aissue+label%3Aroadless)
-label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594). Two of the
-three headline claims cannot be tested until they land: **Wildfire Hazard Potential**
-([#586](https://github.com/boettiger-lab/data-workflows/issues/586)) for the ">40% high hazard"
-claim, and **RoadCore + TIGER roads**
-([#588](https://github.com/boettiger-lab/data-workflows/issues/588)) for "11.3M acres near roads".
-The full table is in [DATA-SOURCES.md](DATA-SOURCES.md).
+label, coordinated by [#594](https://github.com/boettiger-lab/data-workflows/issues/594). All three
+headline claims are now testable — **Wildfire Hazard Potential**
+([#586](https://github.com/boettiger-lab/data-workflows/issues/586)) and **RoadCore + TIGER roads**
+([#588](https://github.com/boettiger-lab/data-workflows/issues/588)) have both landed. What is still
+in flight, and what is blocked, is in the full table in [DATA-SOURCES.md](DATA-SOURCES.md).
 
 ## Local development
 

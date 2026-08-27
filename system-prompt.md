@@ -204,10 +204,12 @@ of category. Never read rule status, protection level, or permission off this co
 
 ## What this app has — and what it does not
 
-The layer panel is the complete inventory; there is no data behind the scenes. The first three
-groups — **roadless areas, roads, ignitions** — are the app's priority questions and open by default;
-everything below them is context and starts collapsed. Layers are grouped by what the data
-describes:
+The layer panel is the complete inventory; there is no data behind the scenes. The panel is ordered
+by how directly a group bears on the proposal: the subject, then what the rule regulates, then what
+"roadless" does *not* mean, then the agency's stated rationale, then the denominators, then
+background. The first two groups — **roadless areas** and **roads** — open by default; everything
+below them is context and starts collapsed. Within a group, layers are ordered so that a subset
+always follows the layer it is a subset of.
 
 - **Roadless areas · USFS 2001** — the 2001 inventory, split into `Rule-affected · 44.7M ac` and
   `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
@@ -216,61 +218,8 @@ describes:
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
   them to switch Idaho & Colorado on whenever the question is comparative, since those are the
   roadless areas the proposal leaves alone.
-- **Trails & recreation access** — `USFS trails, 134,983 mi · Federal Trails 2026`,
-  `NPS & BLM trails, 25,916 mi · Federal Trails 2026`,
-  `National Trails System routes, 12,488 mi · Federal Trails 2026` and
-  `Rivers with outstanding values, 90,476 mi · NPS NRI 2024`. The first three are one dataset
-  (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
-  **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
-  answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
-  to the public.** If a user reads "roadless" as "inaccessible", the ~135,000 miles of Forest
-  Service trail is the direct answer. ⛔ **A trail is never a road** — 36 CFR 294.11 requires a motor
-  vehicle travelway over 50 inches, so no trail mileage may enter a road-proximity figure. ⚠️ Filter
-  trails only on `admin_agency` or `nts_designation`; `trail_type`, `trail_class` and `trail_surface`
-  carry each agency's raw vocabulary unharmonized (41 `trail_type` values collapsing to 31 on case
-  folding), so grouping on them splits one category across rows. ⚠️ Trail miles must come from the
-  GeoParquet, not the hex — `length_miles` repeats on every cell a buffered segment touches.
-  ⛔ **NRI is an inventory, not a protection**: it records that a free-flowing segment has an
-  outstanding natural, cultural or recreational value and is *potentially eligible* for Wild &
-  Scenic designation. It is a different dataset from the PAD-US designated W&SR stratum under
-  *Comparison strata* — never treat one as an update of the other. `Management` on NRI is free text
-  (1,827 blanks, the rest individual forest names), so per-agency NRI figures need a spatial join.
-- **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
-  `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
-  `Ranger districts, 237.1M ac · USFS 2025`. Only the first is **ownership**; the other three are
-  administrative envelopes, drawn as outlines with no fill precisely because they are boundaries
-  rather than land. The ownership layer is filtered to `OWNERCLASS = 'USDA FOREST SERVICE'` in the
-  map; the parquet also carries 10,993,819 acres of `NON-FS` inholdings and 130,508 acres of
-  unpartitioned riparian interest, which the assistant can query. **There is no state column** —
-  attributing acreage to a state needs a spatial or hex join (e.g. `census-2024/state`, native h8);
-  a plain `ST_Intersects` sum double-counts, because it credits a parcel's whole acreage to every
-  state it touches.
-- **Comparison strata** — `Designated wilderness · PAD-US 4.1`,
-  `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
-  These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
-  40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres. All three are one
-  PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer equals its
-  Table 12 component, and the layers can overlap each other. Never add their acreages, and never
-  present a layer total as the deduction.
-- **Fuels & fire** — `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
-  `Completed treatments, FY2014+ · USFS FACTS 2026`,
-  `Fire perimeters 1835–2020 · USGS 2021`, `Wildland-urban interface · SILVIS 2020`,
-  `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
-  `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
-  selector rather than one entry per year — and `Vegetation condition class · LANDFIRE 2024`
-  (**CONUS only**), the layer that speaks to claims about stands being overgrown or out of their
-  natural condition.
-  The two WHP entries are separate rasters on separate scales (the published Very High break is
-  1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
-  compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
-  are two halves of one variable and currently need two clicks.
-- **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
-  14.8M roadless acres) and `Human modification · Theobald 2016`.
-- **Ignitions · FPA-FOD 1992–2024** — `Ignitions by cause 1992–2024 · FPA-FOD` and
-  `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`. These are **points, not a density surface**.
-  For an actual ignition-density map, aggregate the res-10 hex to a coarser resolution and render it
-  with `add_hex_tile_layer` — see *Building an ignition-density layer* below.
-- **Roads & access** — five layers from two datasets. `NFS roads open to vehicles, 263,807 mi ·
+- **Roads** — five layers from two datasets; this is the group the rule is actually about, since
+  what 36 CFR 294 prohibits is road construction. `NFS roads open to vehicles, 263,807 mi ·
   USFS 2025` and `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` are one dataset
   (`roadcore-fs`) filtered on `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1
   distinction changes the answer to claim 3.
@@ -280,8 +229,72 @@ describes:
   are one dataset (`census-2025/roads`) filtered on `MTFCC`. The highways layer is a **subset** of
   the motor-vehicle layer, not an addition to it. All five start switched off. Counted in
   **segments**, not miles — TIGER has no length column, and a TIGER segment is not the same unit as a
-  RoadCore segment, so never compare or add the two counts. When a user asks to "see the roads", say which jurisdiction they mean: RoadCore is Forest
-  Service only, TIGER is everything.
+  RoadCore segment, so never compare or add the two counts. When a user asks to "see the roads", say
+  which jurisdiction they mean: RoadCore is Forest Service only, TIGER is everything.
+  ⚠️ The walkways layer sits in this group because it is the excluded complement of the TIGER
+  `MTFCC` road filter — it shows what the road layers leave out. It is **not** a road, and never
+  enters a road figure.
+- **Trails & recreation access** — `USFS trails, 134,983 mi · Federal Trails 2026`,
+  `NPS & BLM trails, 25,916 mi · Federal Trails 2026`,
+  `National Trails System routes, 12,488 mi · Federal Trails 2026` and
+  `Rivers with outstanding values, 90,476 mi · NPS NRI 2024`. The first three are one dataset
+  (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
+  **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
+  answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
+  to the public.** If a user reads "roadless" as "inaccessible", the ~135,000 miles of Forest
+  Service trail is the direct answer. ⛔ **A trail is never a road** — 36 CFR 294.11 requires a motor
+  vehicle travelway over 50 inches, so no trail mileage may enter a road-proximity figure. This is
+  why trails are their own group rather than part of *Roads*. ⚠️ Filter
+  trails only on `admin_agency` or `nts_designation`; `trail_type`, `trail_class` and `trail_surface`
+  carry each agency's raw vocabulary unharmonized (41 `trail_type` values collapsing to 31 on case
+  folding), so grouping on them splits one category across rows. ⚠️ Trail miles must come from the
+  GeoParquet, not the hex — `length_miles` repeats on every cell a buffered segment touches.
+  ⛔ **NRI is an inventory, not a protection**: it records that a free-flowing segment has an
+  outstanding natural, cultural or recreational value and is *potentially eligible* for Wild &
+  Scenic designation. It is a different dataset from the PAD-US designated W&SR stratum under
+  *Existing protections* — never treat one as an update of the other. `Management` on NRI is free text
+  (1,827 blanks, the rest individual forest names), so per-agency NRI figures need a spatial join.
+- **Fire history** — what has already burned and where fires start: `Ignitions by cause 1992–2024 ·
+  FPA-FOD` and `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`,
+  `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
+  `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
+  selector rather than one entry per year — and `Fire perimeters 1835–2020 · USGS 2021`.
+  The two FPA-FOD layers are **points, not a density surface**; the large-fire layer is a
+  **subset** of the all-ignitions layer, not an addition to it. For an actual ignition-density map,
+  aggregate the res-10 hex to a coarser resolution and render it with `add_hex_tile_layer` — see
+  *Building an ignition-density layer* below. Ignitions are grouped with fire rather than with roads,
+  but the roads × ignitions intersection is the core of claim 3 — turn on layers from both groups.
+- **Fire risk & fuels** — forward-looking hazard, stand condition and the treatment response:
+  `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
+  `Vegetation condition class · LANDFIRE 2024` (**CONUS only**), the layer that speaks to claims
+  about stands being overgrown or out of their natural condition,
+  `Completed treatments, FY2014+ · USFS FACTS 2026` and
+  `Wildland-urban interface · SILVIS 2020`.
+  The two WHP entries are separate rasters on separate scales (the published Very High break is
+  1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
+  compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
+  are two halves of one variable and currently need two clicks.
+- **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
+  `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
+  `Ranger districts, 237.1M ac · USFS 2025`, ordered by ascending acreage. Only the first is
+  **ownership**; the other three are
+  administrative envelopes, drawn as outlines with no fill precisely because they are boundaries
+  rather than land. The ownership layer is filtered to `OWNERCLASS = 'USDA FOREST SERVICE'` in the
+  map; the parquet also carries 10,993,819 acres of `NON-FS` inholdings and 130,508 acres of
+  unpartitioned riparian interest, which the assistant can query. **There is no state column** —
+  attributing acreage to a state needs a spatial or hex join (e.g. `census-2024/state`, native h8);
+  a plain `ST_Intersects` sum double-counts, because it credits a parcel's whole acreage to every
+  state it touches.
+- **Existing protections** — `Designated wilderness · PAD-US 4.1`,
+  `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
+  These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
+  40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres — which is why
+  they sit next to *National Forest System extent* rather than with the thematic layers. All three
+  are one PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer
+  equals its Table 12 component, and the layers can overlap each other. Never add their acreages, and
+  never present a layer total as the deduction.
+- **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
+  14.8M roadless acres) and `Human modification · Theobald 2016`.
 
 ### Building an ignition-density layer
 

@@ -121,7 +121,7 @@
             "collection_id": "roadcore-fs",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json",
             "group": {
-                "name": "Roads & access",
+                "name": "Roads",
                 "collapsed": false
             },
             "assets": [
@@ -174,7 +174,7 @@
             "collection_id": "census-2025/roads",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-census/census-2025/roads/stac-collection.json",
             "group": {
-                "name": "Roads & access",
+                "name": "Roads",
                 "collapsed": false
             },
             "assets": [
@@ -241,85 +241,6 @@
                         }
                     ],
                     "tooltip_fields": ["FULLNAME", "MTFCC", "RTTYP", "GEOID_COUNTY", "LINEARID"]
-                }
-            ]
-        },
-        {
-            "collection_id": "fpa-fod-1992-2024",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
-            "group": {
-                "name": "Ignitions · FPA-FOD 1992–2024",
-                "collapsed": false
-            },
-            "assets": [
-                {
-                    "id": "fpa-fod-1992-2024-pmtiles",
-                    "alias": "fpa-fod-all",
-                    "display_name": "Ignitions by cause 1992–2024 · FPA-FOD",
-                    "visible": false,
-                    "layer_type": "circle",
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
-                            "Human", "#D64545",
-                            "Natural", "#3B6BA5",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": 2.5,
-                        "circle-opacity": 0.55
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Human-caused ignition",
-                            "color": "#D64545"
-                        },
-                        {
-                            "label": "Natural (lightning) ignition",
-                            "color": "#3B6BA5"
-                        },
-                        {
-                            "label": "Cause undetermined / not specified",
-                            "color": "#9E9E9E"
-                        }
-                    ],
-                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
-                },
-                {
-                    "id": "fpa-fod-1992-2024-pmtiles",
-                    "alias": "fpa-fod-large",
-                    "display_name": "Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD",
-                    "visible": false,
-                    "layer_type": "circle",
-                    "default_filter": ["match", ["get", "FIRE_SIZE_CLASS"], ["F", "G"], true, false],
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
-                            "Human", "#D64545",
-                            "Natural", "#3B6BA5",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": 5,
-                        "circle-opacity": 0.85
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Human-caused, reached ≥1,000 ac",
-                            "color": "#D64545"
-                        },
-                        {
-                            "label": "Natural (lightning), reached ≥1,000 ac",
-                            "color": "#3B6BA5"
-                        },
-                        {
-                            "label": "Cause undetermined, reached ≥1,000 ac",
-                            "color": "#9E9E9E"
-                        }
-                    ],
-                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
                 }
             ]
         },
@@ -423,6 +344,429 @@
                         }
                     ],
                     "tooltip_fields": ["River", "Reach", "Classifica", "ORV", "GIS_Miles", "Management", "State1"]
+                }
+            ]
+        },
+        {
+            "collection_id": "fpa-fod-1992-2024",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "fpa-fod-1992-2024-pmtiles",
+                    "alias": "fpa-fod-all",
+                    "display_name": "Ignitions by cause 1992–2024 · FPA-FOD",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
+                            "Human", "#D64545",
+                            "Natural", "#3B6BA5",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": 2.5,
+                        "circle-opacity": 0.55
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Human-caused ignition",
+                            "color": "#D64545"
+                        },
+                        {
+                            "label": "Natural (lightning) ignition",
+                            "color": "#3B6BA5"
+                        },
+                        {
+                            "label": "Cause undetermined / not specified",
+                            "color": "#9E9E9E"
+                        }
+                    ],
+                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
+                },
+                {
+                    "id": "fpa-fod-1992-2024-pmtiles",
+                    "alias": "fpa-fod-large",
+                    "display_name": "Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD",
+                    "visible": false,
+                    "layer_type": "circle",
+                    "default_filter": ["match", ["get", "FIRE_SIZE_CLASS"], ["F", "G"], true, false],
+                    "default_style": {
+                        "circle-color": [
+                            "match",
+                            ["get", "NWCG_CAUSE_CLASSIFICATION"],
+                            "Human", "#D64545",
+                            "Natural", "#3B6BA5",
+                            "#9E9E9E"
+                        ],
+                        "circle-radius": 5,
+                        "circle-opacity": 0.85
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Human-caused, reached ≥1,000 ac",
+                            "color": "#D64545"
+                        },
+                        {
+                            "label": "Natural (lightning), reached ≥1,000 ac",
+                            "color": "#3B6BA5"
+                        },
+                        {
+                            "label": "Cause undetermined, reached ≥1,000 ac",
+                            "color": "#9E9E9E"
+                        }
+                    ],
+                    "tooltip_fields": ["FIRE_NAME", "FIRE_YEAR", "NWCG_GENERAL_CAUSE", "FIRE_SIZE", "FIRE_SIZE_CLASS", "STATE", "OWNER_DESCR"]
+                }
+            ]
+        },
+        {
+            "collection_id": "mtbs-perimeters-1984-2024",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "mtbs-perimeters-1984-2024-pmtiles",
+                    "alias": "mtbs-wildfire",
+                    "display_name": "Wildfire perimeters 1984–2024 · MTBS",
+                    "visible": false,
+                    "default_filter": ["match", ["get", "Incid_Type"], ["Wildfire", "Wildland Fire Use"], true, false],
+                    "default_style": {
+                        "fill-color": "#B03A2E",
+                        "fill-opacity": 0.35
+                    },
+                    "outline_style": {
+                        "line-color": "#7B241C",
+                        "line-width": 0.4
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Wildfire / wildland fire use perimeter",
+                            "color": "#B03A2E"
+                        }
+                    ],
+                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
+                },
+                {
+                    "id": "mtbs-perimeters-1984-2024-pmtiles",
+                    "alias": "mtbs-rxfire",
+                    "display_name": "Prescribed fire perimeters 1984–2024 · MTBS",
+                    "visible": false,
+                    "default_filter": ["match", ["get", "Incid_Type"], ["Prescribed Fire"], true, false],
+                    "default_style": {
+                        "fill-color": "#2E86AB",
+                        "fill-opacity": 0.4
+                    },
+                    "outline_style": {
+                        "line-color": "#1B5A75",
+                        "line-width": 0.4
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Prescribed fire perimeter",
+                            "color": "#2E86AB"
+                        }
+                    ],
+                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
+                }
+            ]
+        },
+        {
+            "collection_id": "mtbs-severity-1984-2024-conus",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "mtbs-severity-conus",
+                    "display_name": "Burn severity by year · MTBS (CONUS)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "MTBS thematic burn severity",
+                    "default_style": {
+                        "raster-opacity": 0.85
+                    },
+                    "default_version": "2024",
+                    "versions": [
+                        { "label": "1984", "asset_id": "mtbs-severity-conus-cog-1984" },
+                        { "label": "1985", "asset_id": "mtbs-severity-conus-cog-1985" },
+                        { "label": "1986", "asset_id": "mtbs-severity-conus-cog-1986" },
+                        { "label": "1987", "asset_id": "mtbs-severity-conus-cog-1987" },
+                        { "label": "1988", "asset_id": "mtbs-severity-conus-cog-1988" },
+                        { "label": "1989", "asset_id": "mtbs-severity-conus-cog-1989" },
+                        { "label": "1990", "asset_id": "mtbs-severity-conus-cog-1990" },
+                        { "label": "1991", "asset_id": "mtbs-severity-conus-cog-1991" },
+                        { "label": "1992", "asset_id": "mtbs-severity-conus-cog-1992" },
+                        { "label": "1993", "asset_id": "mtbs-severity-conus-cog-1993" },
+                        { "label": "1994", "asset_id": "mtbs-severity-conus-cog-1994" },
+                        { "label": "1995", "asset_id": "mtbs-severity-conus-cog-1995" },
+                        { "label": "1996", "asset_id": "mtbs-severity-conus-cog-1996" },
+                        { "label": "1997", "asset_id": "mtbs-severity-conus-cog-1997" },
+                        { "label": "1998", "asset_id": "mtbs-severity-conus-cog-1998" },
+                        { "label": "1999", "asset_id": "mtbs-severity-conus-cog-1999" },
+                        { "label": "2000", "asset_id": "mtbs-severity-conus-cog-2000" },
+                        { "label": "2001", "asset_id": "mtbs-severity-conus-cog-2001" },
+                        { "label": "2002", "asset_id": "mtbs-severity-conus-cog-2002" },
+                        { "label": "2003", "asset_id": "mtbs-severity-conus-cog-2003" },
+                        { "label": "2005", "asset_id": "mtbs-severity-conus-cog-2005" },
+                        { "label": "2006", "asset_id": "mtbs-severity-conus-cog-2006" },
+                        { "label": "2007", "asset_id": "mtbs-severity-conus-cog-2007" },
+                        { "label": "2008", "asset_id": "mtbs-severity-conus-cog-2008" },
+                        { "label": "2009", "asset_id": "mtbs-severity-conus-cog-2009" },
+                        { "label": "2010", "asset_id": "mtbs-severity-conus-cog-2010" },
+                        { "label": "2011", "asset_id": "mtbs-severity-conus-cog-2011" },
+                        { "label": "2012", "asset_id": "mtbs-severity-conus-cog-2012" },
+                        { "label": "2013", "asset_id": "mtbs-severity-conus-cog-2013" },
+                        { "label": "2014", "asset_id": "mtbs-severity-conus-cog-2014" },
+                        { "label": "2015", "asset_id": "mtbs-severity-conus-cog-2015" },
+                        { "label": "2016", "asset_id": "mtbs-severity-conus-cog-2016" },
+                        { "label": "2018", "asset_id": "mtbs-severity-conus-cog-2018" },
+                        { "label": "2019", "asset_id": "mtbs-severity-conus-cog-2019" },
+                        { "label": "2020", "asset_id": "mtbs-severity-conus-cog-2020" },
+                        { "label": "2021", "asset_id": "mtbs-severity-conus-cog-2021" },
+                        { "label": "2022", "asset_id": "mtbs-severity-conus-cog-2022" },
+                        { "label": "2023", "asset_id": "mtbs-severity-conus-cog-2023" },
+                        { "label": "2024", "asset_id": "mtbs-severity-conus-cog-2024" }
+                    ]
+                }
+            ]
+        },
+        {
+            "collection_id": "mtbs-severity-1984-2024-ak",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "mtbs-severity-ak",
+                    "display_name": "Burn severity by year · MTBS (Alaska)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "MTBS thematic burn severity",
+                    "default_style": {
+                        "raster-opacity": 0.85
+                    },
+                    "default_version": "2023",
+                    "versions": [
+                        { "label": "1984", "asset_id": "mtbs-severity-ak-cog-1984" },
+                        { "label": "1985", "asset_id": "mtbs-severity-ak-cog-1985" },
+                        { "label": "1986", "asset_id": "mtbs-severity-ak-cog-1986" },
+                        { "label": "1988", "asset_id": "mtbs-severity-ak-cog-1988" },
+                        { "label": "1989", "asset_id": "mtbs-severity-ak-cog-1989" },
+                        { "label": "1990", "asset_id": "mtbs-severity-ak-cog-1990" },
+                        { "label": "1991", "asset_id": "mtbs-severity-ak-cog-1991" },
+                        { "label": "1992", "asset_id": "mtbs-severity-ak-cog-1992" },
+                        { "label": "1993", "asset_id": "mtbs-severity-ak-cog-1993" },
+                        { "label": "1994", "asset_id": "mtbs-severity-ak-cog-1994" },
+                        { "label": "1996", "asset_id": "mtbs-severity-ak-cog-1996" },
+                        { "label": "1997", "asset_id": "mtbs-severity-ak-cog-1997" },
+                        { "label": "1998", "asset_id": "mtbs-severity-ak-cog-1998" },
+                        { "label": "1999", "asset_id": "mtbs-severity-ak-cog-1999" },
+                        { "label": "2000", "asset_id": "mtbs-severity-ak-cog-2000" },
+                        { "label": "2002", "asset_id": "mtbs-severity-ak-cog-2002" },
+                        { "label": "2003", "asset_id": "mtbs-severity-ak-cog-2003" },
+                        { "label": "2004", "asset_id": "mtbs-severity-ak-cog-2004" },
+                        { "label": "2005", "asset_id": "mtbs-severity-ak-cog-2005" },
+                        { "label": "2006", "asset_id": "mtbs-severity-ak-cog-2006" },
+                        { "label": "2007", "asset_id": "mtbs-severity-ak-cog-2007" },
+                        { "label": "2008", "asset_id": "mtbs-severity-ak-cog-2008" },
+                        { "label": "2009", "asset_id": "mtbs-severity-ak-cog-2009" },
+                        { "label": "2010", "asset_id": "mtbs-severity-ak-cog-2010" },
+                        { "label": "2011", "asset_id": "mtbs-severity-ak-cog-2011" },
+                        { "label": "2012", "asset_id": "mtbs-severity-ak-cog-2012" },
+                        { "label": "2014", "asset_id": "mtbs-severity-ak-cog-2014" },
+                        { "label": "2015", "asset_id": "mtbs-severity-ak-cog-2015" },
+                        { "label": "2016", "asset_id": "mtbs-severity-ak-cog-2016" },
+                        { "label": "2017", "asset_id": "mtbs-severity-ak-cog-2017" },
+                        { "label": "2018", "asset_id": "mtbs-severity-ak-cog-2018" },
+                        { "label": "2019", "asset_id": "mtbs-severity-ak-cog-2019" },
+                        { "label": "2020", "asset_id": "mtbs-severity-ak-cog-2020" },
+                        { "label": "2021", "asset_id": "mtbs-severity-ak-cog-2021" },
+                        { "label": "2022", "asset_id": "mtbs-severity-ak-cog-2022" },
+                        { "label": "2023", "asset_id": "mtbs-severity-ak-cog-2023" }
+                    ]
+                }
+            ]
+        },
+        {
+            "collection_id": "usgs-fires-2021-combined",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json",
+            "group": {
+                "name": "Fire history",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "combined-pmtiles",
+                    "display_name": "Fire perimeters 1835–2020 · USGS 2021",
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#C0392B",
+                        "fill-opacity": 0.35
+                    },
+                    "outline_style": {
+                        "line-color": "#8C2419",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Fire perimeter (1835–2020)",
+                            "color": "#C0392B"
+                        }
+                    ],
+                    "tooltip_fields": ["Listed_Fire_Names", "Fire_Year", "Assigned_Fire_Type", "GIS_Acres"]
+                }
+            ]
+        },
+        {
+            "collection_id": "whp-2023-continuous-conus",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "whp-2023-continuous-conus-cog",
+                    "display_name": "Wildfire hazard index · WHP 2023 (CONUS)",
+                    "visible": false,
+                    "colormap": "inferno",
+                    "rescale": "0,2000",
+                    "default_style": {
+                        "raster-opacity": 0.75
+                    },
+                    "legend_label": "WHP index, CONUS scale (ramp saturates at 1,985 = the published Very High break)"
+                }
+            ]
+        },
+        {
+            "collection_id": "whp-2023-continuous-ak",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "whp-2023-continuous-ak-cog",
+                    "display_name": "Wildfire hazard index · WHP 2023 (Alaska)",
+                    "visible": false,
+                    "colormap": "inferno",
+                    "rescale": "0,9000",
+                    "default_style": {
+                        "raster-opacity": 0.75
+                    },
+                    "legend_label": "WHP index, Alaska scale (ramp saturates at 8,912 = the published Very High break)"
+                }
+            ]
+        },
+        {
+            "collection_id": "landfire-2024-vcc",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "vcc-cog",
+                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    }
+                }
+            ]
+        },
+        {
+            "collection_id": "facts-common-attributes-2026-06",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "common-attributes-2026-06-pmtiles",
+                    "display_name": "Completed treatments, FY2014+ · USFS FACTS 2026",
+                    "visible": false,
+                    "default_filter": [
+                        "all",
+                        ["!=", ["get", "FISCAL_YEAR_COMPLETED"], null],
+                        [">=", ["get", "FISCAL_YEAR_COMPLETED"], 2014]
+                    ],
+                    "default_style": {
+                        "fill-color": "#E08A2E",
+                        "fill-opacity": 0.7
+                    },
+                    "outline_style": {
+                        "line-color": "#A85F13",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Completed treatment, FY2014+",
+                            "color": "#E08A2E"
+                        }
+                    ],
+                    "tooltip_fields": ["ACTIVITY", "FISCAL_YEAR_COMPLETED", "GIS_ACRES", "ADMIN_FOREST", "NFPORS_CATEGORY"]
+                }
+            ]
+        },
+        {
+            "collection_id": "silvis-wui-2020",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-wui/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "wui-2020-pmtiles",
+                    "display_name": "Wildland-urban interface · SILVIS 2020",
+                    "visible": false,
+                    "default_filter": [">", ["get", "WUIFLAG2020"], 0],
+                    "default_style": {
+                        "fill-color": [
+                            "match",
+                            ["get", "WUIFLAG2020"],
+                            1, "#C99A5B",
+                            2, "#8C4A2F",
+                            "#CCCCCC"
+                        ],
+                        "fill-opacity": 0.6
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Intermix (housing among wildland vegetation)",
+                            "color": "#C99A5B"
+                        },
+                        {
+                            "label": "Interface (housing adjacent to wildland vegetation)",
+                            "color": "#8C4A2F"
+                        }
+                    ],
+                    "tooltip_fields": ["WUICLASS2020", "STATE", "HU2020", "POP2020", "VEG2019PC"]
                 }
             ]
         },
@@ -552,354 +896,10 @@
             ]
         },
         {
-            "collection_id": "whp-2023-continuous-conus",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-conus/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "whp-2023-continuous-conus-cog",
-                    "display_name": "Wildfire hazard index · WHP 2023 (CONUS)",
-                    "visible": false,
-                    "colormap": "inferno",
-                    "rescale": "0,2000",
-                    "default_style": {
-                        "raster-opacity": 0.75
-                    },
-                    "legend_label": "WHP index, CONUS scale (ramp saturates at 1,985 = the published Very High break)"
-                }
-            ]
-        },
-        {
-            "collection_id": "whp-2023-continuous-ak",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/whp-2023-continuous-ak/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "whp-2023-continuous-ak-cog",
-                    "display_name": "Wildfire hazard index · WHP 2023 (Alaska)",
-                    "visible": false,
-                    "colormap": "inferno",
-                    "rescale": "0,9000",
-                    "default_style": {
-                        "raster-opacity": 0.75
-                    },
-                    "legend_label": "WHP index, Alaska scale (ramp saturates at 8,912 = the published Very High break)"
-                }
-            ]
-        },
-        {
-            "collection_id": "landfire-2024-vcc",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "vcc-cog",
-                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
-                    "default_style": {
-                        "raster-opacity": 0.8
-                    }
-                }
-            ]
-        },
-        {
-            "collection_id": "mtbs-severity-1984-2024-conus",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-conus/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "mtbs-severity-conus",
-                    "display_name": "Burn severity by year · MTBS (CONUS)",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "MTBS thematic burn severity",
-                    "default_style": {
-                        "raster-opacity": 0.85
-                    },
-                    "default_version": "2024",
-                    "versions": [
-                        { "label": "1984", "asset_id": "mtbs-severity-conus-cog-1984" },
-                        { "label": "1985", "asset_id": "mtbs-severity-conus-cog-1985" },
-                        { "label": "1986", "asset_id": "mtbs-severity-conus-cog-1986" },
-                        { "label": "1987", "asset_id": "mtbs-severity-conus-cog-1987" },
-                        { "label": "1988", "asset_id": "mtbs-severity-conus-cog-1988" },
-                        { "label": "1989", "asset_id": "mtbs-severity-conus-cog-1989" },
-                        { "label": "1990", "asset_id": "mtbs-severity-conus-cog-1990" },
-                        { "label": "1991", "asset_id": "mtbs-severity-conus-cog-1991" },
-                        { "label": "1992", "asset_id": "mtbs-severity-conus-cog-1992" },
-                        { "label": "1993", "asset_id": "mtbs-severity-conus-cog-1993" },
-                        { "label": "1994", "asset_id": "mtbs-severity-conus-cog-1994" },
-                        { "label": "1995", "asset_id": "mtbs-severity-conus-cog-1995" },
-                        { "label": "1996", "asset_id": "mtbs-severity-conus-cog-1996" },
-                        { "label": "1997", "asset_id": "mtbs-severity-conus-cog-1997" },
-                        { "label": "1998", "asset_id": "mtbs-severity-conus-cog-1998" },
-                        { "label": "1999", "asset_id": "mtbs-severity-conus-cog-1999" },
-                        { "label": "2000", "asset_id": "mtbs-severity-conus-cog-2000" },
-                        { "label": "2001", "asset_id": "mtbs-severity-conus-cog-2001" },
-                        { "label": "2002", "asset_id": "mtbs-severity-conus-cog-2002" },
-                        { "label": "2003", "asset_id": "mtbs-severity-conus-cog-2003" },
-                        { "label": "2005", "asset_id": "mtbs-severity-conus-cog-2005" },
-                        { "label": "2006", "asset_id": "mtbs-severity-conus-cog-2006" },
-                        { "label": "2007", "asset_id": "mtbs-severity-conus-cog-2007" },
-                        { "label": "2008", "asset_id": "mtbs-severity-conus-cog-2008" },
-                        { "label": "2009", "asset_id": "mtbs-severity-conus-cog-2009" },
-                        { "label": "2010", "asset_id": "mtbs-severity-conus-cog-2010" },
-                        { "label": "2011", "asset_id": "mtbs-severity-conus-cog-2011" },
-                        { "label": "2012", "asset_id": "mtbs-severity-conus-cog-2012" },
-                        { "label": "2013", "asset_id": "mtbs-severity-conus-cog-2013" },
-                        { "label": "2014", "asset_id": "mtbs-severity-conus-cog-2014" },
-                        { "label": "2015", "asset_id": "mtbs-severity-conus-cog-2015" },
-                        { "label": "2016", "asset_id": "mtbs-severity-conus-cog-2016" },
-                        { "label": "2018", "asset_id": "mtbs-severity-conus-cog-2018" },
-                        { "label": "2019", "asset_id": "mtbs-severity-conus-cog-2019" },
-                        { "label": "2020", "asset_id": "mtbs-severity-conus-cog-2020" },
-                        { "label": "2021", "asset_id": "mtbs-severity-conus-cog-2021" },
-                        { "label": "2022", "asset_id": "mtbs-severity-conus-cog-2022" },
-                        { "label": "2023", "asset_id": "mtbs-severity-conus-cog-2023" },
-                        { "label": "2024", "asset_id": "mtbs-severity-conus-cog-2024" }
-                    ]
-                }
-            ]
-        },
-        {
-            "collection_id": "mtbs-severity-1984-2024-ak",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-severity-1984-2024-ak/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "mtbs-severity-ak",
-                    "display_name": "Burn severity by year · MTBS (Alaska)",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "MTBS thematic burn severity",
-                    "default_style": {
-                        "raster-opacity": 0.85
-                    },
-                    "default_version": "2023",
-                    "versions": [
-                        { "label": "1984", "asset_id": "mtbs-severity-ak-cog-1984" },
-                        { "label": "1985", "asset_id": "mtbs-severity-ak-cog-1985" },
-                        { "label": "1986", "asset_id": "mtbs-severity-ak-cog-1986" },
-                        { "label": "1988", "asset_id": "mtbs-severity-ak-cog-1988" },
-                        { "label": "1989", "asset_id": "mtbs-severity-ak-cog-1989" },
-                        { "label": "1990", "asset_id": "mtbs-severity-ak-cog-1990" },
-                        { "label": "1991", "asset_id": "mtbs-severity-ak-cog-1991" },
-                        { "label": "1992", "asset_id": "mtbs-severity-ak-cog-1992" },
-                        { "label": "1993", "asset_id": "mtbs-severity-ak-cog-1993" },
-                        { "label": "1994", "asset_id": "mtbs-severity-ak-cog-1994" },
-                        { "label": "1996", "asset_id": "mtbs-severity-ak-cog-1996" },
-                        { "label": "1997", "asset_id": "mtbs-severity-ak-cog-1997" },
-                        { "label": "1998", "asset_id": "mtbs-severity-ak-cog-1998" },
-                        { "label": "1999", "asset_id": "mtbs-severity-ak-cog-1999" },
-                        { "label": "2000", "asset_id": "mtbs-severity-ak-cog-2000" },
-                        { "label": "2002", "asset_id": "mtbs-severity-ak-cog-2002" },
-                        { "label": "2003", "asset_id": "mtbs-severity-ak-cog-2003" },
-                        { "label": "2004", "asset_id": "mtbs-severity-ak-cog-2004" },
-                        { "label": "2005", "asset_id": "mtbs-severity-ak-cog-2005" },
-                        { "label": "2006", "asset_id": "mtbs-severity-ak-cog-2006" },
-                        { "label": "2007", "asset_id": "mtbs-severity-ak-cog-2007" },
-                        { "label": "2008", "asset_id": "mtbs-severity-ak-cog-2008" },
-                        { "label": "2009", "asset_id": "mtbs-severity-ak-cog-2009" },
-                        { "label": "2010", "asset_id": "mtbs-severity-ak-cog-2010" },
-                        { "label": "2011", "asset_id": "mtbs-severity-ak-cog-2011" },
-                        { "label": "2012", "asset_id": "mtbs-severity-ak-cog-2012" },
-                        { "label": "2014", "asset_id": "mtbs-severity-ak-cog-2014" },
-                        { "label": "2015", "asset_id": "mtbs-severity-ak-cog-2015" },
-                        { "label": "2016", "asset_id": "mtbs-severity-ak-cog-2016" },
-                        { "label": "2017", "asset_id": "mtbs-severity-ak-cog-2017" },
-                        { "label": "2018", "asset_id": "mtbs-severity-ak-cog-2018" },
-                        { "label": "2019", "asset_id": "mtbs-severity-ak-cog-2019" },
-                        { "label": "2020", "asset_id": "mtbs-severity-ak-cog-2020" },
-                        { "label": "2021", "asset_id": "mtbs-severity-ak-cog-2021" },
-                        { "label": "2022", "asset_id": "mtbs-severity-ak-cog-2022" },
-                        { "label": "2023", "asset_id": "mtbs-severity-ak-cog-2023" }
-                    ]
-                }
-            ]
-        },
-        {
-            "collection_id": "mtbs-perimeters-1984-2024",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/mtbs-perimeters-1984-2024/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "mtbs-perimeters-1984-2024-pmtiles",
-                    "alias": "mtbs-wildfire",
-                    "display_name": "Wildfire perimeters 1984–2024 · MTBS",
-                    "visible": false,
-                    "default_filter": ["match", ["get", "Incid_Type"], ["Wildfire", "Wildland Fire Use"], true, false],
-                    "default_style": {
-                        "fill-color": "#B03A2E",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#7B241C",
-                        "line-width": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Wildfire / wildland fire use perimeter",
-                            "color": "#B03A2E"
-                        }
-                    ],
-                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
-                },
-                {
-                    "id": "mtbs-perimeters-1984-2024-pmtiles",
-                    "alias": "mtbs-rxfire",
-                    "display_name": "Prescribed fire perimeters 1984–2024 · MTBS",
-                    "visible": false,
-                    "default_filter": ["match", ["get", "Incid_Type"], ["Prescribed Fire"], true, false],
-                    "default_style": {
-                        "fill-color": "#2E86AB",
-                        "fill-opacity": 0.4
-                    },
-                    "outline_style": {
-                        "line-color": "#1B5A75",
-                        "line-width": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Prescribed fire perimeter",
-                            "color": "#2E86AB"
-                        }
-                    ],
-                    "tooltip_fields": ["Incid_Name", "Incid_Type", "Ig_Date", "BurnBndAc", "Asmnt_Type"]
-                }
-            ]
-        },
-        {
-            "collection_id": "facts-common-attributes-2026-06",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-facts/common-attributes-2026-06/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "common-attributes-2026-06-pmtiles",
-                    "display_name": "Completed treatments, FY2014+ · USFS FACTS 2026",
-                    "visible": false,
-                    "default_filter": [
-                        "all",
-                        ["!=", ["get", "FISCAL_YEAR_COMPLETED"], null],
-                        [">=", ["get", "FISCAL_YEAR_COMPLETED"], 2014]
-                    ],
-                    "default_style": {
-                        "fill-color": "#E08A2E",
-                        "fill-opacity": 0.7
-                    },
-                    "outline_style": {
-                        "line-color": "#A85F13",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Completed treatment, FY2014+",
-                            "color": "#E08A2E"
-                        }
-                    ],
-                    "tooltip_fields": ["ACTIVITY", "FISCAL_YEAR_COMPLETED", "GIS_ACRES", "ADMIN_FOREST", "NFPORS_CATEGORY"]
-                }
-            ]
-        },
-        {
-            "collection_id": "usgs-fires-2021-combined",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/usgs-fires-2021/combined/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "combined-pmtiles",
-                    "display_name": "Fire perimeters 1835–2020 · USGS 2021",
-                    "visible": false,
-                    "default_style": {
-                        "fill-color": "#C0392B",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#8C2419",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Fire perimeter (1835–2020)",
-                            "color": "#C0392B"
-                        }
-                    ],
-                    "tooltip_fields": ["Listed_Fire_Names", "Fire_Year", "Assigned_Fire_Type", "GIS_Acres"]
-                }
-            ]
-        },
-        {
-            "collection_id": "silvis-wui-2020",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-wui/stac-collection.json",
-            "group": {
-                "name": "Fuels & fire",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "wui-2020-pmtiles",
-                    "display_name": "Wildland-urban interface · SILVIS 2020",
-                    "visible": false,
-                    "default_filter": [">", ["get", "WUIFLAG2020"], 0],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            ["get", "WUIFLAG2020"],
-                            1, "#C99A5B",
-                            2, "#8C4A2F",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Intermix (housing among wildland vegetation)",
-                            "color": "#C99A5B"
-                        },
-                        {
-                            "label": "Interface (housing adjacent to wildland vegetation)",
-                            "color": "#8C4A2F"
-                        }
-                    ],
-                    "tooltip_fields": ["WUICLASS2020", "STATE", "HU2020", "POP2020", "VEG2019PC"]
-                }
-            ]
-        },
-        {
             "collection_id": "pad-us-4.1-combined",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json",
             "group": {
-                "name": "Comparison strata",
+                "name": "Existing protections",
                 "collapsed": true
             },
             "assets": [
