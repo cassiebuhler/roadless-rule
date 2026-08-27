@@ -517,16 +517,22 @@ the designated inventory PAD-US already supplies, the same trap as PAD-US `Des_T
 against.** The 7th backfills previously underrepresented states, so pre-2021 counts differ — the
 dataset id is `fpa-fod-1992-2024`.
 
-Checked against live STAC on 2026-08-26 — none of the following has a `stac-collection.json` yet, so
+Checked against live STAC on 2026-08-27 — none of the following has a `stac-collection.json` yet, so
 none can be added. `public-landfire/landfire-2024-evc/` and `.../landfire-2024-fbfm40/` hold COGs but
-**no collection JSON** (#623); `public-fire` holds WRC v2 only under `raw/` (#592, #627). A bucket
-prefix is not an ingest — probe for `stac-collection.json` before believing a dataset is available.
+**no collection JSON** (#623). A bucket prefix is not an ingest — probe for `stac-collection.json`
+before believing a dataset is available.
+
+✅ **#592 landed and is now in the app.** `wrc-2-rps-conus` and `wrc-2-rps-ak` published
+2026-08-27 (521.0 M and 120.3 M res-10 cells), verified by `verify-stac.py` with data checks. Note
+what the earlier note above got wrong: `public-fire` held WRC v2 "only under `raw/`" at the time,
+which was true, but the layer that is mapped is the **COG at the bucket root**
+(`wrc-2-rps-conus-cog.tif`), not anything under the dataset prefix — the prefix holds the hex the
+assistant queries. #611 and #627 are still raw-only and remain unaddable.
 
 | Issue | Dataset | Expected bucket |
 |---|---|---|
 | #590 | LANDFIRE 2023/2024 — FRCC, EVC, FBFM40 (VCC done, EVT unusable) | `public-landfire` |
 | #591 | USFS Insect & Disease Detection Survey | `public-usfs` |
-| #592 | Wildfire Risk to Communities v2 | `public-fire` |
 | #603 | TWIG interagency fuel treatments + intersections | `public-fire` |
 | #606 | TNC Resilient & Connected Network — national | TBD |
 | #609 | Mesic Analysis Platform — mesic persistence, valley bottoms | TBD |

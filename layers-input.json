@@ -677,6 +677,48 @@
             ]
         },
         {
+            "collection_id": "wrc-2-rps-conus",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/wrc-2-rps-conus/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "wrc-2-rps-conus-cog",
+                    "display_name": "Risk to potential structures · WRC v2 (CONUS)",
+                    "visible": false,
+                    "colormap": "plasma",
+                    "rescale": "0,0.722298",
+                    "default_style": {
+                        "raster-opacity": 0.75
+                    },
+                    "legend_label": "Expected annual loss to a home, were one to stand on each pixel (ramp saturates at 0.72 = the 95th percentile, the top published class break)"
+                }
+            ]
+        },
+        {
+            "collection_id": "wrc-2-rps-ak",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/wrc-2-rps-ak/stac-collection.json",
+            "group": {
+                "name": "Fire risk & fuels",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "wrc-2-rps-ak-cog",
+                    "display_name": "Risk to potential structures · WRC v2 (Alaska)",
+                    "visible": false,
+                    "colormap": "plasma",
+                    "rescale": "0,0.790832",
+                    "default_style": {
+                        "raster-opacity": 0.75
+                    },
+                    "legend_label": "Expected annual loss to a home, were one to stand on each pixel (ramp saturates at 0.79 = the 95th percentile, the top published class break)"
+                }
+            ]
+        },
+        {
             "collection_id": "landfire-2024-vcc",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-landfire/landfire-2024-vcc/stac-collection.json",
             "group": {
