@@ -70,7 +70,7 @@
                 {
                     "id": "roadless-areas-2001-pmtiles",
                     "alias": "ira-rule-affected",
-                    "display_name": "Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001",
+                    "display_name": "Rule-affected — PROPOSED for rescission · USFS 2001",
                     "group": "Roadless areas",
                     "visible": true,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], false, true],
@@ -94,7 +94,7 @@
                 {
                     "id": "roadless-areas-2001-pmtiles",
                     "alias": "ira-idaho-colorado",
-                    "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001",
+                    "display_name": "Idaho & Colorado — state rules, excluded · USFS 2001",
                     "group": "Roadless areas",
                     "visible": false,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],
@@ -1064,7 +1064,7 @@
             "assets": [
                 {
                     "id": "nfs-surface-ownership-pmtiles",
-                    "display_name": "Forest Service ownership, 193.2M ac · USFS 2025",
+                    "display_name": "Forest Service ownership · USFS 2025",
                     "visible": false,
                     "default_filter": ["match", ["get", "OWNERCLASS"], ["USDA FOREST SERVICE"], true, false],
                     "default_style": {
@@ -1096,7 +1096,7 @@
             "assets": [
                 {
                     "id": "proclaimed-forest-pmtiles",
-                    "display_name": "Proclaimed boundary, 225.1M ac · USFS 2025",
+                    "display_name": "Proclaimed boundary · USFS 2025",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#000000",
@@ -1127,7 +1127,7 @@
             "assets": [
                 {
                     "id": "administrative-forest-pmtiles",
-                    "display_name": "Administrative boundary, 236.8M ac · USFS 2025",
+                    "display_name": "Administrative boundary · USFS 2025",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#000000",
@@ -1158,7 +1158,7 @@
             "assets": [
                 {
                     "id": "ranger-district-pmtiles",
-                    "display_name": "Ranger districts, 237.1M ac · USFS 2025",
+                    "display_name": "Ranger districts · USFS 2025",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#000000",
@@ -1354,7 +1354,7 @@
                 {
                     "id": "epa-ecoregions-l3-pmtiles",
                     "alias": "ecoregion-level-1",
-                    "display_name": "Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)",
+                    "display_name": "Level I ecoregions · EPA Omernik 2012–2013 (CONUS + Alaska)",
                     "visible": false,
                     "default_style": {
                         "fill-color": ["match", ["get", "NA_L1NAME"],
@@ -1430,7 +1430,7 @@
                 {
                     "id": "epa-ecoregions-l3-pmtiles",
                     "alias": "ecoregion-level-3",
-                    "display_name": "Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)",
+                    "display_name": "Level III ecoregion boundaries · EPA Omernik 2012–2013 (CONUS + Alaska)",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#3F6B7A",
@@ -1461,7 +1461,7 @@
             "assets": [
                 {
                     "id": "epa-ecoregions-l4-pmtiles",
-                    "display_name": "Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)",
+                    "display_name": "Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#8A6FA0",

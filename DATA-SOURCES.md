@@ -46,7 +46,7 @@ in the map only; the underlying parquet is complete and the assistant can query 
 
 | Field | Value |
 |---|---|
-| Layers | `Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001`, `Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001` |
+| Layers | `Rule-affected — PROPOSED for rescission · USFS 2001`, `Idaho & Colorado — state rules, excluded · USFS 2001` |
 | Publisher | USDA Forest Service, Geospatial Service and Technology Center |
 | Coverage | National — 38 states + Puerto Rico, incl. Alaska |
 | Vintage | 2001 (the inventory designated by the 2001 rule) |
@@ -489,10 +489,10 @@ ignores any `legend_classes` override. Tracked upstream at
 
 | Layer | Features | `SUM(GIS_ACRES)` | Collection |
 |---|---:|---:|---|
-| `Forest Service ownership, 193.2M ac · USFS 2025` | 97,493 parcels | 193,174,461 | `nfs-surface-ownership` |
-| `Proclaimed boundary, 225.1M ac · USFS 2025` | 154 units | 225,145,181 | `proclaimed-forest` |
-| `Administrative boundary, 236.8M ac · USFS 2025` | 112 units | 236,835,251 | `administrative-forest` |
-| `Ranger districts, 237.1M ac · USFS 2025` | 503 districts | 237,098,674 | `ranger-district` |
+| `Forest Service ownership · USFS 2025` | 97,493 parcels | 193,174,461 | `nfs-surface-ownership` |
+| `Proclaimed boundary · USFS 2025` | 154 units | 225,145,181 | `proclaimed-forest` |
+| `Administrative boundary · USFS 2025` | 112 units | 236,835,251 | `administrative-forest` |
+| `Ranger districts · USFS 2025` | 503 districts | 237,098,674 | `ranger-district` |
 
 Publisher: USDA Forest Service, Enterprise Data Warehouse. Coverage: national. Vintage: 2025-06-22
 snapshot. License: public domain. Sources — [`S_USA.SurfaceOwnership.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.SurfaceOwnership.zip),
@@ -607,9 +607,9 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
-| `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` | as above | **CONUS + Alaska** | as above | Public domain | `epa-ecoregions-l3` |
-| `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
+| `Level I ecoregions · EPA Omernik 2012–2013 (CONUS + Alaska)` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
+| `Level III ecoregion boundaries · EPA Omernik 2012–2013 (CONUS + Alaska)` | as above | **CONUS + Alaska** | as above | Public domain | `epa-ecoregions-l3` |
+| `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
 
 The Level I and Level III layers are one collection drawn two ways via `alias` — a fill coloured on
 `NA_L1NAME`, and boundaries with no fill. Every polygon carries the full hierarchy as columns

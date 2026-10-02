@@ -228,8 +228,8 @@ that group first. Within a group, layers are ordered so that a subset always fol
 is a subset of.
 
 - **Roadless areas** — the 2001 inventory, split into
-  `Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001` and
-  `Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001`. Both are the same underlying dataset filtered on `STATE`.
+  `Rule-affected — PROPOSED for rescission · USFS 2001` and
+  `Idaho & Colorado — state rules, excluded · USFS 2001`. Both are the same underlying dataset filtered on `STATE`.
   **`Idaho & Colorado` starts switched off**, so the opening map shows only the area the proposal
   would affect. That means the default view is the **44.7M** base, not the 58.4M all-IRA base — if a
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
@@ -324,9 +324,9 @@ is a subset of.
   1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
   compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
   are two halves of one variable and currently need two clicks.
-- **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
-  `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
-  `Ranger districts, 237.1M ac · USFS 2025`, ordered by ascending acreage. Only the first is
+- **National Forest System extent** — `Forest Service ownership · USFS 2025`,
+  `Proclaimed boundary · USFS 2025`, `Administrative boundary · USFS 2025` and
+  `Ranger districts · USFS 2025`, ordered by ascending acreage. Only the first is
   **ownership**; the other three are
   administrative envelopes, drawn as outlines with no fill precisely because they are boundaries
   rather than land. The ownership layer is filtered to `OWNERCLASS = 'USDA FOREST SERVICE'` in the
@@ -349,11 +349,11 @@ is a subset of.
   country* the proposal would affect. An ecoregion is a region of broadly similar ecological
   character, not an ecosystem: it contains many, so report results as "by ecoregion", never "by
   ecosystem".
-  `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` and
-  `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)`
+  `Level I ecoregions · EPA Omernik 2012–2013 (CONUS + Alaska)` and
+  `Level III ecoregion boundaries · EPA Omernik 2012–2013 (CONUS + Alaska)`
   are one dataset (`epa-ecoregions-l3`) drawn two ways via `alias`: a filled biome map coloured on
   `NA_L1NAME`, and a boundary-only outline.
-  `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` is a separate
+  `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)` is a separate
   collection (`epa-ecoregions-l4`) and is **CONUS only** — EPA publishes no Alaska Level IV, so it
   carries the same Alaska blind spot as NLCD and LANDFIRE. Every polygon in both collections carries
   the whole hierarchy as columns (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, and `US_L4*` on Level IV),
