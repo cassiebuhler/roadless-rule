@@ -46,7 +46,7 @@ in the map only; the underlying parquet is complete and the assistant can query 
 
 | Field | Value |
 |---|---|
-| Layers | `Rule-affected · 44.7M ac — PROPOSED for rescission`, `Idaho & Colorado · 13.7M ac — state rules, excluded` |
+| Layers | `Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001`, `Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001` |
 | Publisher | USDA Forest Service, Geospatial Service and Technology Center |
 | Coverage | National — 38 states + Puerto Rico, incl. Alaska |
 | Vintage | 2001 (the inventory designated by the 2001 rule) |
