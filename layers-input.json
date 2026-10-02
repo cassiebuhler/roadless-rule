@@ -970,7 +970,7 @@
             "assets": [
                 {
                     "id": "vcc-cog",
-                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS only)",
+                    "display_name": "Vegetation condition class · LANDFIRE 2024 (CONUS)",
                     "visible": false,
                     "legend_type": "categorical",
                     "legend_label": "Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
@@ -1279,14 +1279,14 @@
             "assets": [
                 {
                     "id": "nlcd-cog-2001",
-                    "display_name": "Land cover · NLCD 2001 (CONUS only)",
+                    "display_name": "Land cover · NLCD 2001 (CONUS)",
                     "visible": false,
                     "legend_type": "categorical",
                     "legend_label": "NLCD land-cover class"
                 },
                 {
                     "id": "nlcd-cog-2024",
-                    "display_name": "Land cover · NLCD 2024 (CONUS only)",
+                    "display_name": "Land cover · NLCD 2024 (CONUS)",
                     "visible": false,
                     "legend_type": "categorical",
                     "legend_label": "NLCD land-cover class"
@@ -1461,7 +1461,7 @@
             "assets": [
                 {
                     "id": "epa-ecoregions-l4-pmtiles",
-                    "display_name": "Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)",
+                    "display_name": "Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS)",
                     "visible": false,
                     "default_style": {
                         "fill-color": "#8A6FA0",

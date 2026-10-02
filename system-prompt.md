@@ -353,7 +353,7 @@ is a subset of.
   `Level III ecoregion boundaries · EPA Omernik 2012–2013 (CONUS + Alaska)`
   are one dataset (`epa-ecoregions-l3`) drawn two ways via `alias`: a filled biome map coloured on
   `NA_L1NAME`, and a boundary-only outline.
-  `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)` is a separate
+  `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS)` is a separate
   collection (`epa-ecoregions-l4`) and is **CONUS only** — EPA publishes no Alaska Level IV, so it
   carries the same Alaska blind spot as NLCD and LANDFIRE. Every polygon in both collections carries
   the whole hierarchy as columns (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, and `US_L4*` on Level IV),

@@ -19,7 +19,7 @@ Every layer label follows one form: **`what it is · PUBLISHER vintage`** — fo
 publishes numbered releases, a **version** (`PAD-US 4.1` is the only one here).
 
 Every dataset in this app is a **fixed vintage** — a published release or a frozen snapshot, not a
-live service. Where a layer's label carries a filter (`FY2014+`, `CONUS only`), that filter is applied
+live service. Where a layer's label carries a filter (`FY2014+`, `CONUS`), that filter is applied
 in the map only; the underlying parquet is complete and the assistant can query all of it.
 
 ## Publishers
@@ -446,7 +446,7 @@ filtered to `> 0`.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
+| `Vegetation condition class · LANDFIRE 2024 (CONUS)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
 
 Vegetation Condition Class measures how far current vegetation has departed from its estimated
 historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
@@ -592,8 +592,8 @@ layer.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Land cover · NLCD 2001 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2001 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
-| `Land cover · NLCD 2024 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
+| `Land cover · NLCD 2001 (CONUS)` | MRLC / USGS EROS | **CONUS only** | 2001 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
+| `Land cover · NLCD 2024 (CONUS)` | MRLC / USGS EROS | **CONUS only** | 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
 | `Human modification · Theobald 2016` | Theobald et al. | Global | circa 2016, ~1 km | CC-BY-4.0 | `global-human-modification` |
 
 ⚠️ **NLCD has no Alaska**, which holds 14,778,681 roadless acres — 25% of the all-IRA total and the
@@ -609,7 +609,7 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 |---|---|---|---|---|---|
 | `Level I ecoregions · EPA Omernik 2012–2013 (CONUS + Alaska)` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
 | `Level III ecoregion boundaries · EPA Omernik 2012–2013 (CONUS + Alaska)` | as above | **CONUS + Alaska** | as above | Public domain | `epa-ecoregions-l3` |
-| `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS only)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
+| `Level IV ecoregion boundaries · EPA Omernik 2013 (CONUS)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
 
 The Level I and Level III layers are one collection drawn two ways via `alias` — a fill coloured on
 `NA_L1NAME`, and boundaries with no fill. Every polygon carries the full hierarchy as columns
