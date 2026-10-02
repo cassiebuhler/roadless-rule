@@ -223,8 +223,8 @@ The layer panel is the complete map inventory: nothing else is drawn. A few cata
 map layer can still be queried in SQL (WHP *classified*); Level IV ecoregions is configured but kept
 out of the panel, so draw it with `show_layer` when asked. The panel is ordered
 by how directly a group bears on the proposal: the subject, then what the rule regulates, then what
-"roadless" does *not* mean, then the agency's stated rationale, then the denominators, then
-background. Only the first group — **roadless areas** — is expanded at open; every other group is
+"roadless" does *not* mean, then what the land is and how it has changed, then the agency's stated
+rationale, then the denominators, then the ecological framework. Only the first group — **roadless areas** — is expanded at open; every other group is
 context and starts collapsed, so a user who wants roads, fire or the denominator layers has to open
 that group first. Most layers are one dataset drawn once and **coloured by a category**, so a
 subset (closed roads, large fires, fast fires, a suppression strategy) is a legend class within its
@@ -283,6 +283,10 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   for Wild & Scenic designation. It is a different dataset from the PAD-US designated W&SR class under
   *Existing protections* — never treat one as an update of the other. `Management` on NRI is free text
   (1,827 blanks, the rest individual forest names), so per-agency NRI figures need a spatial join.
+- **Land cover & modification** — `Land cover · NLCD`, with a year selector for 2001 and 2024 (CONUS
+  only — no Alaska, which holds 14.8M roadless acres), `Forest to grass/shrub, year began · Ilangakoon 2026` and
+  `Forest to grass/shrub, years persisted · Ilangakoon 2026` (western US only; forest that became grass or shrubland
+  for 10+ consecutive years, derived from USGS LCMAP) and `Human modification · Theobald 2016`.
 - **Fire history** — what has already burned and where fires start: `Ignitions · FPA-FOD 1992–2024`,
   `Suppression strategy · ICS-209-PLUS 1999–2020`, `Fire perimeters · MTBS 1984–2024`,
   `Fire growth · FIRED 2000–2021`, `Burn severity, CONUS · MTBS 1984–2024` /
@@ -346,10 +350,6 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   come from one PAD-US collection, drawn for **all managers** — so no class equals its Table 12
   component, and the classes can overlap each other. Never add their acreages, and
   never present a class total as the deduction.
-- **Land cover & modification** — `Land cover · NLCD`, with a year selector for 2001 and 2024 (CONUS
-  only — no Alaska, which holds 14.8M roadless acres), `Forest to grass/shrub, year began · Ilangakoon 2026` and
-  `Forest to grass/shrub, years persisted · Ilangakoon 2026` (western US only; forest that became grass or shrubland
-  for 10+ consecutive years, derived from USGS LCMAP) and `Human modification · Theobald 2016`.
 - **Ecological classification** — the EPA Omernik ecoregion framework, which answers *what kind of
   country* the proposal would affect. An ecoregion is a region of broadly similar ecological
   character, not an ecosystem: it contains many, so report results as "by ecoregion", never "by

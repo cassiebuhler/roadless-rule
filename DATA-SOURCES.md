@@ -242,6 +242,22 @@ of 4,496 segments leave it blank; the rest name individual units (`Tongass Natio
 join, not a `GROUP BY`. `Classifica` is likewise multi-valued (`Wild, Scenic, Recreational`) and
 blank on 1,667 segments, so it is not a clean stratum either.
 
+### Land cover & modification
+
+| Layer | Publisher | Coverage | Vintage | License | Collection |
+|---|---|---|---|---|---|
+| `Land cover · NLCD` (year selector: 2001, 2024) | MRLC / USGS EROS | **CONUS only** | 2001 and 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
+| `Forest to grass/shrub, year began · Ilangakoon 2026` | Nayani Ilangakoon, from USGS LCMAP land cover (Zenodo, doi:10.5281/zenodo.23045000) | **Western US** | 2001–2021, published 2026-09-29 | CC-BY-4.0 | `forest-to-grass-shrub` |
+| `Forest to grass/shrub, years persisted · Ilangakoon 2026` | as above | **Western US** | as above | CC-BY-4.0 | `forest-to-grass-shrub` |
+| `Human modification · Theobald 2016` | Theobald et al. | Global | circa 2016, ~1 km | CC-BY-4.0 | `global-human-modification` |
+
+⚠️ **NLCD has no Alaska**, which holds 14,778,681 roadless acres — 25% of the all-IRA total and the
+largest single state. Any land-cover share computed from it silently drops Alaska. Classified raster:
+use `mode`, not `mean`; nodata `250`.
+
+Human modification is a continuous 0–1 index (0 = unmodified, 1 = fully modified) — average it, never
+sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.7283087).
+
 ### Fire history
 
 What has already burned, where fires start, and how incidents were fought.
@@ -580,22 +596,6 @@ Neither is a comparison stratum for this audit. Both remain queryable via the ca
 ⚠️ **PAD-US carries its own `Des_Tp = 'IRA'` records** (~58.2M ac, close to the USFS 58.4M). It is a
 different rendering of the same inventory, not an independent one — never add it to the USFS roadless
 layer.
-
-### Land cover & modification
-
-| Layer | Publisher | Coverage | Vintage | License | Collection |
-|---|---|---|---|---|---|
-| `Land cover · NLCD` (year selector: 2001, 2024) | MRLC / USGS EROS | **CONUS only** | 2001 and 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
-| `Forest to grass/shrub, year began · Ilangakoon 2026` | Nayani Ilangakoon, from USGS LCMAP land cover (Zenodo, doi:10.5281/zenodo.23045000) | **Western US** | 2001–2021, published 2026-09-29 | CC-BY-4.0 | `forest-to-grass-shrub` |
-| `Forest to grass/shrub, years persisted · Ilangakoon 2026` | as above | **Western US** | as above | CC-BY-4.0 | `forest-to-grass-shrub` |
-| `Human modification · Theobald 2016` | Theobald et al. | Global | circa 2016, ~1 km | CC-BY-4.0 | `global-human-modification` |
-
-⚠️ **NLCD has no Alaska**, which holds 14,778,681 roadless acres — 25% of the all-IRA total and the
-largest single state. Any land-cover share computed from it silently drops Alaska. Classified raster:
-use `mode`, not `mean`; nodata `250`.
-
-Human modification is a continuous 0–1 index (0 = unmodified, 1 = fully modified) — average it, never
-sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.7283087).
 
 ### Ecological classification
 

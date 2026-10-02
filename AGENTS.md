@@ -414,11 +414,11 @@ argument, so preserve it when adding a layer:
 | 1 | Roadless areas | the subject — **the only group expanded at open** |
 | 2 | Roads | what 36 CFR 294 actually regulates |
 | 3 | Trails & recreation access | "roadless" ≠ inaccessible |
-| 4 | Fire history | measured record: ignitions, perimeters, severity |
-| 5 | Fire risk & fuels | modelled hazard, stand condition, treatment |
-| 6 | National Forest System extent | the land base (5th denominator) |
-| 7 | Existing protections | the Table 12 deduction → 40.0M base |
-| 8 | Land cover & modification | background |
+| 4 | Land cover & modification | what the land is and how it has changed |
+| 5 | Fire history | measured record: ignitions, perimeters, severity |
+| 6 | Fire risk & fuels | modelled hazard, stand condition, treatment |
+| 7 | National Forest System extent | the land base (5th denominator) |
+| 8 | Existing protections | the Table 12 deduction → 40.0M base |
 | 9 | Ecological classification | the framework the other eight can be stratified by — and the only one covering Alaska |
 
 ⛔ **Do not merge Roads into Trails or vice versa**, and do not restore a shared "access" label for

@@ -240,6 +240,18 @@ li { margin: 0.25rem 0; }
         <p><strong>The rivers inventory is not a protection layer.</strong> NRI listing records that a segment was assessed and found to have outstanding values; it confers no designation. The app&rsquo;s Wild &amp; Scenic <em>designated</em> stratum lives under Existing protections and comes from PAD-US &mdash; a different dataset answering a different question. Do not combine the two. <code>Management</code> on the NRI layer is free text (1,827 segments leave it blank, the rest name individual forests and monuments), so it cannot be filtered as an agency column.</p>
     </div>
 
+    <h3>Land cover &amp; modification</h3>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
+        <tbody>
+            <tr><td>Land cover &middot; NLCD</td><td>MRLC / USGS EROS, Annual NLCD Collection 1.2, CONUS only. Classified raster with a year selector for 2001 and 2024.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Forest to grass/shrub, year began / years persisted &middot; Ilangakoon 2026</td><td>Derived from USGS LCMAP annual land cover (Ilangakoon 2026, Zenodo, CC-BY-4.0), western US only: 30 m pixels that were forest in 2001 and later spent 10 or more consecutive years as grass or shrubland. Two rasters, the year that run began and how long it lasted.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/forest-to-grass-shrub/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+            <tr><td>Human modification &middot; Theobald 2016</td><td>Theobald et al., global, ~1 km. A continuous 0&ndash;1 index. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
+        </tbody>
+    </table>
+    </div>
+
     <h3>Fire history</h3>
     <p>What has already burned, where fires start, and how they were fought. The ignition and incident layers are points, not a density surface. Large fires, fast fires and less-than-full suppression are legend classes within their layers: <em>subsets</em>, never additions. Ignitions (FPA-FOD, 2.66M) and incident reports (ICS-209-PLUS, 33,561) count different things and must not be compared as totals.</p>
     <div class="table-wrap">
@@ -290,18 +302,6 @@ li { margin: 0.25rem 0; }
         <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
         <tbody>
             <tr><td>Protected designations &middot; PAD-US 4.1</td><td>USGS Gap Analysis Project, PAD-US 4.1 <em>combined</em> (Mar 2025), coloured by designation. Designated wilderness: 994 features / 112.5M ac all managers, 475 / 37.11M ac USFS-managed. Wilderness study areas: 722 / 24.16M ac, 42 / 3.40M ac USFS. Wild &amp; Scenic Rivers, designated wild segments only: 163 / 1.36M ac, 91 / 0.58M ac USFS.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-padus/padus-4-1/combined/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-        </tbody>
-    </table>
-    </div>
-
-    <h3>Land cover &amp; modification</h3>
-    <div class="table-wrap">
-    <table>
-        <thead><tr><th>Layer</th><th>Dataset</th><th>Metadata</th></tr></thead>
-        <tbody>
-            <tr><td>Land cover &middot; NLCD</td><td>MRLC / USGS EROS, Annual NLCD Collection 1.2, CONUS only. Classified raster with a year selector for 2001 and 2024.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Forest to grass/shrub, year began / years persisted &middot; Ilangakoon 2026</td><td>Derived from USGS LCMAP annual land cover (Ilangakoon 2026, Zenodo, CC-BY-4.0), western US only: 30 m pixels that were forest in 2001 and later spent 10 or more consecutive years as grass or shrubland. Two rasters, the year that run began and how long it lasted.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-land-cover/forest-to-grass-shrub/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
-            <tr><td>Human modification &middot; Theobald 2016</td><td>Theobald et al., global, ~1 km. A continuous 0&ndash;1 index. CC-BY-4.0.</td><td><a href="https://radiantearth.github.io/stac-browser/#/external/s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json" target="_blank" rel="noopener">STAC</a></td></tr>
         </tbody>
     </table>
     </div>

@@ -461,6 +461,84 @@
             ]
         },
         {
+            "collection_id": "nlcd",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json",
+            "group": {
+                "name": "Land cover & modification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "nlcd",
+                    "display_name": "Land cover · NLCD",
+                    "visible": false,
+                    "legend_type": "categorical",
+                    "legend_label": "NLCD land-cover class, CONUS only",
+                    "default_version": "2024",
+                    "versions": [
+                        {
+                            "label": "2001",
+                            "asset_id": "nlcd-cog-2001"
+                        },
+                        {
+                            "label": "2024",
+                            "asset_id": "nlcd-cog-2024"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "collection_id": "forest-to-grass-shrub",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/forest-to-grass-shrub/stac-collection.json",
+            "group": {
+                "name": "Land cover & modification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "forest-to-grass-shrub-change-year-cog",
+                    "display_name": "Forest to grass/shrub, year began · Ilangakoon 2026",
+                    "visible": false,
+                    "colormap": "viridis",
+                    "rescale": "2002,2012",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    },
+                    "legend_label": "Western US. First year of a 10+ year grass/shrub run on land that was forest in 2001 (LCMAP)"
+                },
+                {
+                    "id": "forest-to-grass-shrub-max-run-years-cog",
+                    "display_name": "Forest to grass/shrub, years persisted · Ilangakoon 2026",
+                    "visible": false,
+                    "colormap": "magma",
+                    "rescale": "10,20",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    },
+                    "legend_label": "Western US. Longest grass/shrub run after 2001, years (10-20)"
+                }
+            ]
+        },
+        {
+            "collection_id": "global-human-modification",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json",
+            "group": {
+                "name": "Land cover & modification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "ghm-cog",
+                    "display_name": "Human modification · Theobald 2016",
+                    "visible": false,
+                    "colormap": "magma",
+                    "rescale": "0,1",
+                    "legend_label": "Human modification index (0 = none, 1 = fully modified)"
+                }
+            ]
+        },
+        {
             "collection_id": "fpa-fod-1992-2024",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-fire/fpa-fod-1992-2024/stac-collection.json",
             "group": {
@@ -1429,84 +1507,6 @@
                         "GAP_Sts",
                         "GIS_Acres"
                     ]
-                }
-            ]
-        },
-        {
-            "collection_id": "nlcd",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/nlcd/stac-collection.json",
-            "group": {
-                "name": "Land cover & modification",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "nlcd",
-                    "display_name": "Land cover · NLCD",
-                    "visible": false,
-                    "legend_type": "categorical",
-                    "legend_label": "NLCD land-cover class, CONUS only",
-                    "default_version": "2024",
-                    "versions": [
-                        {
-                            "label": "2001",
-                            "asset_id": "nlcd-cog-2001"
-                        },
-                        {
-                            "label": "2024",
-                            "asset_id": "nlcd-cog-2024"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "collection_id": "forest-to-grass-shrub",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/forest-to-grass-shrub/stac-collection.json",
-            "group": {
-                "name": "Land cover & modification",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "forest-to-grass-shrub-change-year-cog",
-                    "display_name": "Forest to grass/shrub, year began · Ilangakoon 2026",
-                    "visible": false,
-                    "colormap": "viridis",
-                    "rescale": "2002,2012",
-                    "default_style": {
-                        "raster-opacity": 0.8
-                    },
-                    "legend_label": "Western US. First year of a 10+ year grass/shrub run on land that was forest in 2001 (LCMAP)"
-                },
-                {
-                    "id": "forest-to-grass-shrub-max-run-years-cog",
-                    "display_name": "Forest to grass/shrub, years persisted · Ilangakoon 2026",
-                    "visible": false,
-                    "colormap": "magma",
-                    "rescale": "10,20",
-                    "default_style": {
-                        "raster-opacity": 0.8
-                    },
-                    "legend_label": "Western US. Longest grass/shrub run after 2001, years (10-20)"
-                }
-            ]
-        },
-        {
-            "collection_id": "global-human-modification",
-            "collection_url": "https://s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json",
-            "group": {
-                "name": "Land cover & modification",
-                "collapsed": true
-            },
-            "assets": [
-                {
-                    "id": "ghm-cog",
-                    "display_name": "Human modification · Theobald 2016",
-                    "visible": false,
-                    "colormap": "magma",
-                    "rescale": "0,1",
-                    "legend_label": "Human modification index (0 = none, 1 = fully modified)"
                 }
             ]
         },

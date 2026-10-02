@@ -66,8 +66,9 @@ lives in the legend ("Rule-affected, proposed for rescission"), so it reads as a
 an accomplished fact.
 
 Groups run in order of how directly they bear on the proposal: the subject, then what the rule
-regulates, then what "roadless" does *not* mean, then the agency's stated rationale, then the
-denominators, then background, and last the ecological framework the rest can be stratified by.
+regulates, then what "roadless" does *not* mean, then what the land is and how it has changed, then
+the agency's stated rationale, then the denominators, and last the ecological framework the rest can
+be stratified by.
 Most layers are one dataset coloured by a category, so a subset (closed roads, large fires, a
 suppression strategy) is a legend class within its layer rather than a separate toggle.
 
@@ -76,11 +77,11 @@ suppression strategy) is a legend class within its layer rather than a separate 
 | 1 | **Roadless areas** | `Roadless areas · USFS 2001` · `Roadless protection status · Manley 2026` |
 | 2 | **Roads** | `Forest Service roads · USFS 2025` · `Roads & paths · TIGER 2025` |
 | 3 | **Trails & recreation access** | `Federal trails · USFS, NPS, BLM 2026` · `Outstanding rivers · NPS 2024` |
-| 4 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity, CONUS · MTBS 1984–2024` · `Burn severity, Alaska · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |
-| 5 | **Fire risk & fuels** | `Wildfire hazard, CONUS · WHP 2023` · `Wildfire hazard, Alaska · WHP 2023` · `Risk to structures, CONUS · WRC 2024` · `Risk to structures, Alaska · WRC 2024` · `Vegetation condition · LANDFIRE 2024` · `Completed treatments · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
-| 6 | **National Forest System extent** | `Forest Service ownership · USFS 2025` · `Proclaimed boundaries · USFS 2025` · `Administrative boundaries · USFS 2025` · `Ranger districts · USFS 2025` |
-| 7 | **Existing protections** | `Protected designations · PAD-US 4.1` |
-| 8 | **Land cover & modification** | `Land cover · NLCD` · `Forest to grass/shrub, year began · Ilangakoon 2026` · `Forest to grass/shrub, years persisted · Ilangakoon 2026` · `Human modification · Theobald 2016` |
+| 4 | **Land cover & modification** | `Land cover · NLCD` · `Forest to grass/shrub, year began · Ilangakoon 2026` · `Forest to grass/shrub, years persisted · Ilangakoon 2026` · `Human modification · Theobald 2016` |
+| 5 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity, CONUS · MTBS 1984–2024` · `Burn severity, Alaska · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |
+| 6 | **Fire risk & fuels** | `Wildfire hazard, CONUS · WHP 2023` · `Wildfire hazard, Alaska · WHP 2023` · `Risk to structures, CONUS · WRC 2024` · `Risk to structures, Alaska · WRC 2024` · `Vegetation condition · LANDFIRE 2024` · `Completed treatments · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
+| 7 | **National Forest System extent** | `Forest Service ownership · USFS 2025` · `Proclaimed boundaries · USFS 2025` · `Administrative boundaries · USFS 2025` · `Ranger districts · USFS 2025` |
+| 8 | **Existing protections** | `Protected designations · PAD-US 4.1` |
 | 9 | **Ecological classification** | `Ecoregions · EPA Omernik` |
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
