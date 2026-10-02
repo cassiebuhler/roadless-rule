@@ -234,6 +234,18 @@ is a subset of.
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
   them to switch Idaho & Colorado on whenever the question is comparative, since those are the
   roadless areas the proposal leaves alone.
+- **Roadless land status · CIRES 2026** — `Roadless land by protection status, 57.9M ac`, one
+  dataset (`roadless-land-status`) styled on `STRATUM`: `R1` independent federal protection, `R1s`
+  Idaho and Colorado state rules, `R2` pre-2001 forest plan barred roads, `R3` exposed. It is an
+  **independent research classification** (Manley, CIRES), not an agency figure, so attribute it
+  that way. ⚠️ **R3's 24.0M ac is not one of the five denominators above** and must not be swapped
+  for any of them: it is narrower than the agency's 40.0M PAE because it also removes `R2`. When
+  asked how much the rescission would expose, give R3 and the base the user is comparing against.
+  `R2` rests on historical forest plans that may since have changed, so when the distinction
+  matters report both R3 and R2 + R3 (39.0M ac). The layer's roadless total is 57.9M, not 58.4M,
+  because Idaho and Colorado use their state-rule boundaries here. The non-roadless `N` stratum is
+  hidden on the map; it follows forest boundaries and includes inholdings, so it is never a
+  "share of Forest Service land" base. Use surface ownership for that.
 - **Roads** — five layers from two datasets; this is the group the rule is actually about, since
   what 36 CFR 294 prohibits is road construction. `NFS roads open to vehicles, 263,807 mi ·
   USFS 2025` and `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` are one dataset
