@@ -131,7 +131,7 @@
             "assets": [
                 {
                     "id": "roadless-land-status-pmtiles",
-                    "display_name": "Roadless protection status · CIRES 2026",
+                    "display_name": "Roadless protection status · Manley 2026",
                     "group": "Roadless areas",
                     "visible": false,
                     "default_filter": [

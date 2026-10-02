@@ -73,7 +73,7 @@ suppression strategy) is a legend class within its layer rather than a separate 
 
 | # | Group | Layers |
 |---:|---|---|
-| 1 | **Roadless areas** | `Roadless areas · USFS 2001` · `Roadless protection status · CIRES 2026` |
+| 1 | **Roadless areas** | `Roadless areas · USFS 2001` · `Roadless protection status · Manley 2026` |
 | 2 | **Roads** | `Forest Service roads · USFS 2025` · `Roads & paths · TIGER 2025` |
 | 3 | **Trails & recreation access** | `Federal trails · USFS, NPS, BLM 2026` · `Outstanding rivers · NPS 2024` |
 | 4 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity, CONUS · MTBS 1984–2024` · `Burn severity, Alaska · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |

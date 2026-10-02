@@ -236,7 +236,7 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   alone. So the opening map shows the **58.4M** all-IRA total with the 44.7M rule-affected base
   picked out in green — if a user reads an acreage off the map, ask which colour they mean, and
   treat the grey areas as the comparison group, not part of the affected area.
-  The group's second layer, `Roadless protection status · CIRES 2026`, is a
+  The group's second layer, `Roadless protection status · Manley 2026`, is a
   different dataset (`roadless-land-status`) and starts switched off. It is styled on
   `STRATUM`: `R1` independent federal protection, `R1s`
   Idaho and Colorado state rules, `R2` pre-2001 forest plan barred roads, `R3` exposed. It is an

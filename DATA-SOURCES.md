@@ -73,11 +73,11 @@ USFS cautions that source scales vary across this layer and that boundaries cann
 align with features from other datasets — the National Forest Planning Record documents remain the
 official inventory. Treat adjacency and buffer-distance results as approximate.
 
-### Roadless protection status · CIRES 2026 (in the Roadless areas group)
+### Roadless protection status · Manley 2026 (in the Roadless areas group)
 
 | Field | Value |
 |---|---|
-| Layers | `Roadless protection status · CIRES 2026` |
+| Layers | `Roadless protection status · Manley 2026` |
 | Publisher | Kyle Manley, Cooperative Institute for Research in Environmental Sciences (CIRES), University of Colorado Boulder |
 | Coverage | National Forest System — 44 states + Puerto Rico, incl. Alaska |
 | Vintage | Version 1.0, published 2026-10-02 |
