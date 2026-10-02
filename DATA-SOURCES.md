@@ -189,9 +189,7 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `USFS trails · USFS NFST 2026` | USDA Forest Service (NFST) | National | 2026 | Public domain | `federal-trails-2026` |
-| `NPS & BLM trails · NPS + BLM GTLF 2026` | NPS + BLM (GTLF) | National | 2026 | Public domain | `federal-trails-2026` |
-| `National Trails System routes · USFS + NPS + BLM 2026` | USFS + NPS + BLM | National | 2026 | Public domain | `federal-trails-2026` |
+| `Federal trails · USFS, NPS & BLM 2026` | USDA Forest Service (NFST) + NPS (Public Trails) + BLM (GTLF), composited by the Boettiger Lab | National | Pulled 2026-05-24 | Public domain | `federal-trails-2026` |
 | `Rivers with outstanding values · NPS NRI 2024` | National Park Service | 50 states + PR + territories | 2024 | Public domain | `american-rivers-nri-2024` |
 
 **Why recreation data is in a rule-audit app.** The 2001 rule prohibits road construction and
@@ -199,8 +197,8 @@ reconstruction. It does not close land to the public. A map carrying only roads 
 inference that a roadless area is unreachable; ~135,000 miles of Forest Service trail says
 otherwise. These layers make that testable rather than rhetorical.
 
-The first three layers are one dataset (`federal-trails-2026`, 127,619 segments) filtered on
-`admin_agency` and `nts_designation`. `length_miles` is recomputed in EPSG:5070, not carried from
+The trails layer is one dataset (`federal-trails-2026`, 127,619 segments) coloured by
+`admin_agency`. `length_miles` is recomputed in EPSG:5070, not carried from
 the source.
 
 | `admin_agency` | Segments | Miles |
@@ -209,9 +207,9 @@ the source.
 | `NPS` | 31,281 | 17,046 |
 | `BLM` | 19,104 | 8,870 |
 
-⛔ **The National Trails System layer is a subset, not a third category.** Its 4,382 segments are
-already inside the USFS and NPS/BLM layers; adding the three mileages triple-counts the designated
-routes. The 16 designation codes are `NRT` (1,853 segments), `PCT` (792), `NST` (700), `CDT` (404),
+⛔ **National Trails System routes are a subset, not a fourth agency.** Their 4,382 segments
+(flagged by `nts_designation`) are already counted in the agency mileages above; adding NTS mileage
+to them double-counts the designated routes. The 16 designation codes are `NRT` (1,853 segments), `PCT` (792), `NST` (700), `CDT` (404),
 `AT` (225), `NCT` (203), `INHT` (64), `ANZA` (45), `PENHT` (36), `FNST` (30), `ANT` (12), `IANST`
 (8), `OSNHT` (5), `PNT` (2), `NTNST` (2) and `PHT` (1).
 

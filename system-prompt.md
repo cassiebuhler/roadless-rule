@@ -264,12 +264,12 @@ is a subset of.
   ⚠️ The walkways layer sits in this group because it is the excluded complement of the TIGER
   `MTFCC` road filter — it shows what the road layers leave out. It is **not** a road, and never
   enters a road figure.
-- **Trails & recreation access** — `USFS trails · USFS NFST 2026`,
-  `NPS & BLM trails · NPS + BLM GTLF 2026`,
-  `National Trails System routes · USFS + NPS + BLM 2026` and
-  `Rivers with outstanding values · NPS NRI 2024`. The first three are one dataset
-  (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
-  **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
+- **Trails & recreation access** — `Federal trails · USFS, NPS & BLM 2026` and
+  `Rivers with outstanding values · NPS NRI 2024`. The trails layer is one dataset
+  (`federal-trails-2026`, a composite of USFS NFST, NPS Public Trails and BLM GTLF) coloured by
+  `admin_agency`: Forest Service 134,983 mi, NPS 17,046 mi, BLM 8,870 mi. National Trails System
+  routes (PCT, AT, CDT, …) have no layer of their own; they are segments within it, flagged by
+  `nts_designation`, so never add NTS mileage to agency mileage. These layers exist to
   answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
   to the public.** If a user reads "roadless" as "inaccessible", the ~135,000 miles of Forest
   Service trail is the direct answer. ⛔ **A trail is never a road** — 36 CFR 294.11 requires a motor
