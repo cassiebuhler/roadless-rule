@@ -121,8 +121,8 @@ be difficult to control. The source metadata states plainly that it is **not** a
 homes, communities, or people, and does not account for what is exposed. Conflating WHP with "risk to
 our communities" is the central framing move in the announcement — do not repeat it.
 
-✅ **Risk to communities IS in this app: use `Risk to potential structures · WRC v2`.** It is the
-layer that incorporates exposure and the susceptibility of structures, so it answers "would a fire
+✅ **Risk to communities IS in this app: use the `Risk to structures · WRC 2024` layers (CONUS and Alaska).** They are the
+layers that incorporate exposure and the susceptibility of structures, so they answer "would a fire
 here harm anyone" where WHP answers only "could a fire here burn intensely". A question about risk
 to homes or communities should be answered from WRC, not WHP. The two will correlate and will not
 track each other, and that divergence is the point.
@@ -219,23 +219,25 @@ of category. Never read rule status, protection level, or permission off this co
 
 ## What this app has — and what it does not
 
-The layer panel is the complete inventory; there is no data behind the scenes. The panel is ordered
+The layer panel is the complete map inventory: nothing else is drawn. A few catalog datasets with no
+map layer can still be queried in SQL (WHP *classified*); Level IV ecoregions is configured but kept
+out of the panel, so draw it with `show_layer` when asked. The panel is ordered
 by how directly a group bears on the proposal: the subject, then what the rule regulates, then what
-"roadless" does *not* mean, then the agency's stated rationale, then the denominators, then
-background. Only the first group — **roadless areas** — is expanded at open; every other group is
+"roadless" does *not* mean, then what the land is and how it has changed, then the agency's stated
+rationale, then the denominators, then the ecological framework. Only the first group — **roadless areas** — is expanded at open; every other group is
 context and starts collapsed, so a user who wants roads, fire or the denominator layers has to open
-that group first. Within a group, layers are ordered so that a subset always follows the layer it
-is a subset of.
+that group first. Most layers are one dataset drawn once and **coloured by a category**, so a
+subset (closed roads, large fires, fast fires, a suppression strategy) is a legend class within its
+layer, not a separate toggle. To isolate a subset, filter the layer on the column named below.
 
-- **Roadless areas** — the USFS 2001 inventory, split into `Rule-affected · 44.7M ac` and
-  `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
-  **`Idaho & Colorado` starts switched off**, so the opening map shows only the area the proposal
-  would affect. That means the default view is the **44.7M** base, not the 58.4M all-IRA base — if a
-  user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
-  them to switch Idaho & Colorado on whenever the question is comparative, since those are the
-  roadless areas the proposal leaves alone.
-  The group's third layer, `Roadless land by protection status, 57.9M ac · CIRES 2026`, is a
-  different dataset (`roadless-land-status`) and also starts switched off. It is styled on
+- **Roadless areas** — `Roadless areas · USFS 2001`, the 2001 inventory, is the one layer switched
+  on at open. It is coloured by `STATE`: green for the rule-affected areas (`STATE NOT IN
+  ('ID','CO')`, 44.7M ac) and grey for Idaho and Colorado (13.7M ac), which the proposal leaves
+  alone. So the opening map shows the **58.4M** all-IRA total with the 44.7M rule-affected base
+  picked out in green — if a user reads an acreage off the map, ask which colour they mean, and
+  treat the grey areas as the comparison group, not part of the affected area.
+  The group's second layer, `Roadless protection status · Manley 2026`, is a
+  different dataset (`roadless-land-status`) and starts switched off. It is styled on
   `STRATUM`: `R1` independent federal protection, `R1s`
   Idaho and Colorado state rules, `R2` pre-2001 forest plan barred roads, `R3` exposed. It is an
   **independent research classification** (Manley, CIRES), not an agency figure, so attribute it
@@ -247,28 +249,26 @@ is a subset of.
   because Idaho and Colorado use their state-rule boundaries here. The non-roadless `N` stratum is
   hidden on the map; it follows forest boundaries and includes inholdings, so it is never a
   "share of Forest Service land" base. Use surface ownership for that.
-- **Roads** — five layers from two datasets; this is the group the rule is actually about, since
-  what 36 CFR 294 prohibits is road construction. `NFS roads open to vehicles, 263,807 mi ·
-  USFS 2025` and `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` are one dataset
-  (`roadcore-fs`) filtered on `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1
-  distinction changes the answer to claim 3.
-  `All motor-vehicle roads, 16,470,232 segments · TIGER 2025`,
-  `Highways & secondary roads, 268,817 segments · TIGER 2025` and
-  `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025`
-  are one dataset (`census-2025/roads`) filtered on `MTFCC`. The highways layer is a **subset** of
-  the motor-vehicle layer, not an addition to it. All five start switched off. Counted in
+- **Roads** — two layers from two datasets; this is the group the rule is actually about, since
+  what 36 CFR 294 prohibits is road construction. `Forest Service roads · USFS 2025`
+  (`roadcore-fs`) is coloured by `OPER_MAINT_LEVEL`: dark for roads open to motor vehicles (ML 2–5,
+  263,807 mi) and light grey for roads closed and in storage (ML1, 103,945 mi). The ML1 distinction
+  changes the answer to claim 3, so always say which you counted.
+  `Roads & paths · TIGER 2025` (`census-2025/roads`) is coloured by `MTFCC`: highways and secondary
+  roads (`S1100`, `S1200`, 268,817 segments, a **subset** of all motor-vehicle roads, not an addition),
+  every other motor-vehicle road of any jurisdiction, and walkways, stairways, bike and bridle paths
+  (`S1710`, `S1720`, `S1820`, `S1830`, 20,667 segments). Both start switched off. TIGER is counted in
   **segments**, not miles — TIGER has no length column, and a TIGER segment is not the same unit as a
   RoadCore segment, so never compare or add the two counts. When a user asks to "see the roads", say
   which jurisdiction they mean: RoadCore is Forest Service only, TIGER is everything.
-  ⚠️ The walkways layer sits in this group because it is the excluded complement of the TIGER
-  `MTFCC` road filter — it shows what the road layers leave out. It is **not** a road, and never
-  enters a road figure.
-- **Trails & recreation access** — `USFS trails, 134,983 mi · Federal Trails 2026`,
-  `NPS & BLM trails, 25,916 mi · Federal Trails 2026`,
-  `National Trails System routes, 12,488 mi · Federal Trails 2026` and
-  `Rivers with outstanding values, 90,476 mi · NPS NRI 2024`. The first three are one dataset
-  (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
-  **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
+  ⚠️ The walkway and path classes are drawn so a user can see what the road figures leave out. They
+  are **not** roads, and never enter a road figure: exclude those four `MTFCC` codes.
+- **Trails & recreation access** — `Federal trails · USFS, NPS, BLM 2026` and
+  `Outstanding rivers · NPS 2024`. The trails layer is one dataset (`federal-trails-2026`, a
+  composite of USFS NFST, NPS Public Trails and BLM GTLF) coloured by `admin_agency`: Forest Service
+  134,983 mi, NPS 17,046 mi, BLM 8,870 mi. National Trails System routes (PCT, AT, CDT, …) have no
+  layer of their own; they are segments within it, flagged by `nts_designation`, so never add NTS
+  mileage to agency mileage. These layers exist to
   answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
   to the public.** If a user reads "roadless" as "inaccessible", the ~135,000 miles of Forest
   Service trail is the direct answer. ⛔ **A trail is never a road** — 36 CFR 294.11 requires a motor
@@ -278,33 +278,39 @@ is a subset of.
   carry each agency's raw vocabulary unharmonized (41 `trail_type` values collapsing to 31 on case
   folding), so grouping on them splits one category across rows. ⚠️ Trail miles must come from the
   GeoParquet, not the hex — `length_miles` repeats on every cell a buffered segment touches.
-  ⛔ **NRI is an inventory, not a protection**: it records that a free-flowing segment has an
-  outstanding natural, cultural or recreational value and is *potentially eligible* for Wild &
-  Scenic designation. It is a different dataset from the PAD-US designated W&SR stratum under
+  ⛔ **The rivers layer (NRI) is an inventory, not a protection**: it records that a free-flowing
+  segment has an outstanding natural, cultural or recreational value and is *potentially eligible*
+  for Wild & Scenic designation. It is a different dataset from the PAD-US designated W&SR class under
   *Existing protections* — never treat one as an update of the other. `Management` on NRI is free text
   (1,827 blanks, the rest individual forest names), so per-agency NRI figures need a spatial join.
-- **Fire history** — what has already burned and where fires start: `Ignitions by cause 1992–2024 ·
-  FPA-FOD` and `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD`,
-  `Wildfire perimeters 1984–2024 · MTBS`, `Prescribed fire perimeters 1984–2024 · MTBS`,
-  `Burn severity by year · MTBS (CONUS)` / `(Alaska)` — the severity layers carry a year
-  selector rather than one entry per year — and `Fire perimeters 1835–2020 · USGS 2021`.
-  The two FPA-FOD layers are **points, not a density surface**; the large-fire layer is a
-  **subset** of the all-ignitions layer, not an addition to it. For an actual ignition-density map,
+- **Land cover & modification** — `Land cover · NLCD`, with a year selector for 2001 and 2024 (CONUS
+  only — no Alaska, which holds 14.8M roadless acres), `Forest to grass/shrub, year began · Ilangakoon 2026` and
+  `Forest to grass/shrub, years persisted · Ilangakoon 2026` (western US only; forest that became grass or shrubland
+  for 10+ consecutive years, derived from USGS LCMAP) and `Human modification · Theobald 2016`.
+- **Fire history** — what has already burned and where fires start: `Ignitions · FPA-FOD 1992–2024`,
+  `Suppression strategy · ICS-209-PLUS 1999–2020`, `Fire perimeters · MTBS 1984–2024`,
+  `Fire growth · FIRED 2000–2021`, `Burn severity, CONUS · MTBS 1984–2024` /
+  `Burn severity, Alaska · MTBS 1984–2024` — the severity layers carry a year selector rather than
+  one entry per year — and `Historical fire perimeters · USGS 1835–2020`.
+  The ignitions layer is coloured by cause, with fires that reached ≥1,000 ac (`FIRE_SIZE_CLASS` F
+  or G) drawn as larger dots; they are a **subset** of all ignitions, not an addition. Ignitions are
+  **points, not a density surface**. For an actual ignition-density map,
   aggregate the res-10 hex to a coarser resolution and render it with `add_hex_tile_layer` — see
   *Building an ignition-density layer* below. Ignitions are grouped with fire rather than with roads,
   but the roads × ignitions intersection is the core of claim 3 — turn on layers from both groups.
-  Also here: `Fire events by peak daily growth 2000–2021 · FIRED` and
-  `Fast fires, >1,620 ha in a day · FIRED` — the only layers carrying **how fast** a fire grew. The
-  fast layer is a **subset** of the all-events layer, not an addition.
-  Also here: `Incident suppression strategy 1999–2020 · ICS-209-PLUS` and
-  `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` — the only layers
-  carrying **how a fire was fought**. The second is a **subset** of the first. This is the
+  The MTBS perimeters layer is coloured by `Incid_Type`: wildfire (including wildland fire use) and
+  prescribed fire.
+  `Fire growth · FIRED 2000–2021` is the only layer carrying **how fast** a fire grew, coloured by
+  peak single-day growth; its top two classes are the fast fires.
+  `Suppression strategy · ICS-209-PLUS 1999–2020` is the only layer carrying **how a fire was
+  fought**, coloured by `SUPPRESSION_METHOD`; confine, monitor and point-zone protection are classes
+  within it. This is the
   response record, not an ignition census: 33,561 wildfire/WFU incidents that generated an
-  ICS-209 report, against FPA-FOD's 2.66M ignitions. Both layers hide the 443 incidents whose
+  ICS-209 report, against FPA-FOD's 2.66M ignitions. The layer hides the 443 incidents whose
   upstream coordinates are defective (see *ICS-209-PLUS caveats* below).
   ⛔ **A "fast fire" has a published definition and it is not the average spread rate.** Balch et al.
-  2024 define it as peak single-day growth above 1,620 ha — `mx_grw_km2 > 16.2` — which is what both
-  layers use (1,968 of 278,569 events here). `fsr_km2_dy` is `tot_ar_km2 / event_dur`, an average
+  2024 define it as peak single-day growth above 1,620 ha — `mx_grw_km2 > 16.2` — which is what the
+  layer's fast-fire classes use (1,968 of 278,569 events here). `fsr_km2_dy` is `tot_ar_km2 / event_dur`, an average
   over the whole event, and answers a different question; do not substitute one for the other or
   describe a `fsr_km2_dy` result as a fast-fire count. Our 0.71% is over all events including tiny
   ones and over CONUS **plus Alaska**; the paper's 2.7% is a different base — quote the base.
@@ -313,19 +319,20 @@ is a subset of.
   is a MODIS daily composite, so peak growth is a 24-hour bound, not a run-hour rate; and the 11-day
   grouping window can merge two nearby fires or split one long one.
 - **Fire risk & fuels** — forward-looking hazard, stand condition and the treatment response:
-  `Wildfire hazard index · WHP 2023 (CONUS)` / `(Alaska)`,
-  `Risk to potential structures · WRC v2 (CONUS)` / `(Alaska)`,
-  `Vegetation condition class · LANDFIRE 2024` (**CONUS only**), the layer that speaks to claims
+  `Wildfire hazard, CONUS · WHP 2023` / `Wildfire hazard, Alaska · WHP 2023`,
+  `Risk to structures, CONUS · WRC 2024` / `Risk to structures, Alaska · WRC 2024`,
+  `Vegetation condition · LANDFIRE 2024` (**CONUS only**), the layer that speaks to claims
   about stands being overgrown or out of their natural condition,
-  `Completed treatments, FY2014+ · USFS FACTS 2026` and
+  `Completed treatments · USFS FACTS 2026` (activities completed FY2014 onward) and
   `Wildland-urban interface · SILVIS 2020`.
   The two WHP entries are separate rasters on separate scales (the published Very High break is
   1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
   compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
-  are two halves of one variable and currently need two clicks.
-- **National Forest System extent** — `Forest Service ownership, 193.2M ac · USFS 2025`,
-  `Proclaimed boundary, 225.1M ac · USFS 2025`, `Administrative boundary, 236.8M ac · USFS 2025` and
-  `Ranger districts, 237.1M ac · USFS 2025`, ordered by ascending acreage. Only the first is
+  are two halves of one variable and currently need two clicks. The same holds for the two WRC
+  entries and the two burn-severity entries.
+- **National Forest System extent** — `Forest Service ownership · USFS 2025` (193.2M ac),
+  `Proclaimed boundaries · USFS 2025` (225.1M ac), `Administrative boundaries · USFS 2025` (236.8M ac)
+  and `Ranger districts · USFS 2025` (237.1M ac), ordered by ascending acreage. Only the first is
   **ownership**; the other three are
   administrative envelopes, drawn as outlines with no fill precisely because they are boundaries
   rather than land. The ownership layer is filtered to `OWNERCLASS = 'USDA FOREST SERVICE'` in the
@@ -334,29 +341,25 @@ is a subset of.
   attributing acreage to a state needs a spatial or hex join (e.g. `census-2024/state`, native h8);
   a plain `ST_Intersects` sum double-counts, because it credits a parcel's whole acreage to every
   state it touches.
-- **Existing protections** — `Designated wilderness · PAD-US 4.1`,
-  `Wilderness study areas · PAD-US 4.1` and `Wild & Scenic Rivers, wild segments · PAD-US 4.1`.
+- **Existing protections** — `Protected designations · PAD-US 4.1`, coloured by `Des_Tp`:
+  designated wilderness (`WA`), wilderness study areas (`WSA`) and Wild & Scenic Rivers wild
+  segments (`WSR` with `Loc_Ds` wild).
   These are the three components DEIS Vol I Table 12 nets out of the ~44.3M NFS acres to reach the
   40,049,537-acre potentially affected environment, a deduction of 4,250,463 acres — which is why
   they sit next to *National Forest System extent* rather than with the thematic layers. All three
-  are one PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer
-  equals its Table 12 component, and the layers can overlap each other. Never add their acreages, and
-  never present a layer total as the deduction.
-- **Land cover & modification** — `Land cover · NLCD 2001` and `Land cover · NLCD 2024` (CONUS
-  only — no Alaska, which holds 14.8M roadless acres) and `Human modification · Theobald 2016`.
+  come from one PAD-US collection, drawn for **all managers** — so no class equals its Table 12
+  component, and the classes can overlap each other. Never add their acreages, and
+  never present a class total as the deduction.
 - **Ecological classification** — the EPA Omernik ecoregion framework, which answers *what kind of
   country* the proposal would affect. An ecoregion is a region of broadly similar ecological
   character, not an ecosystem: it contains many, so report results as "by ecoregion", never "by
   ecosystem".
-  `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` and
-  `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)`
-  are one dataset (`epa-ecoregions-l3`) drawn two ways via `alias`: a filled biome map coloured on
-  `NA_L1NAME`, and a boundary-only outline.
-  `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` is a separate
-  collection (`epa-ecoregions-l4`) and is **CONUS only** — EPA publishes no Alaska Level IV, so it
-  carries the same Alaska blind spot as NLCD and LANDFIRE. Every polygon in both collections carries
-  the whole hierarchy as columns (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, and `US_L4*` on Level IV),
-  so any level is a `GROUP BY` away and no join between levels is needed.
+  `Ecoregions · EPA Omernik` (`epa-ecoregions-l3`) draws the 105 Level III ecoregions as outlines,
+  filled by their Level I biome (`NA_L1NAME`). Every polygon carries the hierarchy as columns
+  (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`), so Levels I, II and III are each a `GROUP BY` away and
+  no join between levels is needed. `Level IV ecoregions · EPA Omernik 2013` (`epa-ecoregions-l4`, 967 subdivisions) has no panel
+  toggle but is configured, so show it on request; it is CONUS only, because EPA publishes no Alaska
+  Level IV.
   ⭐ **This is the only ecological stratification in the app that covers Alaska**, which is 33.1% of
   the rule-affected base — NLCD and LANDFIRE VCC are CONUS-only, and WHP's Alaska domain cannot be
   pooled with its CONUS one. When a user asks what kind of country would lose roadless protection,
