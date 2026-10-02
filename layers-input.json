@@ -1620,6 +1620,42 @@
                     }
                 }
             ]
+        },
+        {
+            "collection_id": "epa-ecoregions-l4",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-ecoregion/epa-ecoregions-l4/stac-collection.json",
+            "group": {
+                "name": "Ecological classification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "epa-ecoregions-l4-pmtiles",
+                    "display_name": "Level IV ecoregions · EPA Omernik 2013",
+                    "sidebar": false,
+                    "visible": false,
+                    "default_style": {
+                        "fill-color": "#8A6FA0",
+                        "fill-opacity": 0
+                    },
+                    "outline_style": {
+                        "line-color": "#7A5F90",
+                        "line-width": 0.5
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "Level IV boundary, CONUS only",
+                            "color": "#7A5F90"
+                        }
+                    ],
+                    "tooltip_fields": [
+                        "US_L4NAME",
+                        "US_L3NAME",
+                        "NA_L1NAME"
+                    ]
+                }
+            ]
         }
     ]
 }

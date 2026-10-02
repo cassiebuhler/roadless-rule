@@ -606,8 +606,9 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 One layer: the 105 Level III ecoregions (1,616 polygons) drawn as outlines and filled by their
 Level I biome (`NA_L1NAME`). Every polygon carries the hierarchy as columns (`NA_L1CODE`/`NAME`,
 `NA_L2*`, `US_L3*`), so Levels I and II need no separate dataset. EPSG:4326 with an H3 hex at native
-resolution 8, which is the catalog join key. Level IV (`epa-ecoregions-l4`, 967 subdivisions) has no
-map layer but can be queried in SQL: EPA publishes it for CONUS only, so it cannot cover the Alaska
+resolution 8, which is the catalog join key. `Level IV ecoregions · EPA Omernik 2013`
+(`epa-ecoregions-l4`, 967 subdivisions) is configured with `sidebar: false`: no panel toggle, but the
+assistant can draw it on request and query it in SQL. EPA publishes it for CONUS only, so it cannot cover the Alaska
 roadless acres, and 967 units is too fine to draw for a national view.
 
 ⭐ **This is the only ecological classification here that covers Alaska**, and Alaska is
@@ -747,7 +748,7 @@ added here as each lands.
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
 (watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
-(drinking-water source areas), `epa-ecoregions-l4` (Level IV ecoregions, CONUS only).
+(drinking-water source areas).
 
 Two datasets here are SQL-only, for different reasons — both worth recording.
 

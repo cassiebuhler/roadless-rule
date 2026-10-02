@@ -220,7 +220,8 @@ of category. Never read rule status, protection level, or permission off this co
 ## What this app has — and what it does not
 
 The layer panel is the complete map inventory: nothing else is drawn. A few catalog datasets with no
-map layer can still be queried in SQL (WHP *classified*, Level IV ecoregions). The panel is ordered
+map layer can still be queried in SQL (WHP *classified*); Level IV ecoregions is configured but kept
+out of the panel, so draw it with `show_layer` when asked. The panel is ordered
 by how directly a group bears on the proposal: the subject, then what the rule regulates, then what
 "roadless" does *not* mean, then the agency's stated rationale, then the denominators, then
 background. Only the first group — **roadless areas** — is expanded at open; every other group is
@@ -356,8 +357,9 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   `Ecoregions · EPA Omernik` (`epa-ecoregions-l3`) draws the 105 Level III ecoregions as outlines,
   filled by their Level I biome (`NA_L1NAME`). Every polygon carries the hierarchy as columns
   (`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`), so Levels I, II and III are each a `GROUP BY` away and
-  no join between levels is needed. Level IV (`epa-ecoregions-l4`, 967 subdivisions) has no map layer
-  but can be queried in SQL; it is CONUS only, because EPA publishes no Alaska Level IV.
+  no join between levels is needed. `Level IV ecoregions · EPA Omernik 2013` (`epa-ecoregions-l4`, 967 subdivisions) has no panel
+  toggle but is configured, so show it on request; it is CONUS only, because EPA publishes no Alaska
+  Level IV.
   ⭐ **This is the only ecological stratification in the app that covers Alaska**, which is 33.1% of
   the rule-affected base — NLCD and LANDFIRE VCC are CONUS-only, and WHP's Alaska domain cannot be
   pooled with its CONUS one. When a user asks what kind of country would lose roadless protection,
