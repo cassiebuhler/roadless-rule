@@ -118,6 +118,84 @@
             ]
         },
         {
+            "collection_id": "roadless-land-status",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadless-land-status/stac-collection.json",
+            "group": {
+                "name": "Roadless land status · CIRES 2026",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "roadless-land-status-pmtiles",
+                    "display_name": "Roadless land by protection status, 57.9M ac · CIRES 2026",
+                    "visible": false,
+                    "default_filter": [
+                        "match",
+                        [
+                            "get",
+                            "STRATUM"
+                        ],
+                        [
+                            "R1",
+                            "R1s",
+                            "R2",
+                            "R3"
+                        ],
+                        true,
+                        false
+                    ],
+                    "default_style": {
+                        "fill-color": [
+                            "match",
+                            [
+                                "get",
+                                "STRATUM"
+                            ],
+                            "R3",
+                            "#C0392B",
+                            "R2",
+                            "#E59866",
+                            "R1s",
+                            "#7FB3D5",
+                            "R1",
+                            "#1F618D",
+                            "#CCCCCC"
+                        ],
+                        "fill-opacity": 0.55
+                    },
+                    "outline_style": {
+                        "line-color": "#4D4D4D",
+                        "line-width": 0.3
+                    },
+                    "legend_type": "categorical",
+                    "legend_classes": [
+                        {
+                            "label": "R3 · exposed to rescission · 24.0M ac",
+                            "color": "#C0392B"
+                        },
+                        {
+                            "label": "R2 · pre-2001 forest plan barred roads · 15.0M ac",
+                            "color": "#E59866"
+                        },
+                        {
+                            "label": "R1s · Idaho & Colorado state rules · 13.1M ac",
+                            "color": "#7FB3D5"
+                        },
+                        {
+                            "label": "R1 · Wilderness, monuments & other federal protection · 5.9M ac",
+                            "color": "#1F618D"
+                        }
+                    ],
+                    "tooltip_fields": [
+                        "STRATUM",
+                        "FOR_NAME",
+                        "STATE",
+                        "ACRES"
+                    ]
+                }
+            ]
+        },
+        {
             "collection_id": "roadcore-fs",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadcore-fs/stac-collection.json",
             "group": {

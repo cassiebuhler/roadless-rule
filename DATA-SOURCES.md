@@ -71,6 +71,32 @@ USFS cautions that source scales vary across this layer and that boundaries cann
 align with features from other datasets — the National Forest Planning Record documents remain the
 official inventory. Treat adjacency and buffer-distance results as approximate.
 
+### Roadless land status · CIRES 2026
+
+| Field | Value |
+|---|---|
+| Layers | `Roadless land by protection status, 57.9M ac · CIRES 2026` |
+| Publisher | Kyle Manley, Cooperative Institute for Research in Environmental Sciences (CIRES), University of Colorado Boulder |
+| Coverage | National Forest System — 44 states + Puerto Rico, incl. Alaska |
+| Vintage | Version 1.0, published 2026-10-02 |
+| Features | 709 polygons · 231,739,395 acres (57,943,676 roadless) |
+| License | CC-BY-4.0 |
+| Source | [Zenodo record 23105982](https://zenodo.org/records/23105982) · doi:10.5281/zenodo.23105982 |
+| Collection | `roadless-land-status` |
+
+An independent research classification derived from Forest Service layers, not an agency product.
+`STRATUM` assigns each piece of land to one class, in order: `R1` roadless with an independent
+federal protection (5.9M ac), `R1s` Idaho and Colorado state-rule roadless land (13.1M), `R2`
+roadless where the pre-2001 forest plan barred roads (15.0M), `R3` the remaining roadless land,
+exposed to the rescission (24.0M), and `N` non-roadless (173.8M, hidden on the map).
+
+⚠️ **`R2` is based on historical forest plans**, which may differ from the current plan and can be
+changed, so it is a weaker protection than `R1` or `R1s`. `R3` measures exposure, not a
+prediction that roads will be built.
+
+⚠️ **`N` follows forest boundaries and includes inholdings** the Forest Service does not own (about
+38.8M ac). Use surface ownership for any "share of Forest Service land" figure.
+
 ### Roads
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
