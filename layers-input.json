@@ -1219,6 +1219,38 @@
             ]
         },
         {
+            "collection_id": "forest-to-grass-shrub",
+            "collection_url": "https://s3-west.nrp-nautilus.io/public-land-cover/forest-to-grass-shrub/stac-collection.json",
+            "group": {
+                "name": "Land cover & modification",
+                "collapsed": true
+            },
+            "assets": [
+                {
+                    "id": "forest-to-grass-shrub-change-year-cog",
+                    "display_name": "Forest to grass/shrub conversion · year began (western US)",
+                    "visible": false,
+                    "colormap": "viridis",
+                    "rescale": "2002,2012",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    },
+                    "legend_label": "First year of a 10+ year grass/shrub run on land that was forest in 2001 (LCMAP)"
+                },
+                {
+                    "id": "forest-to-grass-shrub-max-run-years-cog",
+                    "display_name": "Forest to grass/shrub conversion · years persisted (western US)",
+                    "visible": false,
+                    "colormap": "magma",
+                    "rescale": "10,20",
+                    "default_style": {
+                        "raster-opacity": 0.8
+                    },
+                    "legend_label": "Longest grass/shrub run after 2001, years (10-20)"
+                }
+            ]
+        },
+        {
             "collection_id": "global-human-modification",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-human-modification/stac-collection.json",
             "group": {
