@@ -78,7 +78,7 @@ Within a group, a layer that is a **subset** of another always follows it.
 | 5 | **Fire risk & fuels** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Risk to potential structures · WRC v2 (CONUS)` · `(Alaska)` · `Vegetation condition class · LANDFIRE 2024 (CONUS only)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
 | 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
 | 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
-| 8 | **Land cover & modification** | `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
+| 8 | **Land cover & modification** | `Land cover · NLCD 2001 (CONUS only)` · `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
 | 9 | **Ecological classification** | `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` |
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11

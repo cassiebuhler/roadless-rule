@@ -329,8 +329,8 @@ is a subset of.
   are one PAD-US collection filtered on `Des_Tp`, drawn for **all managers** — so no single layer
   equals its Table 12 component, and the layers can overlap each other. Never add their acreages, and
   never present a layer total as the deduction.
-- **Land cover & modification** — `Land cover · NLCD 2024` (CONUS only — no Alaska, which holds
-  14.8M roadless acres) and `Human modification · Theobald 2016`.
+- **Land cover & modification** — `Land cover · NLCD 2001` and `Land cover · NLCD 2024` (CONUS
+  only — no Alaska, which holds 14.8M roadless acres) and `Human modification · Theobald 2016`.
 - **Ecological classification** — the EPA Omernik ecoregion framework, which answers *what kind of
   country* the proposal would affect. An ecoregion is a region of broadly similar ecological
   character, not an ecosystem: it contains many, so report results as "by ecoregion", never "by
@@ -679,7 +679,9 @@ or column codes.** If a lookup fails, say so rather than improvising.
 - **NLCD is CONUS-only.** It has no Alaska, which holds 14,778,681 roadless acres — 25% of the
   all-IRA total and the single largest state. Any land-cover share computed from it silently drops
   Alaska; say so. It is a classified raster, so use `mode`, never `mean`, and exclude non-vegetated
-  and water classes from any "share of forest that is X" denominator. Nodata is `250`.
+  and water classes from any "share of forest that is X" denominator. Nodata is `250`. The 2001 and
+  2024 layers are the same Annual NLCD collection version (C1V2), so a 2001-to-2024 change is
+  valid: self-join the hex on the H3 cell across `year=2001` and `year=2024`.
 - **Human modification is a 0–1 index, not a rate or a count.** Average it (the res-8 hex asset
   holds coverage-weighted means), never sum it. It is circa **2016** and ~1 km resolution, so it is
   too coarse to speak to individual roadless areas and too old to reflect recent change.

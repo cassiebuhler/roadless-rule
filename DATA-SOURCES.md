@@ -566,6 +566,7 @@ layer.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
+| `Land cover · NLCD 2001 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2001 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
 | `Land cover · NLCD 2024 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
 | `Human modification · Theobald 2016` | Theobald et al. | Global | circa 2016, ~1 km | CC-BY-4.0 | `global-human-modification` |
 
