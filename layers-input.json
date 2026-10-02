@@ -70,7 +70,7 @@
                 {
                     "id": "roadless-areas-2001-pmtiles",
                     "alias": "ira-rule-affected",
-                    "display_name": "Rule-affected · 44.7M ac — PROPOSED for rescission",
+                    "display_name": "Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001",
                     "group": "Roadless areas",
                     "visible": true,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], false, true],
@@ -94,7 +94,7 @@
                 {
                     "id": "roadless-areas-2001-pmtiles",
                     "alias": "ira-idaho-colorado",
-                    "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded",
+                    "display_name": "Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001",
                     "group": "Roadless areas",
                     "visible": false,
                     "default_filter": ["match", ["get", "STATE"], ["ID", "CO"], true, false],

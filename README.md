@@ -71,7 +71,7 @@ Within a group, a layer that is a **subset** of another always follows it.
 
 | # | Group | Layers |
 |---:|---|---|
-| 1 | **Roadless areas** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` · `Roadless land by protection status, 57.9M ac · CIRES 2026` |
+| 1 | **Roadless areas** | `Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001` · `Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001` · `Roadless land by protection status, 57.9M ac · CIRES 2026` |
 | 2 | **Roads** | `NFS roads open to vehicles, 263,807 mi · USFS 2025` · `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` · `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` · `Highways & secondary roads, 268,817 segments · TIGER 2025` · `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` |
 | 3 | **Trails & recreation access** | `USFS trails, 134,983 mi · Federal Trails 2026` · `NPS & BLM trails, 25,916 mi · Federal Trails 2026` · `National Trails System routes, 12,488 mi · Federal Trails 2026` · `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` |
 | 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Incident suppression strategy 1999–2020 · ICS-209-PLUS` · `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Fire events by peak daily growth 2000–2021 · FIRED` · `Fast fires, >1,620 ha in a day · FIRED` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |

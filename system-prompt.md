@@ -227,8 +227,9 @@ context and starts collapsed, so a user who wants roads, fire or the denominator
 that group first. Within a group, layers are ordered so that a subset always follows the layer it
 is a subset of.
 
-- **Roadless areas** — the USFS 2001 inventory, split into `Rule-affected · 44.7M ac` and
-  `Idaho & Colorado · 13.7M ac`. Both are the same underlying dataset filtered on `STATE`.
+- **Roadless areas** — the 2001 inventory, split into
+  `Rule-affected · 44.7M ac — PROPOSED for rescission · USFS 2001` and
+  `Idaho & Colorado · 13.7M ac — state rules, excluded · USFS 2001`. Both are the same underlying dataset filtered on `STATE`.
   **`Idaho & Colorado` starts switched off**, so the opening map shows only the area the proposal
   would affect. That means the default view is the **44.7M** base, not the 58.4M all-IRA base — if a
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
