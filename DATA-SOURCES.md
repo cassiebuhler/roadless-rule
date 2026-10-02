@@ -75,7 +75,7 @@ official inventory. Treat adjacency and buffer-distance results as approximate.
 
 | Field | Value |
 |---|---|
-| Layers | `Roadless land by protection status, 57.9M ac · CIRES 2026` |
+| Layers | `Roadless land by protection status · CIRES 2026` |
 | Publisher | Kyle Manley, Cooperative Institute for Research in Environmental Sciences (CIRES), University of Colorado Boulder |
 | Coverage | National Forest System — 44 states + Puerto Rico, incl. Alaska |
 | Vintage | Version 1.0, published 2026-10-02 |

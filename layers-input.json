@@ -123,7 +123,7 @@
             "assets": [
                 {
                     "id": "roadless-land-status-pmtiles",
-                    "display_name": "Roadless land by protection status, 57.9M ac · CIRES 2026",
+                    "display_name": "Roadless land by protection status · CIRES 2026",
                     "group": "Roadless areas",
                     "visible": false,
                     "default_filter": [
