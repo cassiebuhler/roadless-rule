@@ -604,5 +604,6 @@ FACTS-CA rows overlap ours, so a union double-counts USFS treatments.
 - `kubectl` needs `/home/jovyan/bin` on `PATH` — the kubeconfig's exec credential plugin shells out
   to `kubectl` itself, so a bare invocation fails with "executable kubectl not found".
 - The nginx sidecar config carries two fixes that must not be "cleaned up":
-  `resolver 10.96.0.10 ipv6=off` with a variabled `proxy_pass` (IPv4-only, geo-agent-ops#64) and
+  `/api/llm/` proxies to the in-cluster `open-llm-proxy.biodiversity.svc.cluster.local:8002`
+  ClusterIP, not the public hostname (intermittent 502/504s, geo-agent-ops#73), and
   `worker_processes 2` (OOM on high-core nodes, geo-agent-ops#49).
