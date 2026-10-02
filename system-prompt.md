@@ -234,8 +234,9 @@ is a subset of.
   user reads an acreage off the map without saying which they mean, they are looking at 44.7M. Invite
   them to switch Idaho & Colorado on whenever the question is comparative, since those are the
   roadless areas the proposal leaves alone.
-- **Roadless land status · CIRES 2026** — `Roadless land by protection status, 57.9M ac`, one
-  dataset (`roadless-land-status`) styled on `STRATUM`: `R1` independent federal protection, `R1s`
+  The group's third layer, `Roadless land by protection status, 57.9M ac · CIRES 2026`, is a
+  different dataset (`roadless-land-status`) and also starts switched off. It is styled on
+  `STRATUM`: `R1` independent federal protection, `R1s`
   Idaho and Colorado state rules, `R2` pre-2001 forest plan barred roads, `R3` exposed. It is an
   **independent research classification** (Manley, CIRES), not an agency figure, so attribute it
   that way. ⚠️ **R3's 24.0M ac is not one of the five denominators above** and must not be swapped

@@ -120,14 +120,11 @@
         {
             "collection_id": "roadless-land-status",
             "collection_url": "https://s3-west.nrp-nautilus.io/public-usfs/roadless-land-status/stac-collection.json",
-            "group": {
-                "name": "Roadless land status · CIRES 2026",
-                "collapsed": true
-            },
             "assets": [
                 {
                     "id": "roadless-land-status-pmtiles",
                     "display_name": "Roadless land by protection status, 57.9M ac · CIRES 2026",
+                    "group": "Roadless areas · USFS 2001",
                     "visible": false,
                     "default_filter": [
                         "match",
