@@ -19,7 +19,7 @@ static About page, and deployment manifests.
 ## Files
 
 ```
-index.html          ← HTML shell — loads GLEN core (pinned @v3.27.0) + libs from CDN
+index.html          ← HTML shell — loads GLEN core (pinned @v3.30.2) + libs from CDN
 docs.html           ← "About" page served at /docs.html — sources, denominators, claims
 layers-input.json   ← datasets, grouping, map view, LLM settings
 system-prompt.md    ← rescission-analyst persona, denominators, guardrails
