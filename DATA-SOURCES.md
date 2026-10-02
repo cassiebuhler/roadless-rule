@@ -105,7 +105,7 @@ prediction that roads will be built.
 | `NFS roads closed & stored (ML1) · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
 | `All motor-vehicle roads · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
 | `Highways & secondary roads · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
-| `Walkways & paths — NOT roads under 36 CFR 294.11 · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+| `Walkways & paths · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
 
 The first two layers are one dataset (`roadcore-fs`, 367,666 segments, 368,103 official miles)
 filtered on `OPER_MAINT_LEVEL`. The split is not cosmetic — it is the point of the layer.
@@ -189,9 +189,9 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `USFS trails · Federal Trails 2026` | USDA Forest Service (NFST) | National | 2026 | Public domain | `federal-trails-2026` |
-| `NPS & BLM trails · Federal Trails 2026` | NPS + BLM (GTLF) | National | 2026 | Public domain | `federal-trails-2026` |
-| `National Trails System routes · Federal Trails 2026` | USFS + NPS + BLM | National | 2026 | Public domain | `federal-trails-2026` |
+| `USFS trails · USFS NFST 2026` | USDA Forest Service (NFST) | National | 2026 | Public domain | `federal-trails-2026` |
+| `NPS & BLM trails · NPS + BLM GTLF 2026` | NPS + BLM (GTLF) | National | 2026 | Public domain | `federal-trails-2026` |
+| `National Trails System routes · USFS + NPS + BLM 2026` | USFS + NPS + BLM | National | 2026 | Public domain | `federal-trails-2026` |
 | `Rivers with outstanding values · NPS NRI 2024` | National Park Service | 50 states + PR + territories | 2024 | Public domain | `american-rivers-nri-2024` |
 
 **Why recreation data is in a rule-audit app.** The 2001 rule prohibits road construction and

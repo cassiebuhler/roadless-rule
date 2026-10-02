@@ -298,7 +298,7 @@
                 {
                     "id": "roads-pmtiles",
                     "alias": "tiger-paths-nonmotor",
-                    "display_name": "Walkways & paths — NOT roads under 36 CFR 294.11 · TIGER 2025",
+                    "display_name": "Walkways & paths · TIGER 2025",
                     "visible": false,
                     "layer_type": "line",
                     "default_filter": ["match", ["get", "MTFCC"], ["S1710", "S1720", "S1820", "S1830"], true, false],
@@ -330,7 +330,7 @@
                 {
                     "id": "federal-trails-2026-pmtiles",
                     "alias": "trails-usfs",
-                    "display_name": "USFS trails · Federal Trails 2026",
+                    "display_name": "USFS trails · USFS NFST 2026",
                     "visible": false,
                     "layer_type": "line",
                     "default_filter": ["match", ["get", "admin_agency"], ["USFS"], true, false],
@@ -351,7 +351,7 @@
                 {
                     "id": "federal-trails-2026-pmtiles",
                     "alias": "trails-nps-blm",
-                    "display_name": "NPS & BLM trails · Federal Trails 2026",
+                    "display_name": "NPS & BLM trails · NPS + BLM GTLF 2026",
                     "visible": false,
                     "layer_type": "line",
                     "default_filter": ["match", ["get", "admin_agency"], ["NPS", "BLM"], true, false],
@@ -372,7 +372,7 @@
                 {
                     "id": "federal-trails-2026-pmtiles",
                     "alias": "trails-nts-designated",
-                    "display_name": "National Trails System routes · Federal Trails 2026",
+                    "display_name": "National Trails System routes · USFS + NPS + BLM 2026",
                     "visible": false,
                     "layer_type": "line",
                     "default_filter": ["match", ["get", "nts_designation"], ["NRT", "PCT", "NST", "CDT", "AT", "NCT", "INHT", "ANZA", "PENHT", "FNST", "ANT", "IANST", "OSNHT", "PNT", "NTNST", "PHT"], true, false],

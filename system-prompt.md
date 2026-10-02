@@ -255,7 +255,7 @@ is a subset of.
   distinction changes the answer to claim 3.
   `All motor-vehicle roads · TIGER 2025`,
   `Highways & secondary roads · TIGER 2025` and
-  `Walkways & paths — NOT roads under 36 CFR 294.11 · TIGER 2025`
+  `Walkways & paths · TIGER 2025`
   are one dataset (`census-2025/roads`) filtered on `MTFCC`. The highways layer is a **subset** of
   the motor-vehicle layer, not an addition to it. All five start switched off. Counted in
   **segments**, not miles — TIGER has no length column, and a TIGER segment is not the same unit as a
@@ -264,9 +264,9 @@ is a subset of.
   ⚠️ The walkways layer sits in this group because it is the excluded complement of the TIGER
   `MTFCC` road filter — it shows what the road layers leave out. It is **not** a road, and never
   enters a road figure.
-- **Trails & recreation access** — `USFS trails · Federal Trails 2026`,
-  `NPS & BLM trails · Federal Trails 2026`,
-  `National Trails System routes · Federal Trails 2026` and
+- **Trails & recreation access** — `USFS trails · USFS NFST 2026`,
+  `NPS & BLM trails · NPS + BLM GTLF 2026`,
+  `National Trails System routes · USFS + NPS + BLM 2026` and
   `Rivers with outstanding values · NPS NRI 2024`. The first three are one dataset
   (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
   **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
