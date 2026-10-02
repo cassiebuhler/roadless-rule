@@ -427,26 +427,29 @@ group name is what invites trail mileage into a road figure. Likewise keep *Fire
 *Fire risk & fuels* — one is a measured record, the other a model projection, and the proposal's
 rationale turns on not conflating them.
 
-⚠️ Within a group, a layer that is a **subset** of another must follow it (large-fire ignitions after
-all ignitions; TIGER highways after all motor-vehicle roads; NTS routes after the agency trail
-layers). The subset relationships are stated in the layer labels; the ordering is what makes them
-readable at a glance.
+⚠️ **Prefer one layer coloured by a category over several filtered toggles.** A subset of a
+dataset (large-fire ignitions, TIGER highways, closed ML1 roads, a suppression strategy, a PAD-US
+designation) is a legend class within one layer, not its own toggle: the panel was cut from 45
+toggles to 30 this way. Labels are `title · source year`, with no counts or acreages; put counts and
+coverage caveats (CONUS only, western US) in the legend. The remaining duplicates are the three
+CONUS/Alaska raster pairs, which wait on one-toggle-for-two-layers support in geo-agent
+([boettiger-lab/geo-agent#349](https://github.com/boettiger-lab/geo-agent/issues/349)).
 
 ⚠️ Four surfaces carry the group names and must be updated together, or they drift:
 `layers-input.json`, `system-prompt.md` (the *What this app has* inventory), `docs.html` (the
 *Datasets in this app* `<h3>`s) and `README.md` (*Layer organization*), with `DATA-SOURCES.md`
 mirroring the same section order. They had already drifted into four different orderings once.
 
-## The two roadless layers are one STAC asset
+## The roadless layer is coloured, not split
 
-`roadless-areas-2001-pmtiles` appears **twice** in `layers-input.json`, distinguished by `alias`
-(`ira-rule-affected`, `ira-idaho-colorado`) and complementary `default_filter`s on `STATE`. This is
-the documented mechanism for two logical layers off one asset — the framework shares a single
-MapLibre source between aliases. If you add a third view of the same data, add another alias; do not
-duplicate the collection entry.
+`roadless-areas-2001-pmtiles` is one layer coloured by `STATE`: rule-affected in green, Idaho and
+Colorado in grey (`["match", ["get","STATE"], ["ID","CO"], <grey>, <green>]`). It used to be two
+`alias`ed layers with complementary filters; one layer keeps the comparison group visible at open.
+If a view of the same data genuinely needs its own toggle, `alias` is still the mechanism (the
+framework shares a single MapLibre source between aliases); do not duplicate the collection entry.
 
-Filters use the modern `match` form (`["match", ["get","STATE"], ["ID","CO"], false, true]`). `STATE`
-is a clean two-letter code and **is** present in the tiles — verified, not assumed.
+Expressions use the modern `match` form. `STATE` is a clean two-letter code and **is** present in
+the tiles — verified, not assumed.
 
 ## ⚠️ Raster legends cannot be overridden in config
 

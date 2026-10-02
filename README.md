@@ -61,25 +61,27 @@ The 58.4M ↔ 44.7M split has no attribute in the data; it is `STATE NOT IN ('ID
 ## Layer organization
 
 Layers are grouped by **what the data describes**, not by which agency publishes it. Every label
-follows one form — **`what it is · PUBLISHER vintage`** — and legal status is its own field, so
-"PROPOSED for rescission" reads as a status rather than an accomplished fact.
+follows one form — **`what it is · PUBLISHER vintage`** — with no counts or acreages. Legal status
+lives in the legend ("Rule-affected, proposed for rescission"), so it reads as a status rather than
+an accomplished fact.
 
 Groups run in order of how directly they bear on the proposal: the subject, then what the rule
 regulates, then what "roadless" does *not* mean, then the agency's stated rationale, then the
 denominators, then background, and last the ecological framework the rest can be stratified by.
-Within a group, a layer that is a **subset** of another always follows it.
+Most layers are one dataset coloured by a category, so a subset (closed roads, large fires, a
+suppression strategy) is a legend class within its layer rather than a separate toggle.
 
 | # | Group | Layers |
 |---:|---|---|
-| 1 | **Roadless areas** | `Rule-affected · 44.7M ac — PROPOSED for rescission` · `Idaho & Colorado · 13.7M ac — state rules, excluded` · `Roadless land by protection status, 57.9M ac · CIRES 2026` |
-| 2 | **Roads** | `NFS roads open to vehicles, 263,807 mi · USFS 2025` · `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` · `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` · `Highways & secondary roads, 268,817 segments · TIGER 2025` · `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` |
-| 3 | **Trails & recreation access** | `USFS trails, 134,983 mi · Federal Trails 2026` · `NPS & BLM trails, 25,916 mi · Federal Trails 2026` · `National Trails System routes, 12,488 mi · Federal Trails 2026` · `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` |
-| 4 | **Fire history** | `Ignitions by cause 1992–2024 · FPA-FOD` · `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` · `Incident suppression strategy 1999–2020 · ICS-209-PLUS` · `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` · `Wildfire perimeters 1984–2024 · MTBS` · `Prescribed fire perimeters 1984–2024 · MTBS` · `Fire events by peak daily growth 2000–2021 · FIRED` · `Fast fires, >1,620 ha in a day · FIRED` · `Burn severity by year · MTBS (CONUS)` · `(Alaska)` · `Fire perimeters 1835–2020 · USGS 2021` |
-| 5 | **Fire risk & fuels** | `Wildfire hazard index · WHP 2023 (CONUS)` · `(Alaska)` · `Risk to potential structures · WRC v2 (CONUS)` · `(Alaska)` · `Vegetation condition class · LANDFIRE 2024 (CONUS only)` · `Completed treatments, FY2014+ · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
-| 6 | **National Forest System extent** | `Forest Service ownership, 193.2M ac · USFS 2025` · `Proclaimed boundary, 225.1M ac · USFS 2025` · `Administrative boundary, 236.8M ac · USFS 2025` · `Ranger districts, 237.1M ac · USFS 2025` |
-| 7 | **Existing protections** | `Designated wilderness · PAD-US 4.1` · `Wilderness study areas · PAD-US 4.1` · `Wild & Scenic Rivers, wild segments · PAD-US 4.1` |
-| 8 | **Land cover & modification** | `Land cover · NLCD 2001 (CONUS only)` · `Land cover · NLCD 2024 (CONUS only)` · `Human modification · Theobald 2016` |
-| 9 | **Ecological classification** | `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` · `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` |
+| 1 | **Roadless areas** | `Roadless areas · USFS 2001` · `Roadless protection status · CIRES 2026` |
+| 2 | **Roads** | `Forest Service roads · USFS 2025` · `Roads & paths · TIGER 2025` |
+| 3 | **Trails & recreation access** | `Federal trails · USFS, NPS, BLM 2026` · `Outstanding rivers · NPS 2024` |
+| 4 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity, CONUS · MTBS 1984–2024` · `Burn severity, Alaska · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |
+| 5 | **Fire risk & fuels** | `Wildfire hazard, CONUS · WHP 2023` · `Wildfire hazard, Alaska · WHP 2023` · `Risk to structures, CONUS · WRC 2024` · `Risk to structures, Alaska · WRC 2024` · `Vegetation condition · LANDFIRE 2024` · `Completed treatments · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
+| 6 | **National Forest System extent** | `Forest Service ownership · USFS 2025` · `Proclaimed boundaries · USFS 2025` · `Administrative boundaries · USFS 2025` · `Ranger districts · USFS 2025` |
+| 7 | **Existing protections** | `Protected designations · PAD-US 4.1` |
+| 8 | **Land cover & modification** | `Land cover · NLCD` · `Forest to grass/shrub, year began · Ilangakoon 2026` · `Forest to grass/shrub, years persisted · Ilangakoon 2026` · `Human modification · Theobald 2016` |
+| 9 | **Ecological classification** | `Ecoregions · EPA Omernik` |
 
 **Roads** and **trails** are deliberately separate groups, not one "access" group: 36 CFR 294.11
 defines a road as a motor vehicle travelway over 50 inches wide, so no trail mileage may enter a

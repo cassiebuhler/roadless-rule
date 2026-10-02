@@ -14,13 +14,15 @@ The sidebar is organized by **what the data describes**, not by which agency pub
 
 ## How to read a layer label
 
-Every layer label follows one form: **`what it is · PUBLISHER vintage`** — for example
-`Fire perimeters 1835–2020 · USGS 2021`. The trailing token is either a **year** or, where the source
-publishes numbered releases, a **version** (`PAD-US 4.1` is the only one here).
+Every layer label follows one form: **`what it is · PUBLISHER vintage`**, with no counts or
+acreages — for example `Historical fire perimeters · USGS 1835–2020`. The trailing token is a **year**,
+a **year range** for multi-year records, or, where the source publishes numbered releases, a
+**version** (`PAD-US 4.1` is the only one here). Where coverage is partial (CONUS only, western US),
+the legend says so.
 
 Every dataset in this app is a **fixed vintage** — a published release or a frozen snapshot, not a
-live service. Where a layer's label carries a filter (`FY2014+`, `CONUS only`), that filter is applied
-in the map only; the underlying parquet is complete and the assistant can query all of it.
+live service. Where a layer is drawn with a filter (FACTS from FY2014, Forest Service-owned land only), that filter is
+applied in the map only; the underlying parquet is complete and the assistant can query all of it.
 
 ## Publishers
 
@@ -46,7 +48,7 @@ in the map only; the underlying parquet is complete and the assistant can query 
 
 | Field | Value |
 |---|---|
-| Layers | `Rule-affected · 44.7M ac — PROPOSED for rescission`, `Idaho & Colorado · 13.7M ac — state rules, excluded` |
+| Layers | `Roadless areas · USFS 2001` |
 | Publisher | USDA Forest Service, Geospatial Service and Technology Center |
 | Coverage | National — 38 states + Puerto Rico, incl. Alaska |
 | Vintage | 2001 (the inventory designated by the 2001 rule) |
@@ -55,8 +57,8 @@ in the map only; the underlying parquet is complete and the assistant can query 
 | Source | [`S_USA.RoadlessArea_2001.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.RoadlessArea_2001.zip) |
 | Collection | `roadless-areas-2001` |
 
-Both map layers are the **same dataset**, split on `STATE`: the rule-affected layer is
-`STATE NOT IN ('ID','CO')`, the other its complement. There is no attribute recording which rule
+The layer is coloured by `STATE`: green for the rule-affected areas (`STATE NOT IN ('ID','CO')`,
+44.7M ac, proposed for rescission) and grey for Idaho and Colorado (13.7M ac, state rules, excluded). There is no attribute recording which rule
 governs an area.
 
 ⚠️ **`CATEGORY` (`1B` / `1B-1` / `1C`) records forest-plan direction from *before* the rule took
@@ -71,11 +73,11 @@ USFS cautions that source scales vary across this layer and that boundaries cann
 align with features from other datasets — the National Forest Planning Record documents remain the
 official inventory. Treat adjacency and buffer-distance results as approximate.
 
-### Roadless land by protection status · CIRES 2026 (in the Roadless areas group)
+### Roadless protection status · CIRES 2026 (in the Roadless areas group)
 
 | Field | Value |
 |---|---|
-| Layers | `Roadless land by protection status, 57.9M ac · CIRES 2026` |
+| Layers | `Roadless protection status · CIRES 2026` |
 | Publisher | Kyle Manley, Cooperative Institute for Research in Environmental Sciences (CIRES), University of Colorado Boulder |
 | Coverage | National Forest System — 44 states + Puerto Rico, incl. Alaska |
 | Vintage | Version 1.0, published 2026-10-02 |
@@ -101,14 +103,12 @@ prediction that roads will be built.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `NFS roads open to vehicles, 263,807 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
-| `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
-| `All motor-vehicle roads, 16,470,232 segments · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
-| `Highways & secondary roads, 268,817 segments · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
-| `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
+| `Forest Service roads · USFS 2025` | USDA Forest Service (NRM) | National incl. AK, PR | 2025-05-11 snapshot | Public domain | `roadcore-fs` |
+| `Roads & paths · TIGER 2025` | US Census Bureau | National incl. AK, HI, PR | 2025-09-22 | Public domain | `census-2025/roads` |
 
-The first two layers are one dataset (`roadcore-fs`, 367,666 segments, 368,103 official miles)
-filtered on `OPER_MAINT_LEVEL`. The split is not cosmetic — it is the point of the layer.
+`Forest Service roads` (`roadcore-fs`, 367,666 segments, 368,103 official miles) is coloured by
+`OPER_MAINT_LEVEL`: open to motor vehicles (ML 2–5) versus closed and in storage (ML1). The split is
+not cosmetic — it is the point of the layer.
 
 | `OPER_MAINT_LEVEL` | Segments | Official miles | Share |
 |---|---:|---:|---:|
@@ -126,28 +126,28 @@ layer rather than folded into one road line. These three totals reproduce the Fo
 published figures: ~368,000 mi system, ~65,000 mi (18%) passenger-car, ~200,000 mi (54%)
 high-clearance.
 
-The last three are one dataset (`census-2025/roads`, 16,490,899 features across 3,233 counties and
-county equivalents) filtered on `MTFCC`. TIGER carries no length column, so these layers are counted
+`Roads & paths` (`census-2025/roads`, 16,490,899 features across 3,233 counties and county
+equivalents) is coloured by `MTFCC`. TIGER carries no length column, so this layer is counted
 in segments, not miles — a TIGER segment and a RoadCore segment are not the same unit and the two
 counts are not comparable.
 
-| `MTFCC` | Meaning | Features | In which layer |
+| `MTFCC` | Meaning | Features | Legend class |
 |---|---|---:|---|
-| `S1400` | Local neighborhood road, rural road, city street | 14,009,547 | motor-vehicle |
-| `S1740` | Private road for service vehicles (logging, oil field, ranch) | 1,240,392 | motor-vehicle ⚠️ contestable |
-| `S1500` | Vehicular trail (4WD) | 307,839 | motor-vehicle |
-| `S1200` | Secondary road | 251,196 | motor-vehicle **and** highways |
-| `S1630` | Ramp | 199,684 | motor-vehicle |
-| `S1750` | Internal US Census Bureau use | 196,158 | motor-vehicle ⚠️ contestable |
-| `S1640` | Service drive along a limited-access highway | 137,698 | motor-vehicle |
-| `S1730` | Alley | 70,210 | motor-vehicle |
-| `S1780` | Parking lot road | 39,481 | motor-vehicle |
-| `S1100` | Primary road | 17,621 | motor-vehicle **and** highways |
-| `S1710` | Walkway / pedestrian trail | 16,087 | **excluded** — paths layer |
-| `S1820` | Bike path or trail | 4,323 | **excluded** — paths layer |
-| `S1810` | Winter trail | 406 | motor-vehicle ⚠️ marginal |
-| `S1720` | Stairway | 234 | **excluded** — paths layer |
-| `S1830` | Bridle path | 23 | **excluded** — paths layer |
+| `S1400` | Local neighborhood road, rural road, city street | 14,009,547 | other motor-vehicle road |
+| `S1740` | Private road for service vehicles (logging, oil field, ranch) | 1,240,392 | other motor-vehicle road ⚠️ contestable |
+| `S1500` | Vehicular trail (4WD) | 307,839 | other motor-vehicle road |
+| `S1200` | Secondary road | 251,196 | highway or secondary (also a motor-vehicle road) |
+| `S1630` | Ramp | 199,684 | other motor-vehicle road |
+| `S1750` | Internal US Census Bureau use | 196,158 | other motor-vehicle road ⚠️ contestable |
+| `S1640` | Service drive along a limited-access highway | 137,698 | other motor-vehicle road |
+| `S1730` | Alley | 70,210 | other motor-vehicle road |
+| `S1780` | Parking lot road | 39,481 | other motor-vehicle road |
+| `S1100` | Primary road | 17,621 | highway or secondary (also a motor-vehicle road) |
+| `S1710` | Walkway / pedestrian trail | 16,087 | path, **excluded** from road figures |
+| `S1820` | Bike path or trail | 4,323 | path, **excluded** from road figures |
+| `S1810` | Winter trail | 406 | other motor-vehicle road ⚠️ marginal |
+| `S1720` | Stairway | 234 | path, **excluded** from road figures |
+| `S1830` | Bridle path | 23 | path, **excluded** from road figures |
 
 ⚠️ **RoadCore is Forest Service roads only.** `SYSTEM` is `NFSR` and `JURISDICTION` is `FS` on every
 record — state, county and private roads are absent by construction. The DEIS buffered "National
@@ -189,18 +189,16 @@ fn. 20). Every road-proximity figure computed here is a floor, not a match.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `USFS trails, 134,983 mi · Federal Trails 2026` | USDA Forest Service (NFST) | National | 2026 | Public domain | `federal-trails-2026` |
-| `NPS & BLM trails, 25,916 mi · Federal Trails 2026` | NPS + BLM (GTLF) | National | 2026 | Public domain | `federal-trails-2026` |
-| `National Trails System routes, 12,488 mi · Federal Trails 2026` | USFS + NPS + BLM | National | 2026 | Public domain | `federal-trails-2026` |
-| `Rivers with outstanding values, 90,476 mi · NPS NRI 2024` | National Park Service | 50 states + PR + territories | 2024 | Public domain | `american-rivers-nri-2024` |
+| `Federal trails · USFS, NPS, BLM 2026` | USDA Forest Service (NFST) + NPS (Public Trails) + BLM (GTLF), composited by the Boettiger Lab | National | Pulled 2026-05-24 | Public domain | `federal-trails-2026` |
+| `Outstanding rivers · NPS 2024` | National Park Service | 50 states + PR + territories | 2024 | Public domain | `american-rivers-nri-2024` |
 
 **Why recreation data is in a rule-audit app.** The 2001 rule prohibits road construction and
 reconstruction. It does not close land to the public. A map carrying only roads invites the
 inference that a roadless area is unreachable; ~135,000 miles of Forest Service trail says
 otherwise. These layers make that testable rather than rhetorical.
 
-The first three layers are one dataset (`federal-trails-2026`, 127,619 segments) filtered on
-`admin_agency` and `nts_designation`. `length_miles` is recomputed in EPSG:5070, not carried from
+The trails layer is one dataset (`federal-trails-2026`, 127,619 segments) coloured by
+`admin_agency`. `length_miles` is recomputed in EPSG:5070, not carried from
 the source.
 
 | `admin_agency` | Segments | Miles |
@@ -209,9 +207,9 @@ the source.
 | `NPS` | 31,281 | 17,046 |
 | `BLM` | 19,104 | 8,870 |
 
-⛔ **The National Trails System layer is a subset, not a third category.** Its 4,382 segments are
-already inside the USFS and NPS/BLM layers; adding the three mileages triple-counts the designated
-routes. The 16 designation codes are `NRT` (1,853 segments), `PCT` (792), `NST` (700), `CDT` (404),
+⛔ **National Trails System routes are a subset, not a fourth agency.** Their 4,382 segments
+(flagged by `nts_designation`) are already counted in the agency mileages above; adding NTS mileage
+to them double-counts the designated routes. The 16 designation codes are `NRT` (1,853 segments), `PCT` (792), `NST` (700), `CDT` (404),
 `AT` (225), `NCT` (203), `INHT` (64), `ANZA` (45), `PENHT` (36), `FNST` (30), `ANT` (12), `IANST`
 (8), `OSNHT` (5), `PNT` (2), `NTNST` (2) and `PHT` (1).
 
@@ -250,17 +248,13 @@ What has already burned, where fires start, and how incidents were fought.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Ignitions by cause 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National incl. AK, HI, PR, VI, Guam | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
-| `Large-fire ignitions ≥1,000 ac 1992–2024 · FPA-FOD` | USDA Forest Service (Short, 7th ed.) | National | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
-| `Incident suppression strategy 1999–2020 · ICS-209-PLUS` | St. Denis et al. / Earth Lab, CU Boulder (mined from USFS SIT-209) | National | 1999–2020 | CC-BY-4.0 | `ics-209-plus-1999-2020-wf-incidents` |
-| `Confine / monitor / point-protection incidents 2007–2020 · ICS-209-PLUS` | St. Denis et al. / Earth Lab, CU Boulder | National | 2007–2020 (strategy field starts 2007) | CC-BY-4.0 | `ics-209-plus-1999-2020-wf-incidents` |
-| `Wildfire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
-| `Prescribed fire perimeters 1984–2024 · MTBS` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
-| `Burn severity by year · MTBS (CONUS)` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
-| `Burn severity by year · MTBS (Alaska)` | MTBS (USGS / USFS) | **Alaska only** | 36 annual years, 1984–2023 | Public domain | `mtbs-severity-1984-2024-ak` |
-| `Fire perimeters 1835–2020 · USGS 2021` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
-| `Fire events by peak daily growth 2000–2021 · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
-| `Fast fires, >1,620 ha in a day · FIRED` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
+| `Ignitions · FPA-FOD 1992–2024` | USDA Forest Service (Short, 7th ed.) | National incl. AK, HI, PR, VI, Guam | 1992–2024 | Public domain | `fpa-fod-1992-2024` |
+| `Suppression strategy · ICS-209-PLUS 1999–2020` | St. Denis et al. / Earth Lab, CU Boulder (mined from USFS SIT-209) | National | 1999–2020 (strategy field starts 2007) | CC-BY-4.0 | `ics-209-plus-1999-2020-wf-incidents` |
+| `Fire perimeters · MTBS 1984–2024` | MTBS (USGS / USFS) | National incl. Alaska | 1984–2024 | Public domain | `mtbs-perimeters-1984-2024` |
+| `Burn severity, CONUS · MTBS 1984–2024` | MTBS (USGS / USFS) | **CONUS only** | 39 annual years, 1984–2024 | Public domain | `mtbs-severity-1984-2024-conus` |
+| `Burn severity, Alaska · MTBS 1984–2024` | MTBS (USGS / USFS) | **Alaska only** | 36 annual years, 1984–2023 | Public domain | `mtbs-severity-1984-2024-ak` |
+| `Historical fire perimeters · USGS 1835–2020` | U.S. Geological Survey | National | 2021 release | Public domain | `usgs-fires-2021-combined` |
+| `Fire growth · FIRED 2000–2021` | Earth Lab, CU Boulder | CONUS + Alaska | 2000–2021 | CC-BY-4.0 | `fired-events-2001-2021` |
 
 **ICS-209-PLUS is a response record, not an ignition census.** 34,622 incidents that generated an
 ICS-209 situation report, against FPA-FOD's 2,661,383 ignitions — the two count different things and
@@ -268,7 +262,7 @@ must never be compared as totals. Coverage **stops at 2020** while FPA-FOD runs 
 35,208 distinct pre-2021 FPA-FOD join ids only 33,247 (94.4%) match a row here, so every join on
 `INCIDENT_ID` = `ICS_209_PLUS_INCIDENT_JOIN_ID` must be a LEFT join.
 
-Both map layers filter to `INCTYP_ABBREVIATION` in `WF`,`WFU` — excluding 144 prescribed-fire records
+The map layer filters to `INCTYP_ABBREVIATION` in `WF`,`WFU` — excluding 144 prescribed-fire records
 and 65 complex umbrella records whose member fires also appear individually — and drop the **443
 incidents with defective upstream coordinates** (439 records from 1999–2002 carry
 `POO_LONGITUDE = -POO_LATITUDE`, placing them in the Atlantic; 4 more from 2015 are otherwise off-US).
@@ -281,11 +275,11 @@ folded into either group.
 The two MTBS severity layers carry a **year selector** rather than one panel entry per
 year.
 
-⚠️ **MTBS perimeters mix fire types, and the two map layers do not sum to the dataset.**
+⚠️ **MTBS perimeters mix fire types, and the map does not draw all of them.**
 `Incid_Type` holds `Wildfire` (16,960), `Prescribed Fire` (8,870), `Unknown` (4,689) and
 `Wildland Fire Use` (211) — the last documented nowhere in the source FGDC metadata, which describes
-the field as `WF`/`Rx`/`UNK`. The wildfire layer covers `Wildfire` + `Wildland Fire Use`; the
-prescribed-fire layer covers `Prescribed Fire`; **the 4,689 `Unknown` records appear in neither.**
+the field as `WF`/`Rx`/`UNK`. The perimeters layer colours `Wildfire` + `Wildland Fire Use` as
+wildfire and `Prescribed Fire` as prescribed; **the 4,689 `Unknown` records are not drawn.**
 
 ⚠️ **MTBS severity has two hex assets and they are not interchangeable.** `…-hex` gives the dominant
 class per cell (winner-take-all); `…-hex-fractions` gives each class's fractional coverage via a
@@ -316,8 +310,8 @@ DOI [10.3390/rs12213498](https://doi.org/10.3390/rs12213498).
 different columns and give different answers.** Balch et al. 2024
 ([10.1126/science.adk5737](https://doi.org/10.1126/science.adk5737)) define a fast fire as one that
 grew **more than 1,620 ha (16.2 km²) in a single day** — `mx_grw_km2 > 16.2`. That is the threshold
-both map layers use: the all-events layer colours by `mx_grw_km2` with a break at 1,620 ha, and the
-fast-fire layer is a **subset** filtered to it, not an addition. On this release the threshold
+the map uses: the layer colours by `mx_grw_km2` with a break at 1,620 ha, and its top two classes are
+the fast fires. On this release the threshold
 selects **1,968 of 278,569 events (0.71%)**. `fsr_km2_dy` is `tot_ar_km2 / event_dur` — an average
 over the whole event — and filtering it at the same number selects a different, much smaller set
 (314 events). The distinction matters because it is peak growth, not average spread, that Balch et
@@ -347,8 +341,8 @@ computed independently and do not pair 1:1 (105 codes, 105 names, 294 observed c
 filter on one, not both.
 
 FPA-FOD source DOI [10.2737/RDS-2013-0009.7](https://doi.org/10.2737/RDS-2013-0009.7) —
-2,661,383 ignition points. Both layers colour by `NWCG_CAUSE_CLASSIFICATION`; the large-fire layer is
-filtered to `FIRE_SIZE_CLASS IN ('F','G')`.
+2,661,383 ignition points. The layer colours by `NWCG_CAUSE_CLASSIFICATION` and draws `FIRE_SIZE_CLASS IN ('F','G')`
+(≥1,000 ac) as larger dots.
 
 ⛔ **FPA-FOD owns ignition counts; MTBS does not.** MTBS maps burned area above a size threshold and
 undercounts ignitions badly, since most fires never reach it. The two join per fire on `MTBS_ID`.
@@ -377,11 +371,11 @@ Forward-looking hazard, stand condition, and the treatment response.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Wildfire hazard index · WHP 2023 (CONUS)` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
-| `Wildfire hazard index · WHP 2023 (Alaska)` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
-| `Risk to potential structures · WRC v2 (CONUS)` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **CONUS only** | v2, 30 m | Public domain | `wrc-2-rps-conus` |
-| `Risk to potential structures · WRC v2 (Alaska)` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **Alaska only** | v2, 30 m | Public domain | `wrc-2-rps-ak` |
-| `Completed treatments, FY2014+ · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
+| `Wildfire hazard, CONUS · WHP 2023` | USDA Forest Service (Dillon 2023, 4th ed.) | **CONUS only** | v2023, 270 m | Public domain | `whp-2023-continuous-conus` |
+| `Wildfire hazard, Alaska · WHP 2023` | USDA Forest Service (Dillon 2023, 4th ed.) | **Alaska only** | v2023, 270 m | Public domain | `whp-2023-continuous-ak` |
+| `Risk to structures, CONUS · WRC 2024` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **CONUS only** | v2, 30 m | Public domain | `wrc-2-rps-conus` |
+| `Risk to structures, Alaska · WRC 2024` | USDA Forest Service (Scott et al. 2024, 2nd ed.) | **Alaska only** | v2, 30 m | Public domain | `wrc-2-rps-ak` |
+| `Completed treatments · USFS FACTS 2026` | USDA Forest Service | National (NFS lands) | 2026-06 snapshot | Public domain | `facts-common-attributes-2026-06` |
 | `Wildland-urban interface · SILVIS 2020` | SILVIS Lab, UW–Madison | National (census blocks) | 2020 (v4, decades 1990–2020) | CC-BY-4.0 | `silvis-wui-2020` |
 
 WHP source DOI [10.2737/RDS-2015-0047-4](https://doi.org/10.2737/RDS-2015-0047-4).
@@ -446,7 +440,7 @@ filtered to `> 0`.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Vegetation condition class · LANDFIRE 2024 (CONUS only)` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
+| `Vegetation condition · LANDFIRE 2024` | LANDFIRE (USGS EROS / USFS) | **CONUS only** | LF 2024 (2.5.0), 30 m | Public domain | `landfire-2024-vcc` |
 
 Vegetation Condition Class measures how far current vegetation has departed from its estimated
 historical reference condition, on a six-step ordinal scale from Class I.A (0–16% departure) to
@@ -489,10 +483,10 @@ ignores any `legend_classes` override. Tracked upstream at
 
 | Layer | Features | `SUM(GIS_ACRES)` | Collection |
 |---|---:|---:|---|
-| `Forest Service ownership, 193.2M ac · USFS 2025` | 97,493 parcels | 193,174,461 | `nfs-surface-ownership` |
-| `Proclaimed boundary, 225.1M ac · USFS 2025` | 154 units | 225,145,181 | `proclaimed-forest` |
-| `Administrative boundary, 236.8M ac · USFS 2025` | 112 units | 236,835,251 | `administrative-forest` |
-| `Ranger districts, 237.1M ac · USFS 2025` | 503 districts | 237,098,674 | `ranger-district` |
+| `Forest Service ownership · USFS 2025` | 97,493 parcels | 193,174,461 | `nfs-surface-ownership` |
+| `Proclaimed boundaries · USFS 2025` | 154 units | 225,145,181 | `proclaimed-forest` |
+| `Administrative boundaries · USFS 2025` | 112 units | 236,835,251 | `administrative-forest` |
+| `Ranger districts · USFS 2025` | 503 districts | 237,098,674 | `ranger-district` |
 
 Publisher: USDA Forest Service, Enterprise Data Warehouse. Coverage: national. Vintage: 2025-06-22
 snapshot. License: public domain. Sources — [`S_USA.SurfaceOwnership.zip`](https://data.fs.usda.gov/geodata/edw/edw_resources/shp/S_USA.SurfaceOwnership.zip),
@@ -533,26 +527,25 @@ touches, which overstates Montana by roughly 9M acres.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Designated wilderness · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 (released Mar 2025) | Public domain | `pad-us-4.1-combined` |
-| `Wilderness study areas · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
-| `Wild & Scenic Rivers, wild segments · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 | Public domain | `pad-us-4.1-combined` |
+| `Protected designations · PAD-US 4.1` | USGS Gap Analysis Project | National | 4.1 (released Mar 2025) | Public domain | `pad-us-4.1-combined` |
 
-DOI [10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS). All three are the PAD-US **combined** layer,
-distinguished by `alias` and complementary `Des_Tp` filters on one shared STAC asset.
+DOI [10.5066/P96WBCHS](https://doi.org/10.5066/P96WBCHS). One layer drawn from the PAD-US **combined**
+collection, coloured by `Des_Tp`: designated wilderness, wilderness study areas and Wild & Scenic
+Rivers wild segments.
 
 **These three strata are the deduction behind the fourth denominator.** DEIS Vol I Table 12 nets
 wilderness, wilderness study areas and Wild & Scenic River *wild* segments out of the ~44.3M NFS
 acres to reach the 40,049,537-acre potentially affected environment — a deduction of **4,250,463
-acres**. Each layer is drawn for all managers, not just USFS, so **no layer is itself the deduction**;
+acres**. Each class is drawn for all managers, not just USFS, so **no class is itself the deduction**;
 the USFS-managed subset is the part that can intersect roadless area:
 
-| Layer | `Des_Tp` filter | All managers | USFS-managed |
+| Class | `Des_Tp` filter | All managers | USFS-managed |
 |---|---|---:|---:|
 | Designated wilderness | `WA` | 994 feat · 112.5M ac | 475 feat · 37.11M ac |
 | Wilderness study areas | `WSA` | 722 feat · 24.16M ac | 42 feat · 3.40M ac |
 | W&SR wild segments | `WSR` + `Loc_Ds` | 163 feat · 1.36M ac | 91 feat · 0.58M ac |
 
-⚠️ **`Loc_Ds` is what makes the W&SR layer honest.** PAD-US files all Wild & Scenic River records
+⚠️ **`Loc_Ds` is what makes the W&SR class honest.** PAD-US files all Wild & Scenic River records
 under `Des_Tp = 'WSR'` (910 features, 5.3M ac) regardless of classification; only `Loc_Ds`
 distinguishes wild from scenic and recreational, and designated from eligible and suitable. The layer
 filters to `Loc_Ds IN ('Wild', 'Designated - Wild')` because Table 12 deducts **designated** wild
@@ -592,8 +585,9 @@ layer.
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Land cover · NLCD 2001 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2001 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
-| `Land cover · NLCD 2024 (CONUS only)` | MRLC / USGS EROS | **CONUS only** | 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
+| `Land cover · NLCD` (year selector: 2001, 2024) | MRLC / USGS EROS | **CONUS only** | 2001 and 2024 (Annual NLCD Collection 1.2) | Public domain | `nlcd` |
+| `Forest to grass/shrub, year began · Ilangakoon 2026` | Nayani Ilangakoon, from USGS LCMAP land cover (Zenodo, doi:10.5281/zenodo.23045000) | **Western US** | 2001–2021, published 2026-09-29 | CC-BY-4.0 | `forest-to-grass-shrub` |
+| `Forest to grass/shrub, years persisted · Ilangakoon 2026` | as above | **Western US** | as above | CC-BY-4.0 | `forest-to-grass-shrub` |
 | `Human modification · Theobald 2016` | Theobald et al. | Global | circa 2016, ~1 km | CC-BY-4.0 | `global-human-modification` |
 
 ⚠️ **NLCD has no Alaska**, which holds 14,778,681 roadless acres — 25% of the all-IRA total and the
@@ -607,24 +601,22 @@ sum it. DOI [10.6084/m9.figshare.7283087](https://doi.org/10.6084/m9.figshare.72
 
 | Layer | Publisher | Coverage | Vintage | License | Collection |
 |---|---|---|---|---|---|
-| `Level I ecoregions, 12 biomes · EPA Omernik 2012–2013 (CONUS + Alaska)` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
-| `Level III ecoregion boundaries, 105 regions · EPA Omernik 2012–2013 (CONUS + Alaska)` | as above | **CONUS + Alaska** | as above | Public domain | `epa-ecoregions-l3` |
-| `Level IV ecoregion boundaries, 967 subdivisions · EPA Omernik 2013 (CONUS only)` | EPA ORD | **CONUS only** | 2013-04-16 | Public domain | `epa-ecoregions-l4` |
+| `Ecoregions · EPA Omernik` | EPA ORD (Omernik & Griffith); Level I/II from CEC | **CONUS + Alaska** | CONUS 2013-04-16, Alaska 2012-05-08 | Public domain | `epa-ecoregions-l3` |
 
-The Level I and Level III layers are one collection drawn two ways via `alias` — a fill coloured on
-`NA_L1NAME`, and boundaries with no fill. Every polygon carries the full hierarchy as columns
-(`NA_L1CODE`/`NAME`, `NA_L2*`, `US_L3*`, plus `US_L4*` at Level IV), so Levels I and II need no
-separate dataset. 1,616 Level III polygons make up 105 ecoregions; 5,896 Level IV polygons make up
-967. Both are EPSG:4326 with an H3 hex at native resolution 8, which is the catalog join key.
+One layer: the 105 Level III ecoregions (1,616 polygons) drawn as outlines and filled by their
+Level I biome (`NA_L1NAME`). Every polygon carries the hierarchy as columns (`NA_L1CODE`/`NAME`,
+`NA_L2*`, `US_L3*`), so Levels I and II need no separate dataset. EPSG:4326 with an H3 hex at native
+resolution 8, which is the catalog join key. Level IV (`epa-ecoregions-l4`, 967 subdivisions) has no
+map layer but can be queried in SQL: EPA publishes it for CONUS only, so it cannot cover the Alaska
+roadless acres, and 967 units is too fine to draw for a national view.
 
 ⭐ **This is the only ecological classification here that covers Alaska**, and Alaska is
 **33.1%** of the rule-affected base (14,778,681 of 44,701,002 ac). NLCD and LANDFIRE VCC are
 CONUS-only and WHP's Alaska domain cannot be pooled with its CONUS one, so an ecological share of
 roadless computed from any of those drops a third of the base without saying so. An ecoregion is a
 region of broadly similar ecological character and contains many ecosystems, so results from these
-layers are "by ecoregion", not "by ecosystem". Level IV shares
-that CONUS-only limit — EPA publishes no Alaska Level IV, so Alaska's finest available tier is
-Level III.
+layers are "by ecoregion", not "by ecosystem". EPA publishes no Alaska Level IV, so Level III is the
+finest tier that covers the whole base.
 
 ⛔ **Do not total `h3_cell_area()` over the roadless hex for acres.** Summing resolution-8 cell areas
 over `roadless-areas-2001/hex/` gives 74,561,734 ac against the authoritative 58,419,694 — **28%
@@ -755,7 +747,7 @@ added here as each lands.
 Already in the catalog and available to the assistant via SQL even though not on the map:
 `census-2025/roads` (TIGER roads — see below), `copernicus-glo90` (slope), `usgs-wbd-hu12`
 (watersheds), `census-2024-*` (states, counties, congressional districts), `epa-sab-v3-cws`
-(drinking-water source areas).
+(drinking-water source areas), `epa-ecoregions-l4` (Level IV ecoregions, CONUS only).
 
 Two datasets here are SQL-only, for different reasons — both worth recording.
 
