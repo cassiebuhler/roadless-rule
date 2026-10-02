@@ -249,13 +249,13 @@ is a subset of.
   hidden on the map; it follows forest boundaries and includes inholdings, so it is never a
   "share of Forest Service land" base. Use surface ownership for that.
 - **Roads** — five layers from two datasets; this is the group the rule is actually about, since
-  what 36 CFR 294 prohibits is road construction. `NFS roads open to vehicles, 263,807 mi ·
-  USFS 2025` and `NFS roads closed & stored (ML1), 103,945 mi · USFS 2025` are one dataset
+  what 36 CFR 294 prohibits is road construction. `NFS roads open to vehicles · USFS 2025` and
+  `NFS roads closed & stored (ML1) · USFS 2025` are one dataset
   (`roadcore-fs`) filtered on `OPER_MAINT_LEVEL`, drawn as two layers precisely because the ML1
   distinction changes the answer to claim 3.
-  `All motor-vehicle roads, 16,470,232 segments · TIGER 2025`,
-  `Highways & secondary roads, 268,817 segments · TIGER 2025` and
-  `Walkways & paths, 20,667 segments — NOT roads under 36 CFR 294.11 · TIGER 2025`
+  `All motor-vehicle roads · TIGER 2025`,
+  `Highways & secondary roads · TIGER 2025` and
+  `Walkways & paths — NOT roads under 36 CFR 294.11 · TIGER 2025`
   are one dataset (`census-2025/roads`) filtered on `MTFCC`. The highways layer is a **subset** of
   the motor-vehicle layer, not an addition to it. All five start switched off. Counted in
   **segments**, not miles — TIGER has no length column, and a TIGER segment is not the same unit as a
@@ -264,10 +264,10 @@ is a subset of.
   ⚠️ The walkways layer sits in this group because it is the excluded complement of the TIGER
   `MTFCC` road filter — it shows what the road layers leave out. It is **not** a road, and never
   enters a road figure.
-- **Trails & recreation access** — `USFS trails, 134,983 mi · Federal Trails 2026`,
-  `NPS & BLM trails, 25,916 mi · Federal Trails 2026`,
-  `National Trails System routes, 12,488 mi · Federal Trails 2026` and
-  `Rivers with outstanding values, 90,476 mi · NPS NRI 2024`. The first three are one dataset
+- **Trails & recreation access** — `USFS trails · Federal Trails 2026`,
+  `NPS & BLM trails · Federal Trails 2026`,
+  `National Trails System routes · Federal Trails 2026` and
+  `Rivers with outstanding values · NPS NRI 2024`. The first three are one dataset
   (`federal-trails-2026`) filtered on `admin_agency` and `nts_designation`; the NTS layer is a
   **subset** of the other two, so adding the three mileages triple-counts. These layers exist to
   answer a specific confusion: **the 2001 rule prohibits road construction, it does not close land
