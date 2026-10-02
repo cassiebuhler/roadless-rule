@@ -71,7 +71,7 @@ USFS cautions that source scales vary across this layer and that boundaries cann
 align with features from other datasets — the National Forest Planning Record documents remain the
 official inventory. Treat adjacency and buffer-distance results as approximate.
 
-### Roadless land status · CIRES 2026
+### Roadless land by protection status · CIRES 2026 (in the Roadless areas group)
 
 | Field | Value |
 |---|---|
