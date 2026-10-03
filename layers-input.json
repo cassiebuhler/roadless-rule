@@ -64,6 +64,7 @@
         "contact": false
     },
     "header": {
+        "brand": null,
         "institution": []
     },
     "collections": [
