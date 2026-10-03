@@ -289,9 +289,10 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   for 10+ consecutive years, derived from USGS LCMAP) and `Human modification · Theobald 2016`.
 - **Fire history** — what has already burned and where fires start: `Ignitions · FPA-FOD 1992–2024`,
   `Suppression strategy · ICS-209-PLUS 1999–2020`, `Fire perimeters · MTBS 1984–2024`,
-  `Fire growth · FIRED 2000–2021`, `Burn severity, CONUS · MTBS 1984–2024` /
-  `Burn severity, Alaska · MTBS 1984–2024` — the severity layers carry a year selector rather than
-  one entry per year — and `Historical fire perimeters · USGS 1835–2020`.
+  `Fire growth · FIRED 2000–2021`, `Burn severity · MTBS 1984–2024` — one panel row that switches on
+  two layers, `Burn severity, CONUS · MTBS 1984–2024` and `Burn severity, Alaska · MTBS 1984–2024`,
+  with one year selector rather than one entry per year (a year Alaska lacks hides the Alaska half) —
+  and `Historical fire perimeters · USGS 1835–2020`.
   The ignitions layer is coloured by cause, with fires that reached ≥1,000 ac (`FIRE_SIZE_CLASS` F
   or G) drawn as larger dots; they are a **subset** of all ignitions, not an addition. Ignitions are
   **points, not a density surface**. For an actual ignition-density map,
@@ -319,17 +320,18 @@ layer, not a separate toggle. To isolate a subset, filter the layer on the colum
   is a MODIS daily composite, so peak growth is a 24-hour bound, not a run-hour rate; and the 11-day
   grouping window can merge two nearby fires or split one long one.
 - **Fire risk & fuels** — forward-looking hazard, stand condition and the treatment response:
-  `Wildfire hazard, CONUS · WHP 2023` / `Wildfire hazard, Alaska · WHP 2023`,
-  `Risk to structures, CONUS · WRC 2024` / `Risk to structures, Alaska · WRC 2024`,
+  `Wildfire hazard · WHP 2023` (layers `Wildfire hazard, CONUS · WHP 2023` and
+  `Wildfire hazard, Alaska · WHP 2023`), `Risk to structures · WRC 2024` (layers
+  `Risk to structures, CONUS · WRC 2024` and `Risk to structures, Alaska · WRC 2024`),
   `Vegetation condition · LANDFIRE 2024` (**CONUS only**), the layer that speaks to claims
   about stands being overgrown or out of their natural condition,
   `Completed treatments · USFS FACTS 2026` (activities completed FY2014 onward) and
   `Wildland-urban interface · SILVIS 2020`.
   The two WHP entries are separate rasters on separate scales (the published Very High break is
   1,985 for CONUS, 8,912 for Alaska), so each carries its own legend and the two cannot be
-  compared by raw value. A user who asks for "wildfire hazard" wants **both** turned on — they
-  are two halves of one variable and currently need two clicks. The same holds for the two WRC
-  entries and the two burn-severity entries.
+  compared by raw value. Each pair is **one panel row** that switches both halves on together, so a
+  user who asks for "wildfire hazard" gets the whole country; `show_layer` on one member still shows
+  only that half, and the row then reads as partly on. The same holds for WRC and burn severity.
 - **National Forest System extent** — `Forest Service ownership · USFS 2025` (193.2M ac),
   `Proclaimed boundaries · USFS 2025` (225.1M ac), `Administrative boundaries · USFS 2025` (236.8M ac)
   and `Ranger districts · USFS 2025` (237.1M ac), ordered by ascending acreage. Only the first is

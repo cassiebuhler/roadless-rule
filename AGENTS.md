@@ -429,11 +429,11 @@ rationale turns on not conflating them.
 
 ⚠️ **Prefer one layer coloured by a category over several filtered toggles.** A subset of a
 dataset (large-fire ignitions, TIGER highways, closed ML1 roads, a suppression strategy, a PAD-US
-designation) is a legend class within one layer, not its own toggle: the panel was cut from 45
-toggles to 30 this way. Labels are `title · source year`, with no counts or acreages; put counts and
-coverage caveats (CONUS only, western US) in the legend. The remaining duplicates are the three
-CONUS/Alaska raster pairs, which wait on one-toggle-for-two-layers support in geo-agent
-([boettiger-lab/geo-agent#349](https://github.com/boettiger-lab/geo-agent/issues/349)).
+designation) is a legend class within one layer, not its own toggle. Labels are `title · source
+year`, with no counts or acreages; put counts and coverage caveats (CONUS only, western US) in the
+legend. Two-layer variables (the WHP, WRC and MTBS severity CONUS/Alaska pairs) share one panel row
+via `toggle_group` (geo-agent v3.31.0); each half keeps its own source, stretch and legend. Together
+these took the panel from 45 toggles to 27.
 
 ⚠️ Four surfaces carry the group names and must be updated together, or they drift:
 `layers-input.json`, `system-prompt.md` (the *What this app has* inventory), `docs.html` (the

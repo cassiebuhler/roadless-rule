@@ -432,10 +432,10 @@ agency-figure reproduction belongs in any case.
 class breaks are percentiles computed *within each domain*, so "Very High" is index > 1,985 in CONUS
 but > 8,912 in Alaska — 4.5× apart. Never pool the classified domains; use the continuous index for
 any CONUS-vs-Alaska comparison. Each layer's colour ramp saturates at its own Very High break, which
-is why the two use different rescale bounds. They are consequently **two separate panel toggles** —
-a user who wants national wildfire hazard has to turn on both. One toggle driving both halves needs
-a framework change, tracked at
-[geo-agent#349](https://github.com/boettiger-lab/geo-agent/issues/349); mosaicking the two into one
+is why the two use different rescale bounds. They stay **two separate layers** with their own legends,
+but share one panel row via `toggle_group` (geo-agent v3.31.0,
+[#349](https://github.com/boettiger-lab/geo-agent/issues/349)), so one click shows national wildfire
+hazard. Mosaicking the two into one
 national raster is **not** the fix, because a single shared stretch would saturate >10% of Alaska
 into the top colour and contradict the zero-high-hazard finding below.
 

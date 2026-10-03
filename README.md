@@ -19,7 +19,7 @@ static About page, and deployment manifests.
 ## Files
 
 ```
-index.html          ← HTML shell — loads GLEN core (pinned @v3.30.2) + libs from CDN
+index.html          ← HTML shell — loads GLEN core (pinned @v3.31.0) + libs from CDN
 docs.html           ← "About" page served at /docs.html — sources, denominators, claims
 layers-input.json   ← datasets, grouping, map view, LLM settings
 system-prompt.md    ← rescission-analyst persona, denominators, guardrails
@@ -78,8 +78,8 @@ suppression strategy) is a legend class within its layer rather than a separate 
 | 2 | **Roads** | `Forest Service roads · USFS 2025` · `Roads & paths · TIGER 2025` |
 | 3 | **Trails & recreation access** | `Federal trails · USFS, NPS, BLM 2026` · `Outstanding rivers · NPS 2024` |
 | 4 | **Land cover & modification** | `Land cover · NLCD` · `Forest to grass/shrub, year began · Ilangakoon 2026` · `Forest to grass/shrub, years persisted · Ilangakoon 2026` · `Human modification · Theobald 2016` |
-| 5 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity, CONUS · MTBS 1984–2024` · `Burn severity, Alaska · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |
-| 6 | **Fire risk & fuels** | `Wildfire hazard, CONUS · WHP 2023` · `Wildfire hazard, Alaska · WHP 2023` · `Risk to structures, CONUS · WRC 2024` · `Risk to structures, Alaska · WRC 2024` · `Vegetation condition · LANDFIRE 2024` · `Completed treatments · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
+| 5 | **Fire history** | `Ignitions · FPA-FOD 1992–2024` · `Suppression strategy · ICS-209-PLUS 1999–2020` · `Fire perimeters · MTBS 1984–2024` · `Fire growth · FIRED 2000–2021` · `Burn severity · MTBS 1984–2024` · `Historical fire perimeters · USGS 1835–2020` |
+| 6 | **Fire risk & fuels** | `Wildfire hazard · WHP 2023` · `Risk to structures · WRC 2024` · `Vegetation condition · LANDFIRE 2024` · `Completed treatments · USFS FACTS 2026` · `Wildland-urban interface · SILVIS 2020` |
 | 7 | **National Forest System extent** | `Forest Service ownership · USFS 2025` · `Proclaimed boundaries · USFS 2025` · `Administrative boundaries · USFS 2025` · `Ranger districts · USFS 2025` |
 | 8 | **Existing protections** | `Protected designations · PAD-US 4.1` |
 | 9 | **Ecological classification** | `Ecoregions · EPA Omernik` |
