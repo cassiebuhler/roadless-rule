@@ -60,7 +60,11 @@
     },
     "links": {
         "github": "https://github.com/cassiebuhler/roadless-rule",
-        "docs": "/docs.html"
+        "docs": "/docs.html",
+        "contact": false
+    },
+    "header": {
+        "institution": []
     },
     "collections": [
         {
