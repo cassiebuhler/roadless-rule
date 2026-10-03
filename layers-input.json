@@ -921,6 +921,7 @@
                 {
                     "id": "mtbs-severity-conus",
                     "display_name": "Burn severity, CONUS · MTBS 1984–2024",
+                    "toggle_group": "Burn severity · MTBS 1984–2024",
                     "visible": false,
                     "legend_type": "categorical",
                     "legend_label": "MTBS thematic burn severity",
@@ -983,6 +984,7 @@
                 {
                     "id": "mtbs-severity-ak",
                     "display_name": "Burn severity, Alaska · MTBS 1984–2024",
+                    "toggle_group": "Burn severity · MTBS 1984–2024",
                     "visible": false,
                     "legend_type": "categorical",
                     "legend_label": "MTBS thematic burn severity",
@@ -1073,6 +1075,7 @@
                 {
                     "id": "whp-2023-continuous-conus-cog",
                     "display_name": "Wildfire hazard, CONUS · WHP 2023",
+                    "toggle_group": "Wildfire hazard · WHP 2023",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,2000",
@@ -1094,6 +1097,7 @@
                 {
                     "id": "whp-2023-continuous-ak-cog",
                     "display_name": "Wildfire hazard, Alaska · WHP 2023",
+                    "toggle_group": "Wildfire hazard · WHP 2023",
                     "visible": false,
                     "colormap": "inferno",
                     "rescale": "0,9000",
@@ -1115,6 +1119,7 @@
                 {
                     "id": "wrc-2-rps-conus-cog",
                     "display_name": "Risk to structures, CONUS · WRC 2024",
+                    "toggle_group": "Risk to structures · WRC 2024",
                     "visible": false,
                     "colormap": "plasma",
                     "rescale": "0,0.722298",
@@ -1136,6 +1141,7 @@
                 {
                     "id": "wrc-2-rps-ak-cog",
                     "display_name": "Risk to structures, Alaska · WRC 2024",
+                    "toggle_group": "Risk to structures · WRC 2024",
                     "visible": false,
                     "colormap": "plasma",
                     "rescale": "0,0.790832",
