@@ -9,12 +9,12 @@ percentage, and almost every percentage depends on **which acreage base it is co
 of which there are four, differing by 18 million acres. This app holds the underlying data so those
 figures can be reproduced rather than taken on trust.
 
-Built on the [geo-agent / GLEN](https://github.com/boettiger-lab/geo-agent) framework. **No
+Built on the [GLEN](https://github.com/SchmidtDSE/glen) framework. **No
 JavaScript to write** — the map, chat, agent and tools load from CDN; this repo is config files, a
 static About page, and deployment manifests.
 
 **Live:** <https://roadless-rule.nrp-nautilus.io> · **Framework docs:**
-[boettiger-lab.github.io/geo-agent](https://boettiger-lab.github.io/geo-agent/)
+[schmidtdse.github.io/glen](https://schmidtdse.github.io/glen/)
 
 ## Files
 

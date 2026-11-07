@@ -353,7 +353,7 @@ li { margin: 0.25rem 0; }
 
     <h3>How it works</h3>
     <p>The map reads cloud-native files (PMTiles, Cloud-Optimized GeoTIFFs, GeoParquet) hosted on the <a href="https://nrp.ai" target="_blank" rel="noopener">National Research Platform</a> directly in your browser &mdash; there is no tile server, and only the bytes for the current view are fetched. The assistant turns plain-English questions into <a href="https://duckdb.org" target="_blank" rel="noopener">DuckDB</a> SQL over the same Parquet files, discovering schemas through a <a href="https://stacspec.org" target="_blank" rel="noopener">STAC</a> catalog. Nothing is modeled or estimated by the app: the processing is format conversion, plus a display-time filter where a label says so.</p>
-    <p>The deployed assistant runs on the NRP open-llm-proxy, a shared university inference service using open-weight models. The full stack is open source &mdash; see the <a href="https://github.com/cassiebuhler/roadless-rule" target="_blank" rel="noopener">project repository</a> and the <a href="https://github.com/boettiger-lab/geo-agent" target="_blank" rel="noopener">geo-agent core library</a>.</p>
+    <p>The deployed assistant runs on the NRP open-llm-proxy, a shared university inference service using open-weight models. The full stack is open source &mdash; see the <a href="https://github.com/cassiebuhler/roadless-rule" target="_blank" rel="noopener">project repository</a> and the <a href="https://github.com/SchmidtDSE/glen" target="_blank" rel="noopener">GLEN core library</a>.</p>
 
     <h3>Asking the assistant</h3>
     <ul>
