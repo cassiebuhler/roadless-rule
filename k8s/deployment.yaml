@@ -53,15 +53,13 @@ spec:
         - name: MCP_AUTH_TOKEN
           valueFrom:
             secretKeyRef:
-              name: duckdb-mcp-auth
-              key: MCP_AUTH_TOKEN
-        - name: LLM_ENDPOINT
-          value: "https://open-llm-proxy.nrp-nautilus.io/v1"
+              name: duckdb-mcp-tokens
+              key: roadless-rule
         - name: PROXY_KEY
           valueFrom:
             secretKeyRef:
-              name: open-llm-proxy-secrets
-              key: proxy-key
+              name: open-llm-proxy-namespace-keys
+              key: public
         command:
         - sh
         - -c
