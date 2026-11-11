@@ -77,49 +77,6 @@
                     "display_name": "Roadless areas · USFS 2001",
                     "group": "Roadless areas",
                     "visible": true,
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            [
-                                "get",
-                                "STATE"
-                            ],
-                            [
-                                "ID",
-                                "CO"
-                            ],
-                            "#7A8FA6",
-                            "#1B6B4C"
-                        ],
-                        "fill-opacity": 0.45
-                    },
-                    "outline_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "STATE"
-                            ],
-                            [
-                                "ID",
-                                "CO"
-                            ],
-                            "#4E6377",
-                            "#0E4531"
-                        ],
-                        "line-width": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Rule-affected, proposed for rescission · 44.7M ac",
-                            "color": "#1B6B4C"
-                        },
-                        {
-                            "label": "Idaho & Colorado, state rules, excluded · 13.7M ac",
-                            "color": "#7A8FA6"
-                        }
-                    ],
                     "tooltip_fields": [
                         "NAME",
                         "STATE",
@@ -153,48 +110,6 @@
                         ],
                         true,
                         false
-                    ],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            [
-                                "get",
-                                "STRATUM"
-                            ],
-                            "R3",
-                            "#C0392B",
-                            "R2",
-                            "#E59866",
-                            "R1s",
-                            "#7FB3D5",
-                            "R1",
-                            "#1F618D",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.55
-                    },
-                    "outline_style": {
-                        "line-color": "#4D4D4D",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "R3 · exposed to rescission · 24.0M ac",
-                            "color": "#C0392B"
-                        },
-                        {
-                            "label": "R2 · pre-2001 forest plan barred roads · 15.0M ac",
-                            "color": "#E59866"
-                        },
-                        {
-                            "label": "R1s · Idaho & Colorado state rules · 13.1M ac",
-                            "color": "#7FB3D5"
-                        },
-                        {
-                            "label": "R1 · Wilderness, monuments & other federal protection · 5.9M ac",
-                            "color": "#1F618D"
-                        }
                     ],
                     "tooltip_fields": [
                         "STRATUM",
@@ -234,44 +149,6 @@
                         true,
                         false
                     ],
-                    "default_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "OPER_MAINT_LEVEL"
-                            ],
-                            [
-                                "1 - BASIC CUSTODIAL CARE (CLOSED)"
-                            ],
-                            "#9A9A9A",
-                            "#2B2B2B"
-                        ],
-                        "line-width": [
-                            "match",
-                            [
-                                "get",
-                                "OPER_MAINT_LEVEL"
-                            ],
-                            [
-                                "1 - BASIC CUSTODIAL CARE (CLOSED)"
-                            ],
-                            0.5,
-                            0.7
-                        ],
-                        "line-opacity": 0.85
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Open to motor vehicles (ML 2–5) · 263,807 mi",
-                            "color": "#2B2B2B"
-                        },
-                        {
-                            "label": "Closed & in storage (ML1) · 103,945 mi, 28.2% of the system",
-                            "color": "#9A9A9A"
-                        }
-                    ],
                     "tooltip_fields": [
                         "NAME",
                         "ID",
@@ -296,78 +173,6 @@
                     "display_name": "Roads & paths · TIGER 2025",
                     "visible": false,
                     "layer_type": "line",
-                    "default_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "MTFCC"
-                            ],
-                            [
-                                "S1100",
-                                "S1200"
-                            ],
-                            "#6A3D7A",
-                            [
-                                "match",
-                                [
-                                    "get",
-                                    "MTFCC"
-                                ],
-                                [
-                                    "S1710",
-                                    "S1720",
-                                    "S1820",
-                                    "S1830"
-                                ],
-                                "#C9A227",
-                                "#9B7FA8"
-                            ]
-                        ],
-                        "line-width": [
-                            "match",
-                            [
-                                "get",
-                                "MTFCC"
-                            ],
-                            [
-                                "S1100",
-                                "S1200"
-                            ],
-                            1.1,
-                            [
-                                "match",
-                                [
-                                    "get",
-                                    "MTFCC"
-                                ],
-                                [
-                                    "S1710",
-                                    "S1720",
-                                    "S1820",
-                                    "S1830"
-                                ],
-                                0.8,
-                                0.4
-                            ]
-                        ],
-                        "line-opacity": 0.75
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Highway or secondary road (S1100, S1200) · 268,817 segments",
-                            "color": "#6A3D7A"
-                        },
-                        {
-                            "label": "Other motor-vehicle road, any jurisdiction",
-                            "color": "#9B7FA8"
-                        },
-                        {
-                            "label": "Walkway, stairway, bike or bridle path · 20,667 segments, not a road under 36 CFR 294.11",
-                            "color": "#C9A227"
-                        }
-                    ],
                     "tooltip_fields": [
                         "FULLNAME",
                         "MTFCC",
@@ -391,39 +196,6 @@
                     "display_name": "Federal trails · USFS, NPS, BLM 2026",
                     "visible": false,
                     "layer_type": "line",
-                    "default_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "admin_agency"
-                            ],
-                            "USFS",
-                            "#0E7C7B",
-                            "NPS",
-                            "#7B4F9E",
-                            "BLM",
-                            "#C9A227",
-                            "#999999"
-                        ],
-                        "line-width": 0.8,
-                        "line-opacity": 0.85
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Forest Service (NFST) · 134,983 mi, a trail is not a road under 36 CFR 294.11",
-                            "color": "#0E7C7B"
-                        },
-                        {
-                            "label": "National Park Service · 17,046 mi, not National Forest System",
-                            "color": "#7B4F9E"
-                        },
-                        {
-                            "label": "Bureau of Land Management (GTLF) · 8,870 mi, not National Forest System",
-                            "color": "#C9A227"
-                        }
-                    ],
                     "tooltip_fields": [
                         "trail_name",
                         "admin_agency",
@@ -449,18 +221,6 @@
                     "display_name": "Outstanding rivers · NPS 2024",
                     "visible": false,
                     "layer_type": "line",
-                    "default_style": {
-                        "line-color": "#1B54A8",
-                        "line-width": 1.1,
-                        "line-opacity": 0.85
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Free-flowing segment with outstanding natural, cultural or recreational value · 4,496 segments, 90,476 mi — inventoried, not designated",
-                            "color": "#1B54A8"
-                        }
-                    ],
                     "tooltip_fields": ["River", "Reach", "Classifica", "ORV", "GIS_Miles", "Management", "State1"]
                 }
             ]
@@ -505,8 +265,6 @@
                     "id": "forest-to-grass-shrub-change-year-cog",
                     "display_name": "Forest to grass/shrub, year began · Ilangakoon 2026",
                     "visible": false,
-                    "colormap": "viridis",
-                    "rescale": "2002,2012",
                     "default_style": {
                         "raster-opacity": 0.8
                     },
@@ -516,8 +274,6 @@
                     "id": "forest-to-grass-shrub-max-run-years-cog",
                     "display_name": "Forest to grass/shrub, years persisted · Ilangakoon 2026",
                     "visible": false,
-                    "colormap": "magma",
-                    "rescale": "10,20",
                     "default_style": {
                         "raster-opacity": 0.8
                     },
@@ -537,8 +293,6 @@
                     "id": "ghm-cog",
                     "display_name": "Human modification · Theobald 2016",
                     "visible": false,
-                    "colormap": "magma",
-                    "rescale": "0,1",
                     "legend_label": "Human modification index (0 = none, 1 = fully modified)"
                 }
             ]
@@ -556,61 +310,6 @@
                     "display_name": "Ignitions · FPA-FOD 1992–2024",
                     "visible": false,
                     "layer_type": "circle",
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            [
-                                "get",
-                                "NWCG_CAUSE_CLASSIFICATION"
-                            ],
-                            "Human",
-                            "#D64545",
-                            "Natural",
-                            "#3B6BA5",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": [
-                            "match",
-                            [
-                                "get",
-                                "FIRE_SIZE_CLASS"
-                            ],
-                            [
-                                "F",
-                                "G"
-                            ],
-                            5,
-                            2.5
-                        ],
-                        "circle-opacity": [
-                            "match",
-                            [
-                                "get",
-                                "FIRE_SIZE_CLASS"
-                            ],
-                            [
-                                "F",
-                                "G"
-                            ],
-                            0.85,
-                            0.55
-                        ]
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Human-caused ignition (large dot: reached ≥1,000 ac)",
-                            "color": "#D64545"
-                        },
-                        {
-                            "label": "Natural (lightning) ignition (large dot: reached ≥1,000 ac)",
-                            "color": "#3B6BA5"
-                        },
-                        {
-                            "label": "Cause undetermined or not specified",
-                            "color": "#9E9E9E"
-                        }
-                    ],
                     "tooltip_fields": [
                         "FIRE_NAME",
                         "FIRE_YEAR",
@@ -684,74 +383,6 @@
                             72
                         ]
                     ],
-                    "default_style": {
-                        "circle-color": [
-                            "match",
-                            [
-                                "get",
-                                "SUPPRESSION_METHOD"
-                            ],
-                            "FS",
-                            "#C0392B",
-                            "MMS",
-                            "#E67E22",
-                            "C",
-                            "#E8B92E",
-                            "PZP",
-                            "#16A085",
-                            "M",
-                            "#2E86AB",
-                            "#9E9E9E"
-                        ],
-                        "circle-radius": [
-                            "interpolate",
-                            [
-                                "linear"
-                            ],
-                            [
-                                "get",
-                                "FINAL_ACRES"
-                            ],
-                            0,
-                            2.5,
-                            1000,
-                            4,
-                            20000,
-                            7,
-                            200000,
-                            11,
-                            1305592,
-                            16
-                        ],
-                        "circle-opacity": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Full suppression (FS)",
-                            "color": "#C0392B"
-                        },
-                        {
-                            "label": "MMS, code undefined in the SIT-209 lookup",
-                            "color": "#E67E22"
-                        },
-                        {
-                            "label": "Confine (C)",
-                            "color": "#E8B92E"
-                        },
-                        {
-                            "label": "Point zone protection (PZP)",
-                            "color": "#16A085"
-                        },
-                        {
-                            "label": "Monitor (M)",
-                            "color": "#2E86AB"
-                        },
-                        {
-                            "label": "Strategy not reported, collected from 2007 only",
-                            "color": "#9E9E9E"
-                        }
-                    ],
                     "tooltip_fields": [
                         "INCIDENT_NAME",
                         "START_YEAR",
@@ -792,47 +423,6 @@
                         true,
                         false
                     ],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            [
-                                "get",
-                                "Incid_Type"
-                            ],
-                            [
-                                "Prescribed Fire"
-                            ],
-                            "#2E86AB",
-                            "#B03A2E"
-                        ],
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "Incid_Type"
-                            ],
-                            [
-                                "Prescribed Fire"
-                            ],
-                            "#1B5A75",
-                            "#7B241C"
-                        ],
-                        "line-width": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Wildfire or wildland fire use",
-                            "color": "#B03A2E"
-                        },
-                        {
-                            "label": "Prescribed fire",
-                            "color": "#2E86AB"
-                        }
-                    ],
                     "tooltip_fields": [
                         "Incid_Name",
                         "Incid_Type",
@@ -855,52 +445,6 @@
                     "id": "fired-events-2001-2021-pmtiles",
                     "display_name": "Fire growth · FIRED 2000–2021",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": [
-                            "step",
-                            [
-                                "get",
-                                "mx_grw_km2"
-                            ],
-                            "#FEE08B",
-                            1,
-                            "#FDAE61",
-                            4.05,
-                            "#F46D43",
-                            16.2,
-                            "#D73027",
-                            100,
-                            "#7F0000"
-                        ],
-                        "fill-opacity": 0.55
-                    },
-                    "outline_style": {
-                        "line-color": "#7F0000",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "< 100 ha in a day",
-                            "color": "#FEE08B"
-                        },
-                        {
-                            "label": "100–405 ha in a day",
-                            "color": "#FDAE61"
-                        },
-                        {
-                            "label": "405–1,620 ha in a day",
-                            "color": "#F46D43"
-                        },
-                        {
-                            "label": "1,620–10,000 ha in a day, fast fire",
-                            "color": "#D73027"
-                        },
-                        {
-                            "label": "≥ 10,000 ha in a day, fast fire",
-                            "color": "#7F0000"
-                        }
-                    ],
                     "tooltip_fields": [
                         "id",
                         "ig_date",
@@ -1050,21 +594,6 @@
                     "id": "combined-pmtiles",
                     "display_name": "Historical fire perimeters · USGS 1835–2020",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#C0392B",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#8C2419",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Fire perimeter (1835–2020)",
-                            "color": "#C0392B"
-                        }
-                    ],
                     "tooltip_fields": ["Listed_Fire_Names", "Fire_Year", "Assigned_Fire_Type", "GIS_Acres"]
                 }
             ]
@@ -1082,8 +611,6 @@
                     "display_name": "Wildfire hazard, CONUS · WHP 2023",
                     "toggle_group": "Wildfire hazard · WHP 2023",
                     "visible": false,
-                    "colormap": "inferno",
-                    "rescale": "0,2000",
                     "default_style": {
                         "raster-opacity": 0.75
                     },
@@ -1104,8 +631,6 @@
                     "display_name": "Wildfire hazard, Alaska · WHP 2023",
                     "toggle_group": "Wildfire hazard · WHP 2023",
                     "visible": false,
-                    "colormap": "inferno",
-                    "rescale": "0,9000",
                     "default_style": {
                         "raster-opacity": 0.75
                     },
@@ -1169,7 +694,6 @@
                     "id": "vcc-cog",
                     "display_name": "Vegetation condition · LANDFIRE 2024",
                     "visible": false,
-                    "legend_type": "categorical",
                     "legend_label": "CONUS only. Departure from historical reference condition (Class I.A = 0–16%, III.B = 84–100%); water, snow/ice, developed, barren and agriculture are not rated",
                     "default_style": {
                         "raster-opacity": 0.8
@@ -1194,21 +718,6 @@
                         ["!=", ["get", "FISCAL_YEAR_COMPLETED"], null],
                         [">=", ["get", "FISCAL_YEAR_COMPLETED"], 2014]
                     ],
-                    "default_style": {
-                        "fill-color": "#E08A2E",
-                        "fill-opacity": 0.7
-                    },
-                    "outline_style": {
-                        "line-color": "#A85F13",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Completed treatment, FY2014+",
-                            "color": "#E08A2E"
-                        }
-                    ],
                     "tooltip_fields": ["ACTIVITY", "FISCAL_YEAR_COMPLETED", "GIS_ACRES", "ADMIN_FOREST", "NFPORS_CATEGORY"]
                 }
             ]
@@ -1226,27 +735,6 @@
                     "display_name": "Wildland-urban interface · SILVIS 2020",
                     "visible": false,
                     "default_filter": [">", ["get", "WUIFLAG2020"], 0],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            ["get", "WUIFLAG2020"],
-                            1, "#C99A5B",
-                            2, "#8C4A2F",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.6
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Intermix (housing among wildland vegetation)",
-                            "color": "#C99A5B"
-                        },
-                        {
-                            "label": "Interface (housing adjacent to wildland vegetation)",
-                            "color": "#8C4A2F"
-                        }
-                    ],
                     "tooltip_fields": ["WUICLASS2020", "STATE", "HU2020", "POP2020", "VEG2019PC"]
                 }
             ]
@@ -1264,21 +752,6 @@
                     "display_name": "Forest Service ownership · USFS 2025",
                     "visible": false,
                     "default_filter": ["match", ["get", "OWNERCLASS"], ["USDA FOREST SERVICE"], true, false],
-                    "default_style": {
-                        "fill-color": "#C2A878",
-                        "fill-opacity": 0.35
-                    },
-                    "outline_style": {
-                        "line-color": "#8A7248",
-                        "line-width": 0.3
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "FS-owned land · 193.2M ac",
-                            "color": "#C2A878"
-                        }
-                    ],
                     "tooltip_fields": ["OWNERCLASS", "GIS_ACRES", "LANDSTATUS", "REGION"]
                 }
             ]
@@ -1295,21 +768,6 @@
                     "id": "proclaimed-forest-pmtiles",
                     "display_name": "Proclaimed boundaries · USFS 2025",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#000000",
-                        "fill-opacity": 0
-                    },
-                    "outline_style": {
-                        "line-color": "#B5651D",
-                        "line-width": 1.2
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Proclaimed boundary — not ownership",
-                            "color": "#B5651D"
-                        }
-                    ],
                     "tooltip_fields": ["FORESTNAME", "GIS_ACRES"]
                 }
             ]
@@ -1326,21 +784,6 @@
                     "id": "administrative-forest-pmtiles",
                     "display_name": "Administrative boundaries · USFS 2025",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#000000",
-                        "fill-opacity": 0
-                    },
-                    "outline_style": {
-                        "line-color": "#7B3F00",
-                        "line-width": 1.2
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Administrative boundary — not ownership",
-                            "color": "#7B3F00"
-                        }
-                    ],
                     "tooltip_fields": ["FORESTNAME", "REGION", "GIS_ACRES"]
                 }
             ]
@@ -1357,21 +800,6 @@
                     "id": "ranger-district-pmtiles",
                     "display_name": "Ranger districts · USFS 2025",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#000000",
-                        "fill-opacity": 0
-                    },
-                    "outline_style": {
-                        "line-color": "#A08C6C",
-                        "line-width": 0.7
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Ranger district — not ownership",
-                            "color": "#A08C6C"
-                        }
-                    ],
                     "tooltip_fields": ["DISTRICTNA", "FORESTNAME", "REGION", "GIS_ACRES"]
                 }
             ]
@@ -1461,55 +889,6 @@
                             ]
                         ]
                     ],
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            [
-                                "get",
-                                "Des_Tp"
-                            ],
-                            "WA",
-                            "#6B4E9E",
-                            "WSA",
-                            "#A38FC7",
-                            "WSR",
-                            "#B07AA1",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.5
-                    },
-                    "outline_style": {
-                        "line-color": [
-                            "match",
-                            [
-                                "get",
-                                "Des_Tp"
-                            ],
-                            "WA",
-                            "#4A3572",
-                            "WSA",
-                            "#6B4E9E",
-                            "WSR",
-                            "#8E5A82",
-                            "#999999"
-                        ],
-                        "line-width": 0.5
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Designated wilderness",
-                            "color": "#6B4E9E"
-                        },
-                        {
-                            "label": "Wilderness study area",
-                            "color": "#A38FC7"
-                        },
-                        {
-                            "label": "Wild & Scenic River, wild segment",
-                            "color": "#B07AA1"
-                        }
-                    ],
                     "tooltip_fields": [
                         "Unit_Nm",
                         "Des_Tp",
@@ -1533,102 +912,12 @@
                     "id": "epa-ecoregions-l3-pmtiles",
                     "display_name": "Ecoregions · EPA Omernik",
                     "visible": false,
-                    "default_style": {
-                        "fill-color": [
-                            "match",
-                            [
-                                "get",
-                                "NA_L1NAME"
-                            ],
-                            "TUNDRA",
-                            "#C9D8DE",
-                            "TAIGA",
-                            "#8FA98C",
-                            "NORTHERN FORESTS",
-                            "#5E8C61",
-                            "NORTHWESTERN FORESTED MOUNTAINS",
-                            "#6FA3A0",
-                            "MARINE WEST COAST FOREST",
-                            "#4E7F8C",
-                            "EASTERN TEMPERATE FORESTS",
-                            "#9CBF7A",
-                            "GREAT PLAINS",
-                            "#E3D08A",
-                            "NORTH AMERICAN DESERTS",
-                            "#DDA96B",
-                            "MEDITERRANEAN CALIFORNIA",
-                            "#C98E7B",
-                            "SOUTHERN SEMI-ARID HIGHLANDS",
-                            "#B98A5E",
-                            "TEMPERATE SIERRAS",
-                            "#A88FBF",
-                            "TROPICAL WET FORESTS",
-                            "#7FBFA8",
-                            "#CCCCCC"
-                        ],
-                        "fill-opacity": 0.4
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Tundra",
-                            "color": "#C9D8DE"
-                        },
-                        {
-                            "label": "Taiga",
-                            "color": "#8FA98C"
-                        },
-                        {
-                            "label": "Northern Forests",
-                            "color": "#5E8C61"
-                        },
-                        {
-                            "label": "Northwestern Forested Mountains",
-                            "color": "#6FA3A0"
-                        },
-                        {
-                            "label": "Marine West Coast Forest",
-                            "color": "#4E7F8C"
-                        },
-                        {
-                            "label": "Eastern Temperate Forests",
-                            "color": "#9CBF7A"
-                        },
-                        {
-                            "label": "Great Plains",
-                            "color": "#E3D08A"
-                        },
-                        {
-                            "label": "North American Deserts",
-                            "color": "#DDA96B"
-                        },
-                        {
-                            "label": "Mediterranean California",
-                            "color": "#C98E7B"
-                        },
-                        {
-                            "label": "Southern Semi-Arid Highlands",
-                            "color": "#B98A5E"
-                        },
-                        {
-                            "label": "Temperate Sierras",
-                            "color": "#A88FBF"
-                        },
-                        {
-                            "label": "Tropical Wet Forests",
-                            "color": "#7FBFA8"
-                        }
-                    ],
                     "tooltip_fields": [
                         "US_L3NAME",
                         "NA_L2NAME",
                         "NA_L1NAME",
                         "region"
-                    ],
-                    "outline_style": {
-                        "line-color": "#2F5563",
-                        "line-width": 0.9
-                    }
+                    ]
                 }
             ]
         },
@@ -1645,21 +934,6 @@
                     "display_name": "Level IV ecoregions · EPA Omernik 2013",
                     "sidebar": false,
                     "visible": false,
-                    "default_style": {
-                        "fill-color": "#8A6FA0",
-                        "fill-opacity": 0
-                    },
-                    "outline_style": {
-                        "line-color": "#7A5F90",
-                        "line-width": 0.5
-                    },
-                    "legend_type": "categorical",
-                    "legend_classes": [
-                        {
-                            "label": "Level IV boundary, CONUS only",
-                            "color": "#7A5F90"
-                        }
-                    ],
                     "tooltip_fields": [
                         "US_L4NAME",
                         "US_L3NAME",
